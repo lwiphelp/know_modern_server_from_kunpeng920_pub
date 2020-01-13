@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="95.218277mm"
+   height="57.654129mm"
+   viewBox="0 0 95.218277 57.654129"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   sodipodi:docname="linux_net_subsystem_struc.svg">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="3.959798"
+     inkscape:cx="217.07562"
+     inkscape:cy="85.366673"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     fit-margin-top="2"
+     fit-margin-left="2"
+     fit-margin-bottom="2"
+     fit-margin-right="2"
+     inkscape:window-width="3830"
+     inkscape:window-height="2062"
+     inkscape:window-x="0"
+     inkscape:window-y="42"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-22.689023,-28.348646)">
+    <rect
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.11169566;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect815"
+       width="21.303047"
+       height="5.4005122"
+       x="48.648895"
+       y="30.404493" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.29494503px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 24.856065,40.087165 H 115.52725"
+       id="path817"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="50.714397"
+       y="34.808594"
+       id="text821"><tspan
+         sodipodi:role="line"
+         id="tspan819"
+         x="50.714397"
+         y="34.808594"
+         style="font-size:4.23333311px;stroke-width:0.26458332">socket库</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="93.878418"
+       y="37.21402"
+       id="text825"><tspan
+         sodipodi:role="line"
+         id="tspan823"
+         x="93.878418"
+         y="37.21402"
+         style="font-size:4.23333311px;stroke-width:0.26458332">CPU用户态</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.29494503px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 24.689023,72.894501 H 115.36021"
+       id="path817-3"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="94.964211"
+       y="67.420525"
+       id="text825-6"><tspan
+         sodipodi:role="line"
+         id="tspan823-7"
+         x="94.964211"
+         y="67.420525"
+         style="font-size:4.23333311px;stroke-width:0.26458332">CPU内核态</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="96.762207"
+       y="82.527611"
+       id="text825-6-5"><tspan
+         sodipodi:role="line"
+         id="tspan823-7-3"
+         x="96.762207"
+         y="82.527611"
+         style="font-size:4.23333311px;stroke-width:0.26458332">外部设备</tspan></text>
+    <rect
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.13237302;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect815-5"
+       width="30.035446"
+       height="5.3798347"
+       x="45.619049"
+       y="44.813976" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="47.674213"
+       y="49.207737"
+       id="text821-6"><tspan
+         sodipodi:role="line"
+         id="tspan819-2"
+         x="47.674213"
+         y="49.207737"
+         style="font-size:4.23333311px;stroke-width:0.26458332">sock内核接口</tspan></text>
+    <rect
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.13237302;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect815-5-9"
+       width="30.035446"
+       height="5.3798347"
+       x="45.919727"
+       y="54.636135" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="50.113052"
+       y="59.029896"
+       id="text821-6-1"><tspan
+         sodipodi:role="line"
+         id="tspan819-2-2"
+         x="50.113052"
+         y="59.029896"
+         style="font-size:4.23333311px;stroke-width:0.26458332">协议处理层</tspan></text>
+    <rect
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.13237302;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect815-5-9-7"
+       width="30.035446"
+       height="5.3798347"
+       x="46.120182"
+       y="63.656479" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="52.919384"
+       y="68.317513"
+       id="text821-6-1-0"><tspan
+         sodipodi:role="line"
+         id="tspan819-2-2-9"
+         x="52.919384"
+         y="68.317513"
+         style="font-size:4.23333311px;stroke-width:0.26458332">设备驱动</tspan></text>
+    <rect
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.13237302;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect815-5-9-7-3"
+       width="30.035446"
+       height="5.3798347"
+       x="46.320637"
+       y="78.556755" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="53.387108"
+       y="82.883705"
+       id="text821-6-1-0-6"><tspan
+         sodipodi:role="line"
+         id="tspan819-2-2-9-0"
+         x="53.387108"
+         y="82.883705"
+         style="font-size:4.23333311px;stroke-width:0.26458332">网络设备</tspan></text>
+  </g>
+</svg>
