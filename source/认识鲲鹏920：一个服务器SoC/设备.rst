@@ -1,8 +1,8 @@
 .. Copyright by Kenneth Lee. 2020. All Right Reserved.
 
-虚拟PCIE总线
-============
-todo：这里先说原理，具体的接口在PCIE一章里面介绍
+设备
+====
+todo：这里重点介绍虚拟PCIE总线的原理
 
 非SoC型的CPU通过PCIE总线把外部设备，特别是高速外部设备桥接到系统总线中，关于
 PCIE总线的介绍，我们在PCIE子系统一章详细介绍。

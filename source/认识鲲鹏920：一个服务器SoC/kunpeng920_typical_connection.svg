@@ -15,7 +15,7 @@
    version="1.1"
    id="svg8"
    inkscape:version="0.92.3 (2405546, 2018-03-11)"
-   sodipodi:docname="kunpeng920_1sccl_1sicl_connection.svg">
+   sodipodi:docname="kunpeng920_typical_connection.svg">
   <defs
      id="defs2">
     <marker
@@ -72,8 +72,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.4"
-     inkscape:cx="1050.3558"
-     inkscape:cy="373.59816"
+     inkscape:cx="861.0147"
+     inkscape:cy="277.46597"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -95,7 +95,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -672,5 +672,154 @@
          x="382.61868"
          y="156.51108"
          style="font-size:4.93888903px;stroke-width:0.26458332">IMU</tspan></text>
+    <rect
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.53694254;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-36-7-3"
+       width="36.434834"
+       height="13.513887"
+       x="30.753292"
+       y="93.433739" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 67.034712,100.37869 10.922169,-0.10874"
+       id="path889-5-6"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="32.891426"
+       y="102.70898"
+       id="text893-3-7"><tspan
+         sodipodi:role="line"
+         id="tspan891-5-5"
+         x="32.891426"
+         y="102.70898"
+         style="font-size:4.93888903px;stroke-width:0.26458332">L3 Cache Data</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="40.188705"
+       y="115.96922"
+       id="text893-3-6-3"><tspan
+         sodipodi:role="line"
+         id="tspan891-5-2-5"
+         x="40.188705"
+         y="115.96922"
+         style="font-size:4.93888903px;stroke-width:0.26458332">......</tspan></text>
+    <rect
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.53694254;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-36-7-3-6"
+       width="36.434834"
+       height="13.513887"
+       x="262.88431"
+       y="118.56915" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="265.02243"
+       y="127.84439"
+       id="text893-3-7-2"><tspan
+         sodipodi:role="line"
+         id="tspan891-5-5-9"
+         x="265.02243"
+         y="127.84439"
+         style="font-size:4.93888903px;stroke-width:0.26458332">L3 Cache Data</tspan></text>
+    <rect
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.26458332;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-5-7-1"
+       width="6.2366071"
+       height="4.2522321"
+       x="-254.5489"
+       y="123.57796"
+       transform="scale(-1,1)" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 254.12655,125.47209 h 8.68626"
+       id="path2608"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="277.2771"
+       y="137.91438"
+       id="text893-3-6-7-2"><tspan
+         sodipodi:role="line"
+         id="tspan891-5-2-3-7"
+         x="277.2771"
+         y="137.91438"
+         style="font-size:4.93888903px;stroke-width:0.26458332">......</tspan></text>
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.38999999;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-36-2-0-6"
+       width="19.005974"
+       height="13.66092"
+       x="156.88297"
+       y="49.703972" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="160.41754"
+       y="58.485771"
+       id="text893-7-9-0"><tspan
+         sodipodi:role="line"
+         id="tspan891-59-3-6"
+         x="160.41754"
+         y="58.485771"
+         style="font-size:4.93888903px;stroke-width:0.26458332">SLLC</tspan></text>
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.38999999;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-36-2-0-2"
+       width="19.005974"
+       height="13.66092"
+       x="153.67017"
+       y="83.154869" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="157.20474"
+       y="91.936661"
+       id="text893-7-9-6"><tspan
+         sodipodi:role="line"
+         id="tspan891-59-3-1"
+         x="157.20474"
+         y="91.936661"
+         style="font-size:4.93888903px;stroke-width:0.26458332">SLLC</tspan></text>
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.38999999;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-36-2-0-8"
+       width="19.005974"
+       height="13.66092"
+       x="321.11359"
+       y="57.641472" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="324.64816"
+       y="66.423271"
+       id="text893-7-9-7"><tspan
+         sodipodi:role="line"
+         id="tspan891-59-3-9"
+         x="324.64816"
+         y="66.423271"
+         style="font-size:4.93888903px;stroke-width:0.26458332">SLLC</tspan></text>
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.38999999;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-36-2-0-20"
+       width="19.005974"
+       height="13.66092"
+       x="323.57047"
+       y="106.4004" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="327.10504"
+       y="115.1822"
+       id="text893-7-9-2"><tspan
+         sodipodi:role="line"
+         id="tspan891-59-3-3"
+         x="327.10504"
+         y="115.1822"
+         style="font-size:4.93888903px;stroke-width:0.26458332">SLLC</tspan></text>
   </g>
 </svg>
