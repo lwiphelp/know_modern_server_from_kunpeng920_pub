@@ -1,0 +1,307 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>数据中心 &mdash; 从鲲鹏920了解现代服务器实现和应用 0.1a1 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="服务器的应用" href="服务器的应用.html" />
+    <link rel="prev" title="综述" href="综述.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> 从鲲鹏920了解现代服务器实现和应用
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../序.html">序</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../感谢.html">感谢</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">认识服务器</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="综述.html">综述</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">数据中心</a></li>
+<li class="toctree-l2"><a class="reference internal" href="服务器的应用.html">服务器的应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="服务器的外设生态.html">服务器的外设生态</a></li>
+<li class="toctree-l2"><a class="reference internal" href="服务器的软件生态.html">服务器的软件生态</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../认识鲲鹏920：一个服务器SoC/index.html">认识鲲鹏920：一个服务器SoC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../计算子系统/index.html">计算子系统</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../网络子系统/index.html">网络子系统</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../存储子系统/index.html">存储子系统</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../RAS设计/index.html">RAS设计</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../未来展望.html">未来展望</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">从鲲鹏920了解现代服务器实现和应用</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">认识服务器</a> &raquo;</li>
+        
+      <li>数据中心</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/认识服务器/数据中心.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1>数据中心<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p>数据中心是一种聚合大量服务器的手段，也是实现这种手段的相关建设和建筑。通过标准
+化的供电，温控，网络等各种基础设施的设计，它可以达到提高维护效率，降低研发、维
+护、使用成本等目的。</p>
+<p>下面是一个华为公司数据中心的一角：</p>
+<p>todo: 需要一张图。</p>
+<p>大型的数据中心可以占地XXX亩，todo：需要一个华为大型数据中心的数据。也可以小到
+做成一个集装箱，todo：需要一个华为集装箱式数据中心的介绍。</p>
+<p>服务器本身可以设计成不同的外形，比如塔式，刀片式，机柜式等等。在现代数据中心中
+，通常采用机柜式设计，这样在空间布置上有优势。在这样的布置中，所有服务器都是使
+用一样的宽度，很容易堆叠在一起。在高度上，这些服务器使用标准的尺寸进行打包：它
+总是约44.45mm的整倍数，这种高度称为1U，2U，3U等等。这样把服务器插到机架上，可
+以不留下空隙，替换也很容易。</p>
+<p>todo：可以考据一下刀片式是怎么被服务器放弃的。</p>
+<blockquote>
+<div><div class="line-block">
+<div class="line">关于1U概念的来源</div>
+<div class="line">1U是数据中心机柜一个单元（Unit）的含义，实际高度是todo</div>
+</div>
+</div></blockquote>
+<p>这种标准化的机柜设计反过来约束了服务器的物理设计方向，使这些设计必须满足这些机
+柜的尺寸要求。</p>
+<p>组网上，数据中心服务器通常先连接本机架的交换机（称为TOR交换机），然后在通过TOR
+交换机连接到数据中心的网络上。这些网络通常还会使用多平面结构，把业务，管理等多
+个功能的网络分开，以保证可靠性、安全性和通讯效率。</p>
+<blockquote>
+<div><div class="line-block">
+<div class="line">TOR交换机</div>
+<div class="line">Top Of Rack交换机。部署在机架顶部，用于提供机架内机柜互联和对外接口</div>
+<div class="line">的交换机。</div>
+</div>
+</div></blockquote>
+<p>数据中心的服务器通常需要被远程维护，所以单板上会集成独立的控制芯片，称为BMC
+（Board Management Controller）。BMC有自己的控制网络，通常在服务器加电的时候自动
+启动，用户可以通过Web或者远程软件一类的方法，通过网络访问BMC，对主系统进行开关机，
+安装操作系统，查看控制台，查看设备状态等等。BMC可以为服务器提供近似本地使用键盘
+鼠标和显示器一样的体验。</p>
+<blockquote>
+<div><div class="line-block">
+<div class="line">KVM</div>
+<div class="line">KVM是服务器专用术语，表示Keyboard，Video，和Mouse。</div>
+<div class="line">在服务器中通常通过一个代理设备远程模拟给管理客户端。</div>
+<div class="line">基于KVM的功能，用户在远程操作一个应用程序或者Web界面，</div>
+<div class="line">会被模拟成在这个服务器旁边直接键盘鼠标一样，</div>
+<div class="line">服务器的显示也会被输出到远程的管理客户端上。</div>
+<div class="line">KVM通常会被实现为BMC功能的一部分。</div>
+</div>
+</div></blockquote>
+<p>下面是一组基于鲲鹏920的泰山服务器的BMC控制界面：</p>
+<p>todo：需要一组图和解释：开关机，安装操作系统，KVM访问操作系统图形界面</p>
+<p>基于BMC，使用者可以远程访问任何一台服务器，和使用本地PC一样。但对于管理员来说
+，这仍然是不够的，比如，如果一台服务器的业务出了问题，需要把这个业务迁移到另一
+台服务器上，这个过程就会变得很复杂。所以现代数据中心常常使用IaaS架构，管理员先
+给所有服务器统一安装一个基本的操作系统，然后把业务部署在虚拟机里面。这样，所有
+的服务器的底层软件都是一样的，不一样的软件都在虚拟机中，如果硬件发生了故障，只
+要把整个虚拟机迁移到其他硬件上就可以了。</p>
+<blockquote>
+<div><div class="line-block">
+<div class="line">IaaS</div>
+<div class="line">Infrastructure as a Service。中文一般翻译为“基础设置即服务”。</div>
+<div class="line">他是基于虚拟化技术引入的概念。最初的时候，</div>
+<div class="line">数据中心通常提供的仅仅是“托管服务”。也就是说，</div>
+<div class="line">用户自己把服务器交给数据中心运营商，数据中心运营商为服务器提供场地，</div>
+<div class="line">供电，网络等等设施，而服务器是由用户自己管理的。</div>
+<div class="line">这种方法增加数据中心的管理多样性，从而也提高了管理成本，</div>
+<div class="line">之后技术发展到另一个方案：不但网络，供电，场地等，服务器本身，</div>
+<div class="line">也是数据中心提供的“服务”的一部分。运营商自己采购服务器，</div>
+<div class="line">统一安装自己的基础系统，</div>
+<div class="line">而提供给用户在这些基础系统上创建虚拟机的能力，</div>
+<div class="line">用户可以根据需要增加和删除不同配置的虚拟机，增加和减少资源占用，</div>
+<div class="line">这样一种技术，称为IaaS。</div>
+</div>
+</div></blockquote>
+<p>数据中心中的服务器根据用途的不同，分成不同的类型，一般会包括：</p>
+<ul class="simple">
+<li>业务服务器：用于运行完成业务的软件，比如Web Server，数据库，大数据分析等等。</li>
+<li>存储服务器：用于提供存储功能，通常这种服务器会包含大量的磁盘，对外提供比如
+SCSI，iSCSI，NFS，Samba等接口</li>
+<li>其他专用服务器：为了提供性能，部分数据中心会把部分专用的功能汇聚，比如进行AI
+训练的机器需要大量的GPU算力，进行加密的设备需要专用的加速器，这些专用服务器会
+被独立管理专门用于解决这类的问题。</li>
+</ul>
+<p>todo: 能否拿到华为某个不那么重要的数据中心不同类别的服务器的数量？</p>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="服务器的应用.html" class="btn btn-neutral float-right" title="服务器的应用" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="综述.html" class="btn btn-neutral float-left" title="综述" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Kenneth Lee
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

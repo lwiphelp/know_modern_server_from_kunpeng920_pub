@@ -1,0 +1,30 @@
+.. Copyright by Kenneth Lee. 2020. All Right Reserved.
+
+虚拟PCIE总线
+============
+todo：这里先说原理，具体的接口在PCIE一章里面介绍
+
+非SoC型的CPU通过PCIE总线把外部设备，特别是高速外部设备桥接到系统总线中，关于
+PCIE总线的介绍，我们在PCIE子系统一章详细介绍。
+
+为了可以连接这些外部设备，鲲鹏920也提供PCIE设备接口，但为了软件的通用性，鲲鹏的
+一般设备封装成PCIE总线。从软件的角度看来，这总线的结构如下：
+
+todo：这个地方需要再去确认一下，我们现在认为RC是属于物理PCIE总线的，我觉得这个理解是不对的，这幅图要斟酌一下再看怎么画。
+初步这样考虑：全局一个RC，每个Process一个Bridge，每个PCIE ICL一个Root Port，每个片上设备ICL也独占一个Root Port。
+
+支持特性：PCIE4：
+6.1. PME, 
+6.2. Error Signal and Logging
+6.3. VC (仅CCIX支持）
+6.4. Device Synchronization
+6.6. PCIE reset
+6.7. PCIE Hot Plug
+6.10. Root Complex Topology Discovery
+6.11. Link Speed Management
+6.12. ACS
+6.13. ARI
+6.15. Atomic Operations (inbound only)
+6.17 TPH
+6.20 PASID
+6.23 RN

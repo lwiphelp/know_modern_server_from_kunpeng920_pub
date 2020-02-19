@@ -1,0 +1,303 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>地址翻译和保护 &mdash; 从鲲鹏920了解现代服务器实现和应用 0.1a1 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="NUMA和内存访问效率" href="NUMA和内存访问效率.html" />
+    <link rel="prev" title="总线系统" href="总线系统.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> 从鲲鹏920了解现代服务器实现和应用
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../序.html">序</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../感谢.html">感谢</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../认识服务器/index.html">认识服务器</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">认识鲲鹏920：一个服务器SoC</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="综述.html">综述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="总线系统.html">总线系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="总线系统.html#cache-coherency">Cache Coherency</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">地址翻译和保护</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">介绍</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">地址空间和页式地址翻译</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#iommu">IOMMU</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id4">IOMMU页表描述结构</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#iommuno-strict">IOMMU的No-Strict模式问题</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="NUMA和内存访问效率.html">NUMA和内存访问效率</a></li>
+<li class="toctree-l2"><a class="reference internal" href="GIC和总线的关系.html">GIC和总线的关系</a></li>
+<li class="toctree-l2"><a class="reference internal" href="虚拟PCIE总线.html">虚拟PCIE总线</a></li>
+<li class="toctree-l2"><a class="reference internal" href="软件构架设计.html">软件架构设计</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../计算子系统/index.html">计算子系统</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../网络子系统/index.html">网络子系统</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../存储子系统/index.html">存储子系统</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../RAS设计/index.html">RAS设计</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../未来展望.html">未来展望</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">从鲲鹏920了解现代服务器实现和应用</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">认识鲲鹏920：一个服务器SoC</a> &raquo;</li>
+        
+      <li>地址翻译和保护</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/认识鲲鹏920：一个服务器SoC/地址翻译和保护.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1>地址翻译和保护<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id2">
+<h2>介绍<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>现代服务器几乎都提供虚拟地址服务。这出于如下考虑：</p>
+<ul class="simple">
+<li>安全的需要。现代服务器需要给不同的角色赋予不同的权限，就需要给不同的软件实体
+赋予不同的权限，那么控制不同的地址空间对不同的角色不同的访问权限，就成为基本
+的要求了。</li>
+<li>虚拟分层的需要。在例如虚拟机这样的层次，系统软件需要为被虚拟的软件模拟一个“看
+似”真实的地址空间，这也需要对目标地址进行转换。</li>
+<li>地址空间扩展的需要。部分低端的设备，地址总线的长度不如系统总线，无法访问系统
+总线上的部分设备，地址翻译服务器可以扩展这个地址，让这些设备的地址范围可以提
+升。</li>
+</ul>
+<p>鲲鹏通过MMU和IOMMU单元提供地址翻译服务。其结构示意如下：</p>
+<div class="figure" id="id5">
+<img alt="Kungpeng MMU &amp; SMMU" src="../_images/kunpeng_mmu_smmu.svg" /><p class="caption"><span class="caption-text">鲲鹏MMU和IOMMU服务</span></p>
+</div>
+<p>鲲鹏的主CPU由于使用ARM标准，所以完全遵循ARMv8构架标准，而IOMMU遵循ARM SMMU标准。
+但无论使用的是哪个标准，其原理基本上是不变的。两者都采用（相同格式）的页表格式
+描述虚拟地址到物理地址的转换关系，以及对应地址段的关系。</p>
+</div>
+<div class="section" id="id3">
+<h2>地址空间和页式地址翻译<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>todo: 页式管理的本质介绍：本质是一个地址翻译算法，而用页进行管理页表本身占用的空间太大</p>
+<blockquote>
+<div><div class="line-block">
+<div class="line">虚拟地址、物理地址、中间地址</div>
+<div class="line">todo</div>
+</div>
+</div></blockquote>
+<p>todo：两级页表的概念, 说明现在两级页表的弊病：虚拟机和Hypervisor是两个软件，这个
+设置不应该是两者一同修改的。</p>
+<p>todo：TLB的考量，介绍TLB软件填充模式和自动填充模式，介绍最坏情况下两次填充的效率问题</p>
+<p>todo：ASID概念的介绍</p>
+<p>IOMMU和MMU的基本原理本质没有什么不同，但两者在页表的使用上有明显的差别。CPU通过
+MMU管理多套页表，通常可以封装为进程。当CPU决定把一个进程调度到本CPU上运行的时候，
+CPU把这个进程可以访问的所有虚拟地址和物理地址对应关系设置在这个页表上，这样就控
+制了当前进程可以访问的实际地址的范围。</p>
+<p>todo: 地址空间示意图</p>
+<p>Linux使用共享内核空间的结构，所有进程共享同一个内核空间，所以所有进程的内核空间
+都是重叠的，这样，无论CPU当前在哪个进程，只要提升它的CPU权限，就都可以访问内核的
+服务。这里的细节我们在讨论计算子系统的时候再详细讨论。</p>
+<p>todo：Linux地址空间示意图</p>
+</div>
+<div class="section" id="iommu">
+<h2>IOMMU<a class="headerlink" href="#iommu" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id4">
+<h3>IOMMU页表描述结构<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<p>和MMU这种每个CPU用一个唯一的页表的策略不同，IOMMU每个设备支持多个页表。这首先是
+为了解决虚拟机的问题，如果一个设备被虚拟化成了多个虚拟设备。每个虚拟机需要对设
+备施加多个独立的请求，这些请求的地址可能是重合的，这客观上要求多个独立的页表才能
+实现。</p>
+<p>鲲鹏在设计上对于IOMMU给予了更多的期望，鲲鹏设想IOMMU机制可以让设备和进程拥有相同
+的地址空间，从而把让设备的功能可以按进程进行管理。这个设计原理，我们也在介绍计算
+子系统的时候一起讨论。</p>
+<p>为了支持多页表，鲲鹏的IOMMU采用了SMMU标准的两层的页表描述机制。这种机制下，每个
+IOMMU首先包含一张页表描述表，每个表表项称为Descriptor，可以再描述一张单独的页表
+。并且和内核或者一个ASID对应。当设备发出地址请求的时候，它同时给出它的ASID（或者
+说明它是内核请求），</p>
+<p>todo：IOMMU页表空间示意图</p>
+</div>
+<div class="section" id="iommuno-strict">
+<h3>IOMMU的No-Strict模式问题<a class="headerlink" href="#iommuno-strict" title="永久链接至标题">¶</a></h3>
+<p>todo：解释IOMMU map/unmap的成本和No-Strict模式问题</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="NUMA和内存访问效率.html" class="btn btn-neutral float-right" title="NUMA和内存访问效率" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="总线系统.html" class="btn btn-neutral float-left" title="总线系统" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Kenneth Lee
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

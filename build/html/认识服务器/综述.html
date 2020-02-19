@@ -1,0 +1,265 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>综述 &mdash; 从鲲鹏920了解现代服务器实现和应用 0.1a1 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="数据中心" href="数据中心.html" />
+    <link rel="prev" title="认识服务器" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> 从鲲鹏920了解现代服务器实现和应用
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../序.html">序</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../感谢.html">感谢</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">认识服务器</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">综述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="数据中心.html">数据中心</a></li>
+<li class="toctree-l2"><a class="reference internal" href="服务器的应用.html">服务器的应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="服务器的外设生态.html">服务器的外设生态</a></li>
+<li class="toctree-l2"><a class="reference internal" href="服务器的软件生态.html">服务器的软件生态</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../认识鲲鹏920：一个服务器SoC/index.html">认识鲲鹏920：一个服务器SoC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../计算子系统/index.html">计算子系统</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../网络子系统/index.html">网络子系统</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../存储子系统/index.html">存储子系统</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../RAS设计/index.html">RAS设计</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../未来展望.html">未来展望</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">从鲲鹏920了解现代服务器实现和应用</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">认识服务器</a> &raquo;</li>
+        
+      <li>综述</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/认识服务器/综述.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1>综述<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p>服务器是一种特殊类型的计算机。这是一个很宽泛的定义。一般来说，我们会认为服务器
+主要用于提供公共服务，而不是面向某个特定的个人（比如个人电脑），或者面向特定的
+应用（比如机床控制设备）的通用计算机。</p>
+<p>在现实中，服务器通常具有相比个人电脑更强大的性能，更可靠的服务能力，当然，更高
+的价格和能耗。比如下面是华为公司的一款个人电脑产品：</p>
+<ul class="simple">
+<li>todo: Huawei MateBook X Pro 2019: 4C 1.8G-4.9G 8G/16G的内存(无ECC），
+65W电源适配器
+顶配报价13999
+wifi网络连接
+需要图</li>
+</ul>
+<p>而下面的是服务器产品：</p>
+<ul class="simple">
+<li>todo: Fusion Server Pro 1288H v5  双CPU，内存最大1536GB，支持ECC，
+可选配RAID卡（磁盘可靠性）
+单CPU版本16G内存报价：20388，电源550W，双电源，
+CPU全系列至强可选，（todo：需要找一个典型配置）
+10G网口
+需要图</li>
+</ul>
+<p>这两个产品如果仅从功能和可以运行的软件来说，其实有很多相似之处，甚至可以运行完
+全一样的软件，但我们可以看到后者包含更多的CPU和CPU核，更多的内存，更高带宽的网
+络，还有更多的可靠性保障手段，比如ECC，RAID和双电源等。</p>
+<blockquote>
+<div><div class="line-block">
+<div class="line">ECC</div>
+<div class="line">Error Correcting Code。一类通过增加冗余位对数据进行校验的技术。</div>
+</div>
+<div class="line-block">
+<div class="line">RAID</div>
+<div class="line">Redundant Arrays of Independent Disks。一种通过把多个磁盘聚合使用，</div>
+<div class="line">实现部分磁盘损坏也不会影响全部数据的一种技术。</div>
+</div>
+</div></blockquote>
+<p>服务器可以被独立部署，但到了近代，它更多时候会被组织成数据中心。提供统一的场地
+，把大批的服务器组织在一起，这为统一管理，提高效率提供了很大的便利。今天，很多
+小型的企业不再购买自己的服务器硬件，建立自己的服务器机房，而是租用云服务提供商
+的硬件，这进一步为服务器的数据中心化提供了动力。标准化的高聚合，高性能低功耗服
+务器成为服务器设计的一个重要趋势。</p>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="数据中心.html" class="btn btn-neutral float-right" title="数据中心" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="认识服务器" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Kenneth Lee
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

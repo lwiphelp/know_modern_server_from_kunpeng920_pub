@@ -1,0 +1,398 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>软件架构设计 &mdash; 从鲲鹏920了解现代服务器实现和应用 0.1a1 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="计算子系统" href="../计算子系统/index.html" />
+    <link rel="prev" title="虚拟PCIE总线" href="虚拟PCIE总线.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> 从鲲鹏920了解现代服务器实现和应用
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../序.html">序</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../感谢.html">感谢</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../认识服务器/index.html">认识服务器</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">认识鲲鹏920：一个服务器SoC</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="综述.html">综述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="总线系统.html">总线系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="总线系统.html#cache-coherency">Cache Coherency</a></li>
+<li class="toctree-l2"><a class="reference internal" href="地址翻译和保护.html">地址翻译和保护</a></li>
+<li class="toctree-l2"><a class="reference internal" href="NUMA和内存访问效率.html">NUMA和内存访问效率</a></li>
+<li class="toctree-l2"><a class="reference internal" href="GIC和总线的关系.html">GIC和总线的关系</a></li>
+<li class="toctree-l2"><a class="reference internal" href="虚拟PCIE总线.html">虚拟PCIE总线</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">软件架构设计</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">综述</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">编译器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#linux-kernel">Linux Kernel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#glibc">glibc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">架构分支和战地分支</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../计算子系统/index.html">计算子系统</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../网络子系统/index.html">网络子系统</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../存储子系统/index.html">存储子系统</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../RAS设计/index.html">RAS设计</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../未来展望.html">未来展望</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">从鲲鹏920了解现代服务器实现和应用</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">认识鲲鹏920：一个服务器SoC</a> &raquo;</li>
+        
+      <li>软件架构设计</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/认识鲲鹏920：一个服务器SoC/软件构架设计.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1>软件架构设计<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id2">
+<h2>综述<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>正如我们在上一章服务器介绍中提到的，服务器软件生态最大的问题在于其复杂性。鲲鹏
+SoC采用全兼容，全主线的软件支持策略。也就是说，如果某种接口已经有标准了，鲲鹏
+在可能的情况下完全兼容已有的标准，如果某种接口没有标准，或者必须为了更好的功能
+或者特性需要对接口做出改变，那么相关的软件设计都直接合入对应软件分支的主线。</p>
+<blockquote>
+<div><div class="line-block">
+<div class="line">主线</div>
+<div class="line">主线对某种类型分支的不总是严格的叫法。</div>
+<div class="line">开源开发模式让分支的数量事实上增加了很多，</div>
+<div class="line">但很多分支并没有足够的工程师支持其发展，</div>
+<div class="line">所以很多分支采用跟随其他分支的发展方式，</div>
+<div class="line">这种跟随可以是本分支增加的功能和上游分支关系不密切，</div>
+<div class="line">然后用接近git fast-forward这样的方式快速合并上游的修改。</div>
+<div class="line">也可以使用破坏式的方式使用上游分支，但只维护有限的时间，</div>
+<div class="line">新的版本基于上游分支重新开发，原来的版本退出生命周期后不再维护。</div>
+<div class="line">这样，所有这些分支共同形成一个近似的树状结构。这个树状结构的根，</div>
+<div class="line">就成为“主线”，它代表了这个软件的所有分支的“根”。</div>
+<div class="line">合入主线的特性被认为具有最长的生命周期。</div>
+<div class="line">当然，这是个不清晰的描述，但主流的软件，</div>
+<div class="line">事实上就是几乎都可以找到一个“主线”。</div>
+</div>
+</div></blockquote>
+<p>所以，鲲鹏920的主CPU选择的是生态成熟的ARMv8全指令集，设备接口选择被广泛使用的
+PCIE接口，Boot Loader和OS之间的接口选择服务器领域广发使用的ACPI接口，其他的网络
+，存储等接口，都是业界广泛使用的接口，以便完全融入到已有的软件生态中。这个生态
+不仅包括GNU/Linux生态，也包括其他生态，但为了授权的方便，本书聚焦到介绍
+GNU/Linux的情形，对应的考量，也可以适用于其他软件生态。</p>
+<p>所以，并没有一个特殊的，专门用于鲲鹏的Linux Kernel，专门用于鲲鹏的gcc，专门用于
+鲲鹏的glibc，等等。鲲鹏920被这些软件的主线版本所支持，从而派生的各种GNU/Linux发
+行版都可以被相应支持。本书会用主线软件的设计来介绍相关软件解决方案是如何解决具
+体的问题的，这些思路同样可以被用于理解各大发行版的每个具体情形。</p>
+<p>我们从三个典型软件观察一下鲲鹏的软件是如何和主线软件互相作用的。</p>
+</div>
+<div class="section" id="id3">
+<h2>编译器<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>首先看编译器，鲲鹏主要是在gcc中重新定义了一种新的ARM核的流水线，在gcc源代码的
+如下位置：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">gcc</span><span class="o">/</span><span class="n">config</span><span class="o">/</span><span class="n">aarch64</span><span class="o">/</span><span class="n">tsv110</span><span class="o">.</span><span class="n">md</span>
+</pre></div>
+</div>
+<p>这里的tsv110是泰山V110的缩写（泰山是鲲鹏920的CPU核的名字），里面的定义主要每个
+计算需要的时间，这个东西帮助gcc的后端程序决定指令的排列顺序，从而让生成的二进制
+指令序列更好发挥泰山核的处理能力。</p>
+<p>其实没有这个补丁，编译一个通用ARM64的二进制程序也是可以在鲲鹏上运行的，只是性能
+没有那么高而已。这个观察给我们一个很好的例子，让我们看到开源和标准是怎么发挥作
+用的。如果鲲鹏要使用gcc，就必须遵守gcc代码设计的标准，只能根据gcc定义的流水线的
+标准和允许的参数决定如何排流水线。如果鲲鹏不想遵循这个原则，鲲鹏的工程使用可以
+开发自己的分支，但这个分支建立了另一套规则，这套规则无法和gcc的其他优化器共同作
+用，这个鲲鹏分支就会失去那些优化器所在的生态。</p>
+<p>开源给了一个很好的平衡机会，如果这种分离的分支能找到足够的市场和利益，它就可以活
+下去，形成另一个生态，如果它找不到，就会自然消亡。这个过程中，主线和这种新分支仍
+可以互相学习对方的长处。但任何一种学习，都是对本身发展的一个约束。那个分支能够收
+入最多的有效逻辑，谁就能成为主线，并一直发展下去。无法持续的分支会因为无法满足自
+己的生态需要，无法为加入这个生态圈用户提供利益，自然消失，错误依附的客户也会因为
+错误的投资依赖而收到打击。所以，开源的动力是最接近软件的技术本质，而不是人的意志，
+的，开源的动力不是某种理想，而是某种先进的生产力。</p>
+<p>所以，软件对硬件的使能并非简单让软件使用硬件的接口。对于做硬件的人来说，使能软
+件更重要的是对软件的规则的改变，让硬件的能力充分发挥出来。硬件的软件团队参与标
+准制定，参与主线的开发，目的都在这里。</p>
+<p>如果跟踪开发人员的上传记录，我们还会发现鲲鹏的工程师还在libgcc中合入了一些cache
+处理的逻辑，这些大部分都是在“改变”规则，修改gcc生成的代码的工作模式，从而提高最
+终的程序的运行效率。这仍是前面说到的改变规则的延续。这一点也对硬件设计提出了很高
+的要求。因为改变这种规则的成本很高，如果硬件的未来改进不能充分利用这种规则，这些
+努力都是浪费的。</p>
+<p>todo：能否公开介绍鲲鹏专用的gcc版本和它的设计？</p>
+</div>
+<div class="section" id="linux-kernel">
+<h2>Linux Kernel<a class="headerlink" href="#linux-kernel" title="永久链接至标题">¶</a></h2>
+<p>鲲鹏920使用ACPI接口标准化描述硬件和软件的接口，又兼容ARM64标准，所以内核中几乎
+没有专门用于启动它的代码。鲲鹏系列芯片的软件在设计之初就和其他厂商进行过协同设计
+所以基本上是二进制兼容的，现在的主流服务器发行版，只有ARM64的二进制版本，并不会
+存在独立的专门用于鲲鹏的二进制版本。</p>
+<p>鲲鹏的片内设备按其他外界设备一样管理，都通过ACPI或者PCIE总线的自动发现机制自动
+发现，然后匹配到对应驱动上。</p>
+<blockquote>
+<div><div class="line-block">
+<div class="line">ACPI</div>
+<div class="line">todo</div>
+</div>
+</div></blockquote>
+<p>鲲鹏920用到的片内驱动包括：</p>
+<ul class="simple">
+<li>drivers/perf/hisilicon/* PMU的驱动，鲲鹏提供了ARM标准的性能计数器，也提供了自
+己调优的性能计数器，这里提供了它的使能</li>
+<li>drivers/crypto/hisilicon/* 鲲鹏的硬件加速器驱动</li>
+<li>drivers/net/ethernet/hns3/* 鲲鹏100G网卡驱动</li>
+<li>drivers/infiniband/hw/hns 鲲鹏网卡RoCE功能驱动</li>
+<li>drivers/scsi/hisi_sas/* 鲲鹏的SAS存储驱动</li>
+</ul>
+<p>其他驱动大部分都是标准驱动，虽然在芯片开发的过程中会进行调试，也会提交一两个fix，
+对主线功能进行调整，但并不需要额外的支持。比如USB整体不需要额外的支持，PCIE需要
+增加一点点代码，但也不需要提供整个的驱动。</p>
+<p>其他部分还包含其他改变规则，修正Bug的修改，读者可以通过git log –author查找来自
+hisilicon或者huawei的修改（还有部分来自Linaro的修改），可以找到这些修改，他们会
+涉及比如中断子系统，Cache管理，SMMU，ACPI等。</p>
+</div>
+<div class="section" id="glibc">
+<h2>glibc<a class="headerlink" href="#glibc" title="永久链接至标题">¶</a></h2>
+<p>todo</p>
+</div>
+<div class="section" id="id4">
+<h2>架构分支和战地分支<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<p>在鲲鹏的软件构架设计中，我们常常使用架构分支和战地分支这两个概念。本小节我们深
+入探讨一下这两个概念和它背后的软件工程理念。</p>
+<p>正如我们在前文介绍开源开发模式的时候提到的，一个软件的源代码树，可以被拷贝成多
+个分支。对于同一个软件的维护者来说，这常常不是一件好事，因为这就意味着，如果他
+发现了一个Bug，他就需要在每个分支上都修复一次这个Bug，才能把这个Bug修复掉。</p>
+<p>但把所有客户都归结在一个版本上，其实也是有它的缺点的。首先，这并不能完全降低测试
+的工作量。比如你有一个软件A，用于三个平台P、Q、R。你在A上修改了一个Bug，你不能仅
+仅在P上测试了，就认为这个修改就是可以的，你还是需要在Q和R上都测试了，才能认为这个
+平台是可以的。</p>
+<p>但这样做会影响工程效率，因为可能这个Bug只在P上发生或者用到，P平台的市场域等着尽
+快修复这个Bug，却不得不等待Q、R两个平台都测试完。</p>
+<p>这个问题推广开去，还会有更多的问题。比如A是否需要进行构架调整？调整的过程中，A
+是否还需要在商业环境中使用？如果要使用，A怎么进行架构调整？</p>
+<p>还有，某个P平台的分支版本用于特定的市场竞争的时候，如果考虑Q、R的具体情形，就要
+多做很多判断，要选择对三者都均衡的算法，那么效率不高的问题如何解决？</p>
+<p>所有这些问题，都催生了分支的需求。我们在前面讨论树莓派生态的时候，就发现它并不
+直接支持主线Linux，而是创建了一个新的分支，专门支持树莓派，就是这样的需求催生的
+产物。</p>
+<p>Linux Kernel的创造者Linus Tovards创造的另一个软件，git，大大强化了分支的发展能
+力。git把每次修改作为一个独立的对象进行管理，Linus还在Linux Kernel的代码管理中
+强化了这种工程实践：他要求开发者提供的每个修改都必须是自恰的。也就是说，每个独
+立的修改必须是最小不可细分的，独立合入后可以编译的，完成独立特性的。这种方式管
+理之下的多个分支，即使有一定程度的分离，他们之上的不同修改也是可以成批转移到同
+一个分支之上的。当然，如果这些修改最终冲突了，仍需要人工干预，但它仍让这种多个
+独立管理的分支可以互相合并成为一种可行的，广泛使用的工程实践。现在这种工程方法
+已经成为一种通用实践，被用于很多的软件开发行为中。</p>
+<p>这样，每个软件都有多个开发分支，这些分支的发展好像生物群一样：它们有共同的基因，
+不同的形态，有时几乎一样，有时差距很大。这完全看这个分支的应用和发展。这些分支
+通常有两种类型，一种是某个软件已经发展成熟了，分离出来主要是为了某个应用场合。
+这种分支通常不再发展了，在这种分支上的修改基本上都是为了修复Bug，这种分支，我们
+称为“战地分支”，这种分支存在的目的就是为了使用。常常不同的市场域还会有不同的战地
+分支。我们经常会看到有些发行版的用户虽然使用某个发行版，但会重新修改这个发行版的
+内核和特定的程序，这些也会构成新的战地分支。</p>
+<p>另一个类型的分支，它存在的目的就不是为了使用，而是为了开发一个新特性，这种分支我
+们称为“开发分支”，但开发分支不发生交付，和不和任何人发生交往，我们通常在工程上不
+怎么需要特别考虑这种分支。</p>
+<p>还有一种分支，它负责收集各个分支，包括开发分支开发的特性，战地分支修复的Bug等等
+，它面对的主要问题是权衡，把各个分支的最优实践收集起来，并解决这些独立没有冲突
+，但收集到一起就会产生逻辑冲突的修改的共存问题。这种分支存在的目的就是为了这个
+软件整个族群的发展，它是这个软件族群发展基因的携带者，是族群发展下去的希望。这
+种分支，通常并没有最好的性能，没有最强的功能，但它是生命力最强的分支。这种分支
+，我们就称为“构架分支”。</p>
+<p>架构分支和战地分支构成了一个软件工程维护的主要逻辑。我们维护一个软件，通常把重
+点放在架构分支上，让这个分支具有最长的，愿望上无限的生命周期，但这个分支的质量
+、性能都不见得是最好的。当这个分支需要在某个市场域中实用的时候，我们会收紧它的
+性能要求，代码合入要求，还会进行为性能而破坏架构结构的设计，让它在竞争上达到最
+优，成为一个战地分支。每个战地分支都会有针对这个市场域的一个生命周期。生命周期
+结束了，这个分支就会停止维护，而新的市场机会会由更新的架构分支分支出来的新战地
+分支进行支持。</p>
+<p>多分支的设计在发展和实用之间，不同目标人群之间，不同市场域之间做出的权衡，让“适
+者生存”成为软件发展的动力。</p>
+<p>它常常不被组织和意欲所隔断，有些传统组织把一个分支收回自己的组织内部独自发展，
+认为只要不断吸收其他分支的优势，就可以构造自己的独立生态。但如果它没有足够大的
+参与和使用群体，外部的分支发展速度比它快，外部加入逻辑就可以把那个组织内部加入
+的逻辑全部排除在发展之外。有人希望通过“隔离”设计解决这个问题，让自己的特性和外
+部的特性相对隔离，但这种隔离本身同样限制了它的私有分支的竞争力，最终内部分支还
+是会走向生命周期的终点。所以，发展一个能生存的独立分支，控制要素始终是市场规模
+和技术竞争力，封闭不是保护它的方法。</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../计算子系统/index.html" class="btn btn-neutral float-right" title="计算子系统" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="虚拟PCIE总线.html" class="btn btn-neutral float-left" title="虚拟PCIE总线" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Kenneth Lee
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

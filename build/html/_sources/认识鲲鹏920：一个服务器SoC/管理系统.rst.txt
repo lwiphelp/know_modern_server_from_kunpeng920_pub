@@ -1,0 +1,24 @@
+.. Copyright by Kenneth Lee. 2020. All Right Reserved.
+
+管理系统
+========
+
+BMC通过IPMB总线连接IMU子系统，todo...
+
+.. IMU是一个A53的核，有自己的总线系统连到它要控制的物理实体上，这包括通过I2C链
+   接IPMB，RTC，包括WatchDog，UART，Syscnt，GPIO，Timer0/1，SCMI0/1，BootRom，
+   SPIFlash，GICv3，Secure Boot Engine。它可以访问主存，但它有自己的内存。每个
+   SICL上都有一个IMU，但多片的时候，只有一个起作用。
+
+        | MCTP
+        | Management Componet Transport Protocol
+        | MCTP是一种跨总线类型的管理协议，可以被PCIe，I2C等总线协议承载。
+
+        | IPMB
+        | Intelligent Platform Management Bus
+        | 一个基于I2C的管理总线，上面实施一组管理协议，称为IPMI，Intelligent
+        | Platform Management Interface
+
+        | SCMI
+        | System Control & Management Interface
+        | todo: ...

@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="175.25198mm"
+   height="114.30279mm"
+   viewBox="0 0 175.25198 114.30279"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   sodipodi:docname="kunpeng_mmu_smmu.svg">
+  <defs
+     id="defs2">
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Lend"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path923"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow2Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow2Lend"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path941"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Lend-2"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         inkscape:connector-curvature="0"
+         id="path923-7"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)" />
+    </marker>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="2.8"
+     inkscape:cx="227.5696"
+     inkscape:cy="166.96567"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="3830"
+     inkscape:window-height="2062"
+     inkscape:window-x="0"
+     inkscape:window-y="42"
+     inkscape:window-maximized="0"
+     fit-margin-top="2"
+     fit-margin-left="2"
+     fit-margin-bottom="2"
+     fit-margin-right="2" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-20.045849,-25.181804)">
+    <path
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.99999994;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       d="m 387.67773,103.23438 a 83.749998,79.464284 0 0 0 -83.74023,79.28515 h -0.01 v 0.17969 244.72461 a 83.749998,79.464284 0 0 0 -0.53515,8.66797 83.749998,79.464284 0 0 0 83.75,79.46289 83.749998,79.464284 0 0 0 83.52344,-75.17774 h 0.76171 v -257.67773 -0.17969 h -0.006 a 83.749998,79.464284 0 0 0 -83.74415,-79.28515 z"
+       transform="scale(0.26458333)"
+       id="path834"
+       inkscape:connector-curvature="0" />
+    <path
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.26458332;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       d="m 100.55469,29.414062 c -11.860568,0.666609 -20.122927,12.598005 -18.142581,24.00586 0.222723,21.891952 -0.414834,43.873259 0.257813,65.712888 3.022077,16.32657 26.977598,20.60748 36.167368,7.22026 6.93213,-10.58825 2.73247,-23.9092 3.89318,-35.837445 -0.43866,-15.628631 0.88571,-31.425043 -0.67444,-46.949355 -2.40642,-9.262199 -12.19019,-15.158355 -21.50134,-14.152208 z"
+       id="path834-6"
+       inkscape:connector-curvature="0" />
+    <rect
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.26458332;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873"
+       width="6.2366071"
+       height="4.2522321"
+       x="78.146576"
+       y="47.724701" />
+    <rect
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.26458332;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-7"
+       width="6.2366071"
+       height="4.2522321"
+       x="77.863098"
+       y="70.734001" />
+    <rect
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.26458332;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-5"
+       width="6.2366071"
+       height="4.2522321"
+       x="78.146584"
+       y="97.948288" />
+    <rect
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.26458332;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-3"
+       width="6.2366071"
+       height="4.2522321"
+       x="98.935265"
+       y="133.10007" />
+    <rect
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.26458332;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-56"
+       width="6.2366071"
+       height="4.2522321"
+       x="120.29092"
+       y="77.537575" />
+    <rect
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.26458332;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-2"
+       width="6.2366071"
+       height="4.2522321"
+       x="120.76339"
+       y="55.33147" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="118.8735"
+       y="31.566221"
+       id="text916"><tspan
+         sodipodi:role="line"
+         id="tspan914"
+         x="118.8735"
+         y="31.566221"
+         style="font-size:4.93888903px;stroke-width:0.26458332">总线</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="25.945843"
+       y="52.918648"
+       id="text916-9"><tspan
+         sodipodi:role="line"
+         id="tspan914-1"
+         x="25.945843"
+         y="52.918648"
+         style="font-size:4.93888903px;stroke-width:0.26458332">CPU</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="39.354446"
+       y="96.844383"
+       id="text916-9-9"><tspan
+         sodipodi:role="line"
+         id="tspan914-1-3"
+         x="39.354446"
+         y="96.844383"
+         style="font-size:4.93888903px;stroke-width:0.26458332">......</tspan></text>
+    <rect
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.26499999;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect859"
+       width="17.859375"
+       height="12.567708"
+       x="22.442829"
+       y="44.140099" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="52.262432"
+       y="53.06039"
+       id="text916-9-3"
+       inkscape:transform-center-x="-41.010417"
+       inkscape:transform-center-y="-19.465774"><tspan
+         sodipodi:role="line"
+         id="tspan914-1-6"
+         x="52.262432"
+         y="53.06039"
+         style="font-size:4.93888903px;stroke-width:0.26458332">MMU</tspan></text>
+    <rect
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.26499999;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect859-7"
+       width="17.859375"
+       height="12.567708"
+       x="48.097961"
+       y="44.187344" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.66500002;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 40.302205,50.471199 h 8.126488"
+       id="path882"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.81445539;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 65.910092,50.471199 H 78.099824"
+       id="path882-5"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="25.681362"
+       y="75.242867"
+       id="text916-9-35"><tspan
+         sodipodi:role="line"
+         id="tspan914-1-62"
+         x="25.681362"
+         y="75.242867"
+         style="font-size:4.93888903px;stroke-width:0.26458332">CPU</tspan></text>
+    <rect
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.26499999;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect859-9"
+       width="17.859375"
+       height="12.567708"
+       x="22.178349"
+       y="66.464317" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="51.997952"
+       y="75.384613"
+       id="text916-9-3-1"
+       inkscape:transform-center-x="-41.010417"
+       inkscape:transform-center-y="-19.465774"><tspan
+         sodipodi:role="line"
+         id="tspan914-1-6-2"
+         x="51.997952"
+         y="75.384613"
+         style="font-size:4.93888903px;stroke-width:0.26458332">MMU</tspan></text>
+    <rect
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.26499999;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect859-7-7"
+       width="17.859375"
+       height="12.567708"
+       x="47.833481"
+       y="66.511566" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.66500002;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 40.037726,72.795417 h 8.126488"
+       id="path882-0"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.81445539;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 65.645614,72.795417 H 77.835347"
+       id="path882-5-9"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="148.14565"
+       y="58.895401"
+       id="text916-9-36"><tspan
+         sodipodi:role="line"
+         id="tspan914-1-0"
+         x="148.14565"
+         y="58.895401"
+         style="font-size:4.93888903px;stroke-width:0.26458332">IOMMU</tspan></text>
+    <rect
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.29121652;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect859-6"
+       width="21.612921"
+       height="12.541492"
+       x="145.69518"
+       y="50.602428" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="179.47041"
+       y="59.415115"
+       id="text916-9-3-2"
+       inkscape:transform-center-x="-41.010417"
+       inkscape:transform-center-y="-19.465774"><tspan
+         sodipodi:role="line"
+         id="tspan914-1-6-6"
+         x="179.47041"
+         y="59.415115"
+         style="font-size:4.93888903px;stroke-width:0.26458332">设备</tspan></text>
+    <rect
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.26499999;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect859-7-1"
+       width="17.859375"
+       height="12.567708"
+       x="175.30595"
+       y="50.542068" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.66500002;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 167.5102,56.825923 h 8.12648"
+       id="path882-8"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.81445539;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 126.78326,57.392888 19.18229,-0.09449"
+       id="path882-5-7"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="157.23816"
+       y="99.511642"
+       id="text916-9-9-2"><tspan
+         sodipodi:role="line"
+         id="tspan914-1-3-2"
+         x="157.23816"
+         y="99.511642"
+         style="font-size:4.93888903px;stroke-width:0.26458332">......</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="148.03777"
+       y="81.148743"
+       id="text916-9-36-8"><tspan
+         sodipodi:role="line"
+         id="tspan914-1-0-9"
+         x="148.03777"
+         y="81.148743"
+         style="font-size:4.93888903px;stroke-width:0.26458332">IOMMU</tspan></text>
+    <rect
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.29121652;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect859-6-7"
+       width="21.612921"
+       height="12.541492"
+       x="145.5873"
+       y="72.855774" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="179.36253"
+       y="81.668457"
+       id="text916-9-3-2-3"
+       inkscape:transform-center-x="-41.010417"
+       inkscape:transform-center-y="-19.465774"><tspan
+         sodipodi:role="line"
+         id="tspan914-1-6-6-6"
+         x="179.36253"
+         y="81.668457"
+         style="font-size:4.93888903px;stroke-width:0.26458332">设备</tspan></text>
+    <rect
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.26499999;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect859-7-1-1"
+       width="17.859375"
+       height="12.567708"
+       x="175.19807"
+       y="72.79541" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.66500002;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 167.40233,79.079269 h 8.12648"
+       id="path882-8-2"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.81445539;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 126.67539,79.646234 19.18229,-0.09449"
+       id="path882-5-7-9"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="139.82378"
+       y="114.57602"
+       id="text916-9-36-8-6"><tspan
+         sodipodi:role="line"
+         id="tspan914-1-0-9-7"
+         x="139.82378"
+         y="114.57602"
+         style="font-size:4.93888903px;stroke-width:0.26458332">内存控制器</tspan></text>
+    <rect
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.33954358;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect859-6-7-5"
+       width="28.840635"
+       height="12.776648"
+       x="137.114"
+       y="106.11821" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="178.42921"
+       y="115.33196"
+       id="text916-9-3-2-3-3"
+       inkscape:transform-center-x="-41.010417"
+       inkscape:transform-center-y="-19.465774"><tspan
+         sodipodi:role="line"
+         id="tspan914-1-6-6-6-5"
+         x="178.42921"
+         y="115.33196"
+         style="font-size:4.93888903px;stroke-width:0.26458332">内存</tspan></text>
+    <rect
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.26499999;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect859-7-1-1-6"
+       width="17.859375"
+       height="12.567708"
+       x="174.26476"
+       y="106.45892" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="159.28238"
+       y="130.78917"
+       id="text916-9-9-2-1"><tspan
+         sodipodi:role="line"
+         id="tspan914-1-3-2-2"
+         x="159.28238"
+         y="130.78917"
+         style="font-size:4.93888903px;stroke-width:0.26458332">......</tspan></text>
+    <rect
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.26458332;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-56-7"
+       width="6.2366071"
+       height="4.2522321"
+       x="120.871"
+       y="110.15057" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.81445539;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 127.06036,112.22944 10.11086,-0.0945"
+       id="path882-5-7-9-0"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.66500002;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 166.13365,112.56017 h 8.12648"
+       id="path882-8-2-9"
+       inkscape:connector-curvature="0" />
+  </g>
+</svg>
