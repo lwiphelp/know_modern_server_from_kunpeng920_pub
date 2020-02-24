@@ -1,0 +1,408 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>中断 &mdash; 从鲲鹏920了解现代服务器实现和应用 0.1a1 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="设备" href="设备.html" />
+    <link rel="prev" title="Cache" href="Cache.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> 从鲲鹏920了解现代服务器实现和应用
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../序.html">序</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../感谢.html">感谢</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../认识服务器/index.html">认识服务器</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">认识鲲鹏920：一个服务器SoC</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="综述.html">综述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="总线.html">总线</a></li>
+<li class="toctree-l2"><a class="reference internal" href="地址空间.html">地址空间</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Cache.html">Cache</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Cache.html#cache-coherency">Cache Coherency</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">中断</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">介绍</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">信号中断和电平中断</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">中断控制器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">全局中断控制器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">消息中断</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">软件实现</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="设备.html">设备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="管理系统.html">管理系统</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../计算子系统/index.html">计算子系统</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../网络子系统/index.html">网络子系统</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../存储子系统/index.html">存储子系统</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../RAS设计/index.html">RAS设计</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../未来展望.html">未来展望</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">从鲲鹏920了解现代服务器实现和应用</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">认识鲲鹏920：一个服务器SoC</a> &raquo;</li>
+        
+      <li>中断</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/认识鲲鹏920：一个服务器SoC/中断.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1>中断<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id2">
+<h2>介绍<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>中断是一种重要的异步通讯机制。我们从没有中断的系统的通讯方式来理解中断在计算机
+系统中的作用：</p>
+<p>总线把计算机中的CPU和设备连接在一起，对于总线，CPU和设备其实没有什么区别，所以，
+我们也可以把CPU看做是一种设备。总线上的每个设备是独立的实体，它们如果要配合完成同一个工作，
+就需要把工作分成多个任务，分别分配给不同的设备执行。</p>
+<p>那么，如果设备B完成了一个任务要告知A，这应该怎么办呢？一般有两种方法：</p>
+<ol class="arabic simple">
+<li>A通过总线定期去询问B的状态</li>
+<li>B完成后，主动发一个消息给A</li>
+</ol>
+<p>行为2，就叫中断。因为A当时肯定正在处理其他任务，要让A停下来做另一个工作，这明显
+就是一种“中断”。</p>
+<div class="figure">
+<img alt="../_images/interrupt_logic.svg" src="../_images/interrupt_logic.svg" /></div>
+<p>中断行为需要CPU或者设备的程序语义配合，这个技术我们在计算子系统一章中深入介绍。
+我们这里首先讨论中断的收集和路由方法。</p>
+</div>
+<div class="section" id="id3">
+<h2>信号中断和电平中断<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>传统的中断大多数通过一根信号线来实现的，类似下面这样：</p>
+<div class="figure">
+<img alt="../_images/interrupt.svg" src="../_images/interrupt.svg" /></div>
+<p>CPU内部电路监控中断线的信号，如果发现中断来了，就切换CPU的执行状态，跳转到中断
+上去执行，这就是中断的基本方法了。一样的策略同样用在设备上，只是软件都在CPU上运
+行，语言的主语都是CPU，所以通常设备的中断不叫中断，而叫比如Doorbell这样的名字。</p>
+<p>CPU可以用多种方法来监控中断的发生，比如：</p>
+<ul class="simple">
+<li>中断线在高电平</li>
+<li>中断线在低电平</li>
+<li>中断线从高电平变成高电平</li>
+<li>中断线从低电平变成高电平</li>
+</ul>
+<p>前面两种监控方法就叫电平中断，它一旦发生，如果CPU不控制中断源改变电平，中断就会
+一直发生。后面两种叫边缘触发中断，它每发生一次，CPU就发生一次中断，事后CPU也不用
+控制中断源停止。</p>
+<p>CPU可以屏蔽一个中断，这是一个CPU内部的设置，当CPU屏蔽一个中断的时候，即使中断线
+上出现了中断信号，CPU也不会转到中断向量中执行。</p>
+<p>如果CPU不屏蔽一个中断，当这个中断上报的时候，CPU会保存当前的PC，然后把它修改为
+设定好的中断入口地址，开始从中断向量执行，中断向量执行结束，再恢复原来的PC指针
+（称为中断地址），继续执行原来的程序。这个恢复原来PC指针的操作，称为中断返回，
+简称iret。</p>
+<blockquote>
+<div><div class="line-block">
+<div class="line">PC</div>
+<div class="line">Program Counter，当前指令地址的指针。</div>
+<div class="line">冯诺依曼计算机通过PC控制CPU的执行过程。</div>
+</div>
+</div></blockquote>
+<p>对很多CPU来说（比如ARMv8的兼容CPU），所谓中断向量，只是一个软件的概念，CPU自己
+只关心这个触发过程，跳转到中断向量后，软件完全可以不返回到原来的位置，按自己的
+逻辑继续执行下去，永远不iret。</p>
+<p>所以，理论上，中断并没有结束这个概念。所以如果中断源给CPU报了一个电平中断，CPU
+进入中断向量中执行，CPU什么时候再把CPU切换到中断向量的入口上，完全看CPU的检测机
+制是怎么设计的。一些简单的CPU会在iret的时候重新检测中断线。</p>
+</div>
+<div class="section" id="id4">
+<h2>中断控制器<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<p>当系统中有很多的中断源，CPU就需要很多的中断线。但CPU很难为每个设备拉中断线。像
+在ARMv8兼容的处理器上，就只定义了IRQ和FIQ两个中断线，这根本就杯水车薪。</p>
+<p>所以，很自然地，CPU会把这些中断的收集功能独立出来，变成这样：</p>
+<div class="figure">
+<img alt="../_images/interrupt_controller.svg" src="../_images/interrupt_controller.svg" /></div>
+<p>正如我们一直说的一样，在系统中增加代理，就会对语义空间制造无穷的变数。对CPU来说
+，原来中断线的概念很明确，但现在中断线可以表示中断控制器对CPU的输入，也可以表示
+中断源对中断控制器的输入。</p>
+<p>所以，当我们说屏蔽一个中断的时候，既可以针对CPU的输入来说，也可以针对中断控制器
+来说，还可以针对中断源来说。一些遗留代码和文档资料中并不区分它们的区别，所以很
+多新入行的开发者会觉得无所适从。</p>
+<p>这时，如果我们要细化概念，就要分清“屏蔽”的宾语。如果屏蔽的对象是CPU的中断输入，
+那么所有的中断都无法通过这根中断线报到CPU里。如果屏蔽的对象是中断控制器的输入，
+那么控制的是中断控制器不上报中断，但它仍有可能缓存这个中断。如果屏蔽的对象是中
+断源本身，那么中断根本不会上报。</p>
+<p>一旦引入了缓冲这个概念，又会引入中断响应的问题了。只有一根中断线报到CPU的时候，
+CPU收到一个中断是一个中断，后面的中断就不要了。而中断控制器有缓存就不同了，中断
+控制器可能收集了多个中断，要一个个上报给CPU，那什么时候可以报下一个呢？这要CPU
+主动通知。这种通知通常称为EoI，End of Interrupt。</p>
+<p>EoI和iret是两个概念，但从软件的语义上，它们似乎都表示中断结束。所以像Linux这样
+的操作系统中，会有一个Bottom Half的概念，它表示EoI之后，iret之前的中断处理过程
+。</p>
+</div>
+<div class="section" id="id5">
+<h2>全局中断控制器<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<p>前面我们只讨论了一个CPU的场景，如果有很多CPU和很多中断源（通常是设备，但显然CPU
+也可以作为其他CPU的中断源的），这个关系就变得很复杂了。在ARM GIC的兼容架构中。
+这种多CPU的构架，称为全局中断控制器，GIC。它的原理可以示意如下：</p>
+<blockquote>
+<div><div class="line-block">
+<div class="line">GIC</div>
+<div class="line">Global Interrupt Controller</div>
+<div class="line">ARM针对CPU和中断控制器有相对独立的标准，</div>
+<div class="line">其中GIC标准定义中断控制器的标准。</div>
+</div>
+</div></blockquote>
+<div class="figure" id="id8">
+<img alt="../_images/gic_basic.svg" src="../_images/gic_basic.svg" /><p class="caption"><span class="caption-text">注：这是一个原理示意图，不表示任何实际的产品和标准定义，
+比如，GIC只定义了一个GICD，并没有多个实例。</span></p>
+</div>
+<p>中断分发器，GICD，在中断源一侧收集中断，收集完了转化为总线消息发给对应的路由器
+，GICR。GICR根据路由要求转发给不同的节点，报给CPU接口，CPUIF，CPUIF根据CPU最后
+的中断线的要求，在CPU内部产生中断。</p>
+<p>如果CPU之间要互相发中断，就直接发给自己的GICR。由GICR转到其他CPU的路由器上就可
+以了。</p>
+</div>
+<div class="section" id="id6">
+<h2>消息中断<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
+<p>电平和边缘触发中断对总线并不友好，特别是对于PCIe这种跨域多个网桥的外部总线。所
+以作为一种自然的想法，人们直接基于总线设计了基于总线语义的中断报告思路。PCI的
+MSI和PCIe的MSI-X就是典型的消息中断。它把设备的中断请求转化为对某个物理地址的访
+问操作，对某个特定的物理地址写入中断号等信息，就可以把中断报告出来了。这种完全
+基于总线消息的中断报告形态，就叫消息中断。</p>
+<p>早期GIC标准定义GICD的时候，对消息中断的支持考虑不多，后期要增强的时候也不适合修
+改GICD的定义了。所以从GICv3开始，GIC标准就引入了ITS来解决问题。</p>
+<blockquote>
+<div><div class="line-block">
+<div class="line">ITS</div>
+<div class="line">Interrrupt Translation Service</div>
+<div class="line">ITS是GIC中基于消息收集中断请求的部件，相比GICD，</div>
+<div class="line">它具有更高的收集和部署灵活性，更大的指令空间，</div>
+<div class="line">更强的配置能力。</div>
+</div>
+</div></blockquote>
+<p>ITS可以直接支持MSI/MSI-X，我们可以从鲲鹏920对GICv3的实现理解它的原理：</p>
+<div class="figure">
+<img alt="../_images/gic_its.svg" src="../_images/gic_its.svg" /></div>
+<p>和GICD不同，ITS直接作为一个通讯节点挂在总线上，MSI/MSI-X中断可以直接写到它的中
+断物理地址上，就可以直接产生中断了。</p>
+<p>为了把片内部分设备简单的电平或者边缘触发中断转化为这种消息，鲲鹏920中设计了一些
+中断收集器，称为MBIGEN, Message-Based Interrupt Gernerator，它可以把收集的线路
+中断转化为ITS认可的消息。这样一来GICD就只留给一些系统级的，或者传统的中断使用了。</p>
+<p>todo：920ITS的分布情况和中断号的分布情况。</p>
+<p>消息中断
+上面这种方案很“顺理成章”，但灵活性并不好，既然都已经有无处不在的总线了，为什么
+不直接利用总线本身的功能来发中断呢？</p>
+<p>这样就引入了消息中断的概念：只要增加一个设备，给这个设备分配一个物理地址，只要
+访问这个地址（通常是对这个地址写中断号一类的信息），这个设备负责给路由器发一个
+中断要求就可以了。</p>
+<p>有了ITS和GICR，我们可以对不同的中断进行不同调度，但这些属于GIC的具体编程接口，
+不是原理，本书就不深入介绍了。</p>
+</div>
+<div class="section" id="id7">
+<h2>软件实现<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
+<p>todo：需要对照代码细化一次：</p>
+<p>仍用Linux Kernel作为我们的例子。中断处理的过程我们留到计算子系统来讨论。这里我们
+主要讨论GIC的驱动本身如何工作的。</p>
+<p>Linux把中断控制器抽象成两种对象来管理，一个是irq_chip，一个是irq_domain。前者代
+表一个中断控制单元，比如前面的GICD，ITS等对象，而后者代表一段中断号的空间，重点
+是把设备认为的中断号转化为Linux认可的软件的中断号。</p>
+<p>irq_chip本身不是Linux内核中的device，Linux Kernel使用专有的通用方法发现它们，可
+以是device tree，也可以是ACPI接口。</p>
+<blockquote>
+<div><div class="line-block">
+<div class="line">device tree接口</div>
+<div class="line">todo</div>
+</div>
+<div class="line-block">
+<div class="line">ACPI接口</div>
+<div class="line">todo</div>
+</div>
+</div></blockquote>
+<p>作为服务器芯片，鲲鹏920使用ACPI作为设备发现接口，从ACPI的MADT表中获得所有XX的定
+义：</p>
+<p>todo: 需要MADT表的部分内容展示</p>
+<p>GICD设备发现后，GICD驱动会创建对应的irq_domain，并把这个GIDC的信息封装为irq_chip
+放到这个irq_domain中，未来上层软件控制irq_domain，就可以成为对GICD的控制了。</p>
+<p>这个驱动在drivers/irqchip/irq-gic-v3.c中。</p>
+<p>ITS的驱动在drivers/irqchip/irq-gic-v3-its.c中，它同样创建属于它那部分的
+irq_domain，把ITS的信息封装为irq_chip放到这个irq_domain中。</p>
+<p>todo：补充一张irq_domain的对象图。</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="设备.html" class="btn btn-neutral float-right" title="设备" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="Cache.html" class="btn btn-neutral float-left" title="Cache" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Kenneth Lee
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

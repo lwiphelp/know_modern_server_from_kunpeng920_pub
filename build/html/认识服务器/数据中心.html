@@ -26,6 +26,7 @@
         <script type="text/javascript" src="../_static/doctools.js"></script>
         <script type="text/javascript" src="../_static/language_data.js"></script>
         <script type="text/javascript" src="../_static/translations.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -175,19 +176,26 @@
 化的供电，温控，网络等各种基础设施的设计，它可以达到提高维护效率，降低研发、维
 护、使用成本等目的。</p>
 <p>下面是一个华为公司数据中心的一角：</p>
-<p>todo: 需要一张图。</p>
+<div class="figure" id="id2">
+<img alt="华为数据中心" src="../_images/huawei_data_center.jpg" />
+<p class="caption"><span class="caption-text">注：本图来自网络，仅在本开源版本中使用</span></p>
+</div>
 <p>大型的数据中心可以占地XXX亩，todo：需要一个华为大型数据中心的数据。也可以小到
 做成一个集装箱，todo：需要一个华为集装箱式数据中心的介绍。</p>
+<div class="figure" id="id3">
+<img alt="华为数据中心" src="../_images/huawei_container_datacenter.png" />
+<p class="caption"><span class="caption-text">注：本图来自网络，仅在本开源版本中使用</span></p>
+</div>
 <p>服务器本身可以设计成不同的外形，比如塔式，刀片式，机柜式等等。在现代数据中心中
 ，通常采用机柜式设计，这样在空间布置上有优势。在这样的布置中，所有服务器都是使
 用一样的宽度，很容易堆叠在一起。在高度上，这些服务器使用标准的尺寸进行打包：它
 总是约44.45mm的整倍数，这种高度称为1U，2U，3U等等。这样把服务器插到机架上，可
 以不留下空隙，替换也很容易。</p>
-<p>todo：可以考据一下刀片式是怎么被服务器放弃的。</p>
 <blockquote>
 <div><div class="line-block">
 <div class="line">关于1U概念的来源</div>
-<div class="line">1U是数据中心机柜一个单元（Unit）的含义，实际高度是todo</div>
+<div class="line">1U是数据中心机柜一个单元（Unit）的含义，实际高度是todo：请教一下硬件</div>
+<div class="line">设计的伙伴们。</div>
 </div>
 </div></blockquote>
 <p>这种标准化的机柜设计反过来约束了服务器的物理设计方向，使这些设计必须满足这些机
@@ -199,7 +207,7 @@
 <div><div class="line-block">
 <div class="line">TOR交换机</div>
 <div class="line">Top Of Rack交换机。部署在机架顶部，用于提供机架内机柜互联和对外接口</div>
-<div class="line">的交换机。</div>
+<div class="line">的交换机。todo：缺图</div>
 </div>
 </div></blockquote>
 <p>数据中心的服务器通常需要被远程维护，所以单板上会集成独立的控制芯片，称为BMC
@@ -218,7 +226,27 @@
 <div class="line">KVM通常会被实现为BMC功能的一部分。</div>
 </div>
 </div></blockquote>
-<p>下面是一组基于鲲鹏920的泰山服务器的BMC控制界面：</p>
+<p>下面是基于鲲鹏920的泰山服务器的BMC控制界面，iBMC：</p>
+<div class="figure">
+<img alt="../_images/iBMC-alarm.png" src="../_images/iBMC-alarm.png" />
+</div>
+<p>它可以直接从Web或者应用界面上看到服务器的全部状态，包括硬件的配置，比如下面是
+这台服务器的内存配置：</p>
+<div class="figure">
+<img alt="../_images/iBMC-mem.png" src="../_images/iBMC-mem.png" />
+</div>
+<p>可以通过kvm用不同的方式直接接入设备的控制台：</p>
+<div class="figure">
+<img alt="../_images/iBMC-kvm.png" src="../_images/iBMC-kvm.png" />
+</div>
+<p>这是KVM本身的界面：</p>
+<div class="figure">
+<img alt="../_images/kvm-os-console.png" src="../_images/kvm-os-console.png" />
+</div>
+<p>还可以对这个界面进行截屏或者直接做视频录像：</p>
+<div class="figure">
+<img alt="../_images/iBMC-capture.png" src="../_images/iBMC-capture.png" />
+</div>
 <p>todo：需要一组图和解释：开关机，安装操作系统，KVM访问操作系统图形界面</p>
 <p>基于BMC，使用者可以远程访问任何一台服务器，和使用本地PC一样。但对于管理员来说
 ，这仍然是不够的，比如，如果一台服务器的业务出了问题，需要把这个业务迁移到另一

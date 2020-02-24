@@ -38,7 +38,7 @@
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
     <link rel="next" title="地址空间" href="地址空间.html" />
-    <link rel="prev" title="软件架构设计" href="软件构架设计.html" /> 
+    <link rel="prev" title="综述" href="综述.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -93,12 +93,11 @@
 <li class="toctree-l1"><a class="reference internal" href="../认识服务器/index.html">认识服务器</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">认识鲲鹏920：一个服务器SoC</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="综述.html">综述</a></li>
-<li class="toctree-l2"><a class="reference internal" href="软件构架设计.html">软件架构设计</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">总线</a></li>
 <li class="toctree-l2"><a class="reference internal" href="地址空间.html">地址空间</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Cache系统.html">Cache系统</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Cache系统.html#cache-coherency">Cache Coherency</a></li>
-<li class="toctree-l2"><a class="reference internal" href="中断系统.html">GIC和总线的关系</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Cache.html">Cache</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Cache.html#cache-coherency">Cache Coherency</a></li>
+<li class="toctree-l2"><a class="reference internal" href="中断.html">中断</a></li>
 <li class="toctree-l2"><a class="reference internal" href="设备.html">设备</a></li>
 <li class="toctree-l2"><a class="reference internal" href="管理系统.html">管理系统</a></li>
 </ul>
@@ -183,29 +182,37 @@ SoC会根据自己的需求特点，选择不同的技术方案和参数。本�
 节中，我们更关注总线的设计是如何影响到服务器的使用者的使用方式的。</p>
 <p>作为片内的通讯方式，大部分NoC的基础是一种数字电路。也就是说，它本质是一个门电路，
 在时钟的驱动下，按一次一跳的方式在不同的组件间传递信息。从软件的角度来来看，这
-可以认为是种“同步”的过程。</p>
+可以认为是种“同步”的过程：时钟周期到了，每个部件必须做出唯一的选择。</p>
 <blockquote>
 <div><div class="figure">
 <img alt="../_images/noc_principal.svg" src="../_images/noc_principal.svg" /></div>
 </div></blockquote>
 <p>这种方法最大的缺点是拉线不能太长，对于高速电路，不同的连线长度稍有差别，时钟就
 不一定能同步。所以，只要拉线长度不同，时钟频率不同，就需要切换总线，这通过某个
-节点来转发，这种节点就叫网桥，它起到接续和转换速率的作用。</p>
-<p>由于这个特点，现代计算机NoC之外的高速总线几乎没有使用NoC这种方式连接的，而采用
-串行总线。串行总线没有复杂的时钟同步问题，对拉线的要求就低得多。这种设计形成了
-很标准化的设计模式，称为SerDes。SerDes是SERializer-DESerializer的缩写，表示把
-片内的并行总线信号转化为串行信号，到了目标端，再重新变成并行信号，从而完成整个
-通讯。</p>
+节点来转发，这种节点就叫网桥，它起到接续和转换速率的作用。和软件一样，网桥需要
+通过队列缓存某种速度的总线数据，然后按另一个总线的速率要求，把数据送到那个总线
+上：</p>
+<blockquote>
+<div><div class="figure">
+<img alt="../_images/network_bridge.svg" src="../_images/network_bridge.svg" /></div>
+</div></blockquote>
+<p>由于NoC作为数字电路的这个特点，现代计算机NoC之外的高速总线几乎没有使用NoC这种方
+式连接的，而采用串行总线。串行总线没有复杂的时钟同步问题，对拉线的要求就低得多
+。这种设计形成了很标准化的设计模式，称为SerDes。SerDes是SERializer-DESerializer
+的缩写，表示把片内的并行总线信号转化为串行信号，到了目标端，再重新变成同步的数
+字并行信号，从而完成整个通讯。</p>
 <p>这种标准化的方法可以给不同的设计人员各自的自由度。片内设计师专心控制数字电路的
-逻辑，通讯介质的设计师专心控制提高通讯效率。但串行通讯的速度理论肯定是比不上并
-行通讯的。这样一个自然的想法是多用几个SerDes就好了。所以，片外总线常常有Lane的
-概念，一个Lane，就是一个SerDes的通道。只要在通讯的两端做一个调度器，把数据重新
-排序，就可以扩展通讯带宽了。但这种方法也只是提升带宽，并不能提升时延。</p>
+逻辑，通讯介质的设计师专心控制介质提高通讯效率。但串行通讯的速度理论肯定是比不
+上并行通讯的。这样一个自然的想法是多用几个SerDes就好了。所以，片外总线常常有
+Lane的概念，一个Lane，就是一个SerDes的通道。只要在通讯的两端做一个调度器，把数
+据重新排序，就可以扩展通讯带宽了。这种靠一个或者多个Lane构成的通道，称为一个
+链路，Link。增加Lane只是能提高链路的带宽，并不能提供链路的时延。但这也看角度，因
+为如果因为带宽不足造成了等待，低带宽也可以带来高时延。</p>
 <p>总线通讯协议大致可以分成两层，下层提供基本的通讯能力，上层在这个通讯能力上提供
 读、写，IO，Cache同步等软件语义。</p>
 <p>NoC通讯可以有不同的拓扑结构和通讯协议，不同SoC在这些方案上有不同的选择，从而达
 成这种SoC应用上的性能优势。鲲鹏使用一条全局的Cache Coherent的总线把所有的设备连
-在一起，在上层使用AMBA协议以便可以方便和任何ARM的设备（包括CPU）进行互通。</p>
+在一起，在上层使用AMBA协议以便可以方便地和任何ARM的设备（包括CPU）进行互通。</p>
 <blockquote>
 <div><div class="line-block">
 <div class="line">Cache Coherent</div>
@@ -241,13 +248,16 @@ Flit中有本站的数据，就取走自己的数据，然后补充本站要发�
 这需要留很大的通讯余量。而使用相同技术的Hi1980（市场上所知的达芬奇AI芯片），重
 点要保证的是综合的计算效果，它的Flit利用率就会高达90%，这时，数据常常可能上不了
 车，导致时延上升，但它的带宽可以做得很高。</p>
-<p>在鲲鹏920中，每个Super Cluster都是一条环状总线，如果多个Super Cluster合封在一起，
-就需要部分Station充当网桥，实现数据的“转乘”。这种转乘的路线仍是数字电路，但这个
-效率总是不如在本环之内的。下面是一个典型的鲲鹏920的连接示意图：</p>
-<div class="figure">
-<img alt="../_images/kunpeng920_typical_connection.svg" src="../_images/kunpeng920_typical_connection.svg" /></div>
-<p>它包含了两个Super CPU Cluster和一个Super IO Cluster。每个环内有多个Station提供
-转乘功能，按一定的平衡转发的流量，达成全片互联的目的。</p>
+<p>在鲲鹏920中，每个Super Cluster都是一条环状总线，如果多个Super Cluster合封在一起
+，就需要网桥，在鲲鹏中称为SLLC，实现在两个总线之间实现数据的“转乘”。这种转乘的
+路线仍是数字电路，但因为经过了网桥的缓存再发，这个效率总是不如在本环之内的。下
+面是一个典型的多Super Cluster的鲲鹏920的连接示意图：</p>
+<div class="figure" id="id3">
+<img alt="../_images/kunpeng920_typical_connection.svg" src="../_images/kunpeng920_typical_connection.svg" /><p class="caption"><span class="caption-text">鲲鹏跨Super Cluster互联示意。注意途中的SLLC实际上是通过Super Cluster内
+部的两个部件实现的一个逻辑概念。</span></p>
+</div>
+<p>它包含了两个Super CPU Cluster和一个Super IO Cluster。每个环内有多个Station连接
+了网桥提供转乘功能。SLLC按一定的平衡转发的流量，达成全片互联的目的。</p>
 <p>如果需要多片互联，总线就需要延伸到片外，就需要片间互联的网桥。如前所述，片间互
 联需要使用SerDes。鲲鹏920在SICL中设计了一个用于片间互联的模块，称为Hydra。Hydra
 对外提供3个端口，每个端口可以提供8个Lane。这样，鲲鹏920最大可以连成4个芯片组成
@@ -256,11 +266,11 @@ Flit中有本站的数据，就取走自己的数据，然后补充本站要发�
 <img alt="../_images/kunpeng920_4p.svg" src="../_images/kunpeng920_4p.svg" /></div>
 <p>通过这样一个结构，无论是同一个芯片内部还是多个芯片互联，系统里的任意两个单元都
 是可以互相访问的，但跨SCL就会更慢，而跨片，就会更慢。</p>
-<p>内存控制器（DDRC）是挂在SCCL上的，这样，不同的CPU核和设备访问内存的速度就是不一
-样的。这样的系统，就称为NUMA系统。软件需要意识到访问不同的内存，速度是不一样的。
-考虑前面提到的NoC的特点，我们几乎可以认为，如果基础技术不发生根本性的变化，未来
-CPU和设备越来越多的时候，NUMA几乎是不可避免的。作为程序员的读者可能可以把这个作
-为未来软件开发的一个基本考量。</p>
+<p>内存控制器（DDRC）也是挂在SCCL上的，这样，不同的CPU核和设备访问内存的速度就是不
+一样的。这样的系统，就称为NUMA系统。在NUMA系统上，软件需要意识到访问不同的内存
+地址，速度是不一样的。考虑前面提到的NoC的特点，我们几乎可以认为，如果基础技术不
+发生根本性的变化，未来CPU和设备越来越多的时候，NUMA几乎是不可避免的。作为程序员
+的读者可能可以把这个作为未来软件开发的一个基本考量。</p>
 <blockquote>
 <div><div class="line-block">
 <div class="line">NUMA</div>
@@ -272,6 +282,21 @@ CPU和设备越来越多的时候，NUMA几乎是不可避免的。作为程序�
 <div class="line">件可见的物理地址空间，分散在多片物理内存上。</div>
 </div>
 </div></blockquote>
+<p>下图是鲲鹏920上测试的不同距离内存访问的Latency，可以作为编程上的一种定性的参考：</p>
+<p>（单位: 纳秒）
++——————+—–+
+| 同ring访问       | 89  |
++——————+—–+
+| 跨SCCL访问       | 106 |
++——————+—–+
+| 跨Hydra访问      | 184 |
++——————+—–+
+| 跨SCCL+Hydra访问 | 221 |
++——————+—–+</p>
+<p>内存地址的访问速度不但和访问者和内存的位置相关，还和Cache的设计相关，这我们在讨
+论Cache和计算子系统的时候再来讨论。</p>
+<p>总线的概念还可以进一步扩展，比如，通过背板甚至Ethernet网桥，可以把总线延伸到整个
+机架，乃至整个数据中心，但语义如何呈现，还是看这些通讯的效率。</p>
 </div>
 
 
@@ -285,7 +310,7 @@ CPU和设备越来越多的时候，NUMA几乎是不可避免的。作为程序�
         <a href="地址空间.html" class="btn btn-neutral float-right" title="地址空间" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="软件构架设计.html" class="btn btn-neutral float-left" title="软件架构设计" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="综述.html" class="btn btn-neutral float-left" title="综述" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

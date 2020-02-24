@@ -26,6 +26,7 @@
         <script type="text/javascript" src="../_static/doctools.js"></script>
         <script type="text/javascript" src="../_static/language_data.js"></script>
         <script type="text/javascript" src="../_static/translations.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -172,29 +173,28 @@
   <div class="section" id="id1">
 <h1>综述<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
 <p>服务器是一种特殊类型的计算机。这是一个很宽泛的定义。一般来说，我们会认为服务器
-主要用于提供公共服务，而不是面向某个特定的个人（比如个人电脑），或者面向特定的
-应用（比如机床控制设备）的通用计算机。</p>
+主要是用于提供公共服务，而不是面向某个特定的个人（比如个人电脑），或者面向特定
+的应用（比如机床控制设备）的通用计算机。</p>
 <p>在现实中，服务器通常具有相比个人电脑更强大的性能，更可靠的服务能力，当然，更高
 的价格和能耗。比如下面是华为公司的一款个人电脑产品：</p>
-<ul class="simple">
-<li>todo: Huawei MateBook X Pro 2019: 4C 1.8G-4.9G 8G/16G的内存(无ECC），
-65W电源适配器
-顶配报价13999
-wifi网络连接
-需要图</li>
-</ul>
+<div class="figure" id="id2">
+<img alt="Huawei MateBook X Pro 2019" src="../_images/matebookx2019.png" />
+<p class="caption"><span class="caption-text">注：本图为网络截图，仅在公开版本中临时使用</span></p>
+</div>
+<p>根据产品介绍，该产品使用4核的CPU，主频1.8G-4.9G，提供8G或者16G的普通内存，没有
+ECC，使用65W电源适配器，主网络连接基于Wifi。</p>
 <p>而下面的是服务器产品：</p>
-<ul class="simple">
-<li>todo: Fusion Server Pro 1288H v5  双CPU，内存最大1536GB，支持ECC，
-可选配RAID卡（磁盘可靠性）
-单CPU版本16G内存报价：20388，电源550W，双电源，
-CPU全系列至强可选，（todo：需要找一个典型配置）
-10G网口
-需要图</li>
-</ul>
+<div class="figure" id="id3">
+<img alt="Huawei Fusionserver 5885H V5" src="../_images/HuaweiFusionServer5885HV5.png" />
+<p class="caption"><span class="caption-text">注：本图为网络截图，仅在公开版本中临时使用</span></p>
+</div>
+<p>该产品有多种CPU选配，我们参考一种高配的选择，比如铂金8180，28个CPU内核，每个内
+核包含2个物理线程，最大2.5G的主频。同时可以插4个CPU，总共224个物理线程。使用
+ECC内存，最大可以达到3072GB。包含25个2.5英寸的硬盘位，15个PCIE扩展插槽，2个
+10GE的光纤网口和2个千兆RJ45网口，4个电源互相备份。</p>
 <p>这两个产品如果仅从功能和可以运行的软件来说，其实有很多相似之处，甚至可以运行完
 全一样的软件，但我们可以看到后者包含更多的CPU和CPU核，更多的内存，更高带宽的网
-络，还有更多的可靠性保障手段，比如ECC，RAID和双电源等。</p>
+络，还有更多的可靠性保障手段，比如ECC，RAID和冗余电源等。</p>
 <blockquote>
 <div><div class="line-block">
 <div class="line">ECC</div>

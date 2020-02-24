@@ -93,12 +93,11 @@
 <li class="toctree-l1"><a class="reference internal" href="../认识服务器/index.html">认识服务器</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">认识鲲鹏920：一个服务器SoC</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="综述.html">综述</a></li>
-<li class="toctree-l2"><a class="reference internal" href="软件构架设计.html">软件架构设计</a></li>
 <li class="toctree-l2"><a class="reference internal" href="总线.html">总线</a></li>
 <li class="toctree-l2"><a class="reference internal" href="地址空间.html">地址空间</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Cache系统.html">Cache系统</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Cache系统.html#cache-coherency">Cache Coherency</a></li>
-<li class="toctree-l2"><a class="reference internal" href="中断系统.html">GIC和总线的关系</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Cache.html">Cache</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Cache.html#cache-coherency">Cache Coherency</a></li>
+<li class="toctree-l2"><a class="reference internal" href="中断.html">中断</a></li>
 <li class="toctree-l2"><a class="reference internal" href="设备.html">设备</a></li>
 <li class="toctree-l2"><a class="reference internal" href="管理系统.html">管理系统</a></li>
 </ul>
@@ -177,13 +176,9 @@
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="综述.html">综述</a></li>
-<li class="toctree-l1"><a class="reference internal" href="软件构架设计.html">软件架构设计</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="软件构架设计.html#id2">综述</a></li>
-<li class="toctree-l2"><a class="reference internal" href="软件构架设计.html#id3">编译器</a></li>
-<li class="toctree-l2"><a class="reference internal" href="软件构架设计.html#linux-kernel">Linux Kernel</a></li>
-<li class="toctree-l2"><a class="reference internal" href="软件构架设计.html#glibc">glibc</a></li>
-<li class="toctree-l2"><a class="reference internal" href="软件构架设计.html#id4">架构分支和战地分支</a></li>
+<li class="toctree-l1"><a class="reference internal" href="综述.html">综述</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="综述.html#soc">SoC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="综述.html#id2">构架兼容</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="总线.html">总线</a></li>
@@ -191,24 +186,32 @@
 <li class="toctree-l2"><a class="reference internal" href="地址空间.html#id2">综述</a></li>
 <li class="toctree-l2"><a class="reference internal" href="地址空间.html#mmio">MMIO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="地址空间.html#id3">物理地址空间</a></li>
-<li class="toctree-l2"><a class="reference internal" href="地址空间.html#id4">虚拟地址空间</a></li>
+<li class="toctree-l2"><a class="reference internal" href="地址空间.html#id6">虚拟地址空间</a></li>
+<li class="toctree-l2"><a class="reference internal" href="地址空间.html#stage">虚拟机空间和多Stage翻译</a></li>
 <li class="toctree-l2"><a class="reference internal" href="地址空间.html#iommu">IOMMU页表</a></li>
-<li class="toctree-l2"><a class="reference internal" href="地址空间.html#stage">虚拟化和多Stage翻译</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="Cache系统.html">Cache系统</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Cache系统.html#id1">介绍</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Cache.html">Cache</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Cache.html#id1">介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Cache.html#id2">内存Cache</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="Cache系统.html#cache-coherency">Cache Coherency</a></li>
-<li class="toctree-l1"><a class="reference internal" href="中断系统.html">GIC和总线的关系</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="中断系统.html#id1">关于中断</a></li>
-<li class="toctree-l2"><a class="reference internal" href="中断系统.html#id2">信号中断和电平中断</a></li>
-<li class="toctree-l2"><a class="reference internal" href="中断系统.html#id3">中断的收集</a></li>
-<li class="toctree-l2"><a class="reference internal" href="中断系统.html#id4">中断的调度</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Cache.html#cache-coherency">Cache Coherency</a></li>
+<li class="toctree-l1"><a class="reference internal" href="中断.html">中断</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="中断.html#id2">介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="中断.html#id3">信号中断和电平中断</a></li>
+<li class="toctree-l2"><a class="reference internal" href="中断.html#id4">中断控制器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="中断.html#id5">全局中断控制器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="中断.html#id6">消息中断</a></li>
+<li class="toctree-l2"><a class="reference internal" href="中断.html#id7">软件实现</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="设备.html">设备</a></li>
+<li class="toctree-l1"><a class="reference internal" href="设备.html">设备</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="设备.html#id2">介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="设备.html#pcie">PCIe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="设备.html#usb">USB</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="管理系统.html">管理系统</a></li>
 </ul>
 </div>

@@ -38,7 +38,7 @@
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
     <link rel="next" title="管理系统" href="管理系统.html" />
-    <link rel="prev" title="GIC和总线的关系" href="中断系统.html" /> 
+    <link rel="prev" title="中断" href="中断.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -93,13 +93,23 @@
 <li class="toctree-l1"><a class="reference internal" href="../认识服务器/index.html">认识服务器</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">认识鲲鹏920：一个服务器SoC</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="综述.html">综述</a></li>
-<li class="toctree-l2"><a class="reference internal" href="软件构架设计.html">软件架构设计</a></li>
 <li class="toctree-l2"><a class="reference internal" href="总线.html">总线</a></li>
 <li class="toctree-l2"><a class="reference internal" href="地址空间.html">地址空间</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Cache系统.html">Cache系统</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Cache系统.html#cache-coherency">Cache Coherency</a></li>
-<li class="toctree-l2"><a class="reference internal" href="中断系统.html">GIC和总线的关系</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">设备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Cache.html">Cache</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Cache.html#cache-coherency">Cache Coherency</a></li>
+<li class="toctree-l2"><a class="reference internal" href="中断.html">中断</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">设备</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">介绍</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pcie">PCIe</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id3">综述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">设备发现和访问协议</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">鲲鹏920的真实和虚拟PCIe设备实现</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sr-iov">SR-IOV</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#usb">USB</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="管理系统.html">管理系统</a></li>
 </ul>
 </li>
@@ -176,28 +186,57 @@
             
   <div class="section" id="id1">
 <h1>设备<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
-<p>todo：这里重点介绍虚拟PCIE总线的原理</p>
-<p>非SoC型的CPU通过PCIE总线把外部设备，特别是高速外部设备桥接到系统总线中，关于
-PCIE总线的介绍，我们在PCIE子系统一章详细介绍。</p>
-<p>为了可以连接这些外部设备，鲲鹏920也提供PCIE设备接口，但为了软件的通用性，鲲鹏的
-一般设备封装成PCIE总线。从软件的角度看来，这总线的结构如下：</p>
-<p>todo：这个地方需要再去确认一下，我们现在认为RC是属于物理PCIE总线的，我觉得这个理解是不对的，这幅图要斟酌一下再看怎么画。
-初步这样考虑：全局一个RC，每个Process一个Bridge，每个PCIE ICL一个Root Port，每个片上设备ICL也独占一个Root Port。</p>
-<p>支持特性：PCIE4：
-6.1. PME,
-6.2. Error Signal and Logging
-6.3. VC (仅CCIX支持）
-6.4. Device Synchronization
-6.6. PCIE reset
-6.7. PCIE Hot Plug
-6.10. Root Complex Topology Discovery
-6.11. Link Speed Management
-6.12. ACS
-6.13. ARI
-6.15. Atomic Operations (inbound only)
-6.17 TPH
-6.20 PASID
-6.23 RN</p>
+<div class="section" id="id2">
+<h2>介绍<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>鲲鹏920有两种设备，一种是连在网桥上的设备，这种设备每个基于Station的DAW窗口，有自己的MMIO空间，
+也有DMA机制，可以通过IOMMU访问内存，这种设备的基本接口是比较容易理解的。</p>
+<p>还有一类设备就复杂了，这种设备通过PCIe总线和USB总线动态插入到系统中，这种动态的
+过程为系统引入了更多的复杂性。</p>
+<p>为了让软件生态融合，鲲鹏920选择把片内的设备也模拟成PCIe的访问接口，这些设备具有
+直接接在总线上的性能，但从软件的角度看来，它们的访问接口和其他动态插入到系统中
+的PCIe设备是一样的。本章讨论所有这些设备的工作逻辑。</p>
+</div>
+<div class="section" id="pcie">
+<h2>PCIe<a class="headerlink" href="#pcie" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id3">
+<h3>综述<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<p>PCIe是一种从PCI总线发展过来的，广泛使用的高速外设总线。正如我们前面提到的，为了
+让时钟频率可以提上去，现在大部分的外设总线都是基于Serdes的多Lane P2P串行总线。
+PCIe也不例外，它不再使用PCI的并行结构，而是一种多层网桥的形式，图示如下：</p>
+<div class="figure">
+<img alt="认识鲲鹏920：一个服务器SoC/pcie-arch.svg" src="认识鲲鹏920：一个服务器SoC/pcie-arch.svg" /></div>
+<p>可以看到，和鲲鹏的系统总线不同，PCIe是一个树桩的分层结构，连在总线上的可以是一
+个终点（EP，End Point），也可以是一个网桥，把路径分到下一层，接入下一个网桥，也
+可以接入下一个EP。这样，其他设计就不能假设它是一个单一的通讯结构，这会增加很多
+其他的复杂度：比如必须有协议保证EP和EP间，EP和网桥间，网桥和网桥间通讯不会互锁
+或者自环。</p>
+<p>PCIe总线协议分3层：</p>
+<ul class="simple">
+<li>会话层：定义总线不同业务，比如内存访问，中断，低功耗处理等的通讯和消息协议</li>
+<li>数据链路层：定义会话，链路，通道等协议</li>
+<li>物理层：定义Serdes层的协议要求</li>
+</ul>
+<p>（顺便提一句，鲲鹏920支持CCIX协议，这个协议工作在PCIe的数据链路层上，替换了会话
+层，通过修改鲲鹏920的PCIe控制器，可以让这个端口工作在CCIX模式）</p>
+<p>todo: 补充一些会话层的基本协议和功能</p>
+</div>
+<div class="section" id="id4">
+<h3>设备发现和访问协议<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<p>todo</p>
+</div>
+<div class="section" id="id5">
+<h3>鲲鹏920的真实和虚拟PCIe设备实现<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<p>todo</p>
+</div>
+<div class="section" id="sr-iov">
+<h3>SR-IOV<a class="headerlink" href="#sr-iov" title="永久链接至标题">¶</a></h3>
+<p>todo</p>
+</div>
+</div>
+<div class="section" id="usb">
+<h2>USB<a class="headerlink" href="#usb" title="永久链接至标题">¶</a></h2>
+<p>todo</p>
+</div>
 </div>
 
 
@@ -211,7 +250,7 @@ PCIE总线的介绍，我们在PCIE子系统一章详细介绍。</p>
         <a href="管理系统.html" class="btn btn-neutral float-right" title="管理系统" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="中断系统.html" class="btn btn-neutral float-left" title="GIC和总线的关系" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="中断.html" class="btn btn-neutral float-left" title="中断" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
