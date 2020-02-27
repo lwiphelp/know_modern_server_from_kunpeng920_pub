@@ -1,0 +1,523 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="504.89368mm"
+   height="483.59433mm"
+   viewBox="0 0 504.8937 483.59436"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   sodipodi:docname="pci_vs_pcie.svg">
+  <defs
+     id="defs2">
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker3534"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path3532"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker3452"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lstart">
+      <path
+         transform="matrix(0.8,0,0,0.8,10,0)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path3450"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker3374"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path3372"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Lend"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path923"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow2Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow2Lend"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path941"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Lend-2"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         inkscape:connector-curvature="0"
+         id="path923-7"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)" />
+    </marker>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="838.43489"
+     inkscape:cy="856.72168"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="3830"
+     inkscape:window-height="2062"
+     inkscape:window-x="0"
+     inkscape:window-y="42"
+     inkscape:window-maximized="0"
+     fit-margin-top="2"
+     fit-margin-left="2"
+     fit-margin-bottom="2"
+     fit-margin-right="2"
+     inkscape:snap-global="false" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-57.872585,319.03804)">
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.71402597;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-36-7-93-8-0-2-3-6-0-1-6-4-7-9-2-1"
+       width="89.942413"
+       height="18.929977"
+       x="470.46683"
+       y="-187.7076" />
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.71402597;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-36-7-93-8-0-2-3-6-0-1-6-4-7-9-4-4"
+       width="89.942413"
+       height="18.929977"
+       x="136.91444"
+       y="-279.38104" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.66500002;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 59.872585,-244.26895 H 555.0214"
+       id="path971"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.66500002;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 60.06157,-238.59931 H 555.21039"
+       id="path971-6"
+       inkscape:connector-curvature="0" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot1825"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+       transform="matrix(0.26458333,0,0,0.26458333,57.872585,-398.19998)"><flowRegion
+         id="flowRegion1827"><rect
+           id="rect1829"
+           width="539.28571"
+           height="467.85715"
+           x="229.28572"
+           y="-52.817604" /></flowRegion><flowPara
+         id="flowPara1831" /></flowRoot>    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.71402597;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-36-7-93-8-0-2-3-6-0-1-6-4-7-9"
+       width="89.942413"
+       height="18.929977"
+       x="237.67505"
+       y="-316.68103" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="249.86186"
+       y="-303.74481"
+       id="text2119-4-6-2-9-2-1-7-4-2"><tspan
+         sodipodi:role="line"
+         id="tspan2117-0-7-9-3-9-0-6-5-2"
+         x="249.86186"
+         y="-303.74481"
+         style="stroke-width:0.26458332">PCI网桥控制器</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:6.03495789;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 280.5081,-211.2663 v -86.32806"
+       id="path5977"
+       inkscape:connector-curvature="0" />
+    <path
+       sodipodi:type="star"
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.86500001;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="path6075-0-3"
+       sodipodi:sides="6"
+       sodipodi:cx="360.11526"
+       sodipodi:cy="29.916634"
+       sodipodi:r1="22.144695"
+       sodipodi:r2="19.177872"
+       sodipodi:arg1="1.0531472"
+       sodipodi:arg2="1.576746"
+       inkscape:flatsided="true"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="m 371.07332,49.160039 -22.14431,-0.131752 -10.95805,-19.243406 11.18625,-19.111653 22.14431,0.131753 10.95805,19.243405 z"
+       inkscape:transform-center-x="1.2391205e-06" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="249.89992"
+       y="15.91144"
+       id="text2119-4-9-7-6-2"><tspan
+         sodipodi:role="line"
+         id="tspan2117-0-8-2-2-9"
+         x="249.89992"
+         y="15.91144"
+         style="stroke-width:0.26458332">Root Port</tspan></text>
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.71402597;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-36-7-93-8-0-2-3-6-0-1-6-0-5-3-7"
+       width="89.942413"
+       height="18.929977"
+       x="171.15019"
+       y="55.134552" />
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.71402597;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-36-7-93-8-0-2-3-6-0-1-6-4-7-0"
+       width="89.942413"
+       height="18.929977"
+       x="168.31541"
+       y="51.732773" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="187.84258"
+       y="65.772041"
+       id="text2119-4-6-2-9-2-1-7-4-9"><tspan
+         sodipodi:role="line"
+         id="tspan2117-0-7-9-3-9-0-6-5-36"
+         x="187.84258"
+         y="65.772041"
+         style="stroke-width:0.26458332">End Point</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.1209811;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 268.44181,-39.439793 v -30.20146"
+       id="path5977-8-18"
+       inkscape:connector-curvature="0" />
+    <path
+       sodipodi:type="star"
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.86500001;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="path6075-2"
+       sodipodi:sides="6"
+       sodipodi:cx="356.64075"
+       sodipodi:cy="28.045782"
+       sodipodi:r1="22.144695"
+       sodipodi:r2="19.177872"
+       sodipodi:arg1="1.0531472"
+       sodipodi:arg2="1.576746"
+       inkscape:flatsided="true"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="M 367.5988,47.289188 345.45449,47.157435 334.49644,27.91403 345.6827,8.8023767 367.827,8.934129 378.78505,28.177534 Z"
+       inkscape:transform-center-x="1.2391205e-06" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.06500006;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 341.67365,38.736534 -23.20317,13.39638 v 40.859343"
+       id="path6128-7"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.56500006;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 356.10619,47.021904 V 93.259537"
+       id="path6130-5"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.56500006;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 359.58073,48.759154 V 94.996777"
+       id="path6130-3-9"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.06500006;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 339.24308,36.160784 -23.20317,13.39638 v 40.859353"
+       id="path6128-6-2"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.06500006;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 374.96133,41.724974 23.20313,13.39637 v 40.859353"
+       id="path6128-1-2"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.06500006;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 373.38282,36.743794 27.21221,15.80181 v 40.859343"
+       id="path6128-6-0-8"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccc" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="345.37613"
+       y="32.456425"
+       id="text2119-4-6-2-9-2-1-7-4-6-9"><tspan
+         sodipodi:role="line"
+         id="tspan2117-0-7-9-3-9-0-6-5-3-7"
+         x="345.37613"
+         y="32.456425"
+         style="stroke-width:0.26458332">网桥</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="378.62466"
+       y="110.61822"
+       id="text2119-4-6-2-9-2-1-7-4-6-2-3"><tspan
+         sodipodi:role="line"
+         id="tspan2117-0-7-9-3-9-0-6-5-3-0-6"
+         x="378.62466"
+         y="110.61822"
+         style="stroke-width:0.26458332">下一级结构</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.66500002;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 59.927917,-232.49831 H 555.07673"
+       id="path971-6-1"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.66500002;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 60.902499,-223.95108 H 556.05132"
+       id="path971-2"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.66500002;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 61.091489,-218.28144 H 556.24031"
+       id="path971-6-9"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.66500002;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 60.957829,-212.18044 H 556.10665"
+       id="path971-6-1-3"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="318.00156"
+       y="-228.45547"
+       id="text2119-4-9-7-1"><tspan
+         sodipodi:role="line"
+         id="tspan2117-0-8-2-9"
+         x="318.00156"
+         y="-228.45547"
+         style="stroke-width:0.26458332">...</tspan></text>
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.71402597;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-36-7-93-8-0-2-3-6-0-1-6-4-7-9-4"
+       width="89.942413"
+       height="18.929977"
+       x="133.70721"
+       y="-282.85553" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="145.89401"
+       y="-269.91931"
+       id="text2119-4-6-2-9-2-1-7-4-2-7"><tspan
+         sodipodi:role="line"
+         id="tspan2117-0-7-9-3-9-0-6-5-2-8"
+         x="145.89401"
+         y="-269.91931"
+         style="stroke-width:0.26458332">总线master</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:4.72504091;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 177.34206,-211.78493 V -264.7043"
+       id="path5977-5"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:4.53010941;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 180.5493,-211.78492 v -48.64306"
+       id="path5977-0"
+       inkscape:connector-curvature="0" />
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.71402597;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-36-7-93-8-0-2-3-6-0-1-6-4-7-9-4-4-3"
+       width="89.942413"
+       height="18.929977"
+       x="343.24652"
+       y="-186.50488" />
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.71402597;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-36-7-93-8-0-2-3-6-0-1-6-4-7-9-4-6"
+       width="89.942413"
+       height="18.929977"
+       x="340.03928"
+       y="-189.97937" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="352.22607"
+       y="-177.04315"
+       id="text2119-4-6-2-9-2-1-7-4-2-7-1"><tspan
+         sodipodi:role="line"
+         id="tspan2117-0-7-9-3-9-0-6-5-2-8-0"
+         x="352.22607"
+         y="-177.04315"
+         style="stroke-width:0.26458332">总线master</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:4.80783892;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 379.93237,-189.73519 v -54.79026"
+       id="path5977-0-6"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:4.77253008;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 382.33779,-190.26973 v -53.98845"
+       id="path5977-0-3"
+       inkscape:connector-curvature="0" />
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.71402597;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-36-7-93-8-0-2-3-6-0-1-6-4-7-9-2"
+       width="89.942413"
+       height="18.929977"
+       x="467.25958"
+       y="-190.38028" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="485.05905"
+       y="-176.64226"
+       id="text2119-4-6-2-9-2-1-7-4-2-0"><tspan
+         sodipodi:role="line"
+         id="tspan2117-0-7-9-3-9-0-6-5-2-6"
+         x="485.05905"
+         y="-176.64226"
+         style="stroke-width:0.26458332">下一级网桥</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:4.80783892;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 510.76963,-190.67062 v -54.79026"
+       id="path5977-0-6-5"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:4.77253008;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 513.17505,-191.20516 v -53.98845"
+       id="path5977-0-3-5"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="200.93747"
+       y="-130.9021"
+       id="text2119-4-9-7"><tspan
+         sodipodi:role="line"
+         id="tspan2117-0-8-2"
+         x="200.93747"
+         y="-130.9021"
+         style="stroke-width:0.26458332">PCI网络结构（基于Burst的并行总线互联）</tspan></text>
+    <path
+       sodipodi:type="star"
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.86500001;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="path6075-2-7"
+       sodipodi:sides="6"
+       sodipodi:cx="270.75278"
+       sodipodi:cy="-21.489"
+       sodipodi:r1="22.144695"
+       sodipodi:r2="19.177872"
+       sodipodi:arg1="1.0531472"
+       sodipodi:arg2="1.576746"
+       inkscape:flatsided="true"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="m 281.71083,-2.2455949 -22.14431,-0.1317524 -10.95805,-19.2434057 11.18626,-19.111653 22.1443,0.131753 10.95805,19.243405 z"
+       inkscape:transform-center-x="1.2391205e-06" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="259.97894"
+       y="-16.324236"
+       id="text2119-4-6-2-9-2-1-7-4-2-6"><tspan
+         sodipodi:role="line"
+         id="tspan2117-0-7-9-3-9-0-6-5-2-2"
+         x="259.97894"
+         y="-16.324236"
+         style="stroke-width:0.26458332">根桥</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.96499997;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 253.2466,-12.535496 215.1147,9.4799802 V 51.074649"
+       id="path1269"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.93294674;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 255.60294,-9.9337338 219.0492,11.531897 v 40.555838"
+       id="path1269-6"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.16499996;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 287.18982,-11.733676 339.55608,18.49997"
+       id="path1286"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="213.19795"
+       y="161.5403"
+       id="text2119-4-9-7-9"><tspan
+         sodipodi:role="line"
+         id="tspan2117-0-8-2-3"
+         x="213.19795"
+         y="161.5403"
+         style="stroke-width:0.26458332">PCI网络结构（基于SerDes的P2P互联）</tspan></text>
+  </g>
+</svg>

@@ -93,12 +93,18 @@
 <li class="toctree-l1"><a class="reference internal" href="../认识服务器/index.html">认识服务器</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">认识鲲鹏920：一个服务器SoC</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="综述.html">综述</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">总线</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">总线</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">片上总线</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pcie">PCIe总线</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#usb">USB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">其他总线</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="地址空间.html">地址空间</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Cache.html">Cache</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Cache.html#cache-coherency">Cache Coherency</a></li>
 <li class="toctree-l2"><a class="reference internal" href="中断.html">中断</a></li>
-<li class="toctree-l2"><a class="reference internal" href="设备.html">设备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="设备和设备总线.html">设备和设备总线</a></li>
 <li class="toctree-l2"><a class="reference internal" href="管理系统.html">管理系统</a></li>
 </ul>
 </li>
@@ -175,14 +181,19 @@
             
   <div class="section" id="id1">
 <h1>总线<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p>总线，Bus，是把系统各个部件连接在一起的技术。广义上的总线可以包括芯片内部互联的
+片上总线，单机内部互联的外设总线，多机互联的背板总线，乃至网络连接。本章重点介
+绍片上总线的设计，其他总线我们在介绍设备的时候再详细讨论。</p>
+<div class="section" id="id2">
+<h2>片上总线<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
 <p>片上总线，Network on Chip，是SoC设计的基础，SoC上的所有CPU和IO设备，都需要通过
 NoC连接在一起。</p>
 <p>NoC是一个独立的技术门类，其中包括介质，拓扑，安全，算法等各方面专门的研究。每种
 SoC会根据自己的需求特点，选择不同的技术方案和参数。本书不准备深入到总线设计的细
 节中，我们更关注总线的设计是如何影响到服务器的使用者的使用方式的。</p>
-<p>作为片内的通讯方式，大部分NoC的基础是一种数字电路。也就是说，它本质是一个门电路，
-在时钟的驱动下，按一次一跳的方式在不同的组件间传递信息。从软件的角度来来看，这
-可以认为是种“同步”的过程：时钟周期到了，每个部件必须做出唯一的选择。</p>
+<p>作为片内的通讯方式，大部分NoC的基础是一种数字电路。也就是说，它本质是一个门电路
+，在时钟的驱动下，按一次一跳的方式在不同的组件间传递信息。从软件的角度来来看，
+这可以认为是种“同步”的过程：时钟周期到了，每个部件必须做出唯一的选择。</p>
 <blockquote>
 <div><div class="figure">
 <img alt="../_images/noc_principal.svg" src="../_images/noc_principal.svg" /></div>
@@ -205,9 +216,9 @@ SoC会根据自己的需求特点，选择不同的技术方案和参数。本�
 逻辑，通讯介质的设计师专心控制介质提高通讯效率。但串行通讯的速度理论肯定是比不
 上并行通讯的。这样一个自然的想法是多用几个SerDes就好了。所以，片外总线常常有
 Lane的概念，一个Lane，就是一个SerDes的通道。只要在通讯的两端做一个调度器，把数
-据重新排序，就可以扩展通讯带宽了。这种靠一个或者多个Lane构成的通道，称为一个
-链路，Link。增加Lane只是能提高链路的带宽，并不能提供链路的时延。但这也看角度，因
-为如果因为带宽不足造成了等待，低带宽也可以带来高时延。</p>
+据重新排序，就可以扩展通讯带宽了。这种靠一个或者多个Lane构成的通道，称为一个链
+路，Link。增加Lane只是能提高链路的带宽，并不能提高链路的时延。当然这也看角度，
+因为如果因为带宽不足造成了等待，低带宽也可以带来高时延。</p>
 <p>总线通讯协议大致可以分成两层，下层提供基本的通讯能力，上层在这个通讯能力上提供
 读、写，IO，Cache同步等软件语义。</p>
 <p>NoC通讯可以有不同的拓扑结构和通讯协议，不同SoC在这些方案上有不同的选择，从而达
@@ -236,7 +247,7 @@ Lane的概念，一个Lane，就是一个SerDes的通道。只要在通讯的两
 </div>
 </div></blockquote>
 <p>鲲鹏920使用以环状总线为基础的总线拓扑，下面是一个示意图：</p>
-<div class="figure" id="id2">
+<div class="figure" id="id4">
 <img alt="Kungpeng Ring Bus" src="../_images/kunpeng_ring_bus.svg" /><p class="caption"><span class="caption-text">鲲鹏环状总线示意图</span></p>
 </div>
 <p>这个结构有点像城市里的环线地铁：列车在一个环线上一直循环，在每个车站停车上下乘
@@ -252,7 +263,7 @@ Flit中有本站的数据，就取走自己的数据，然后补充本站要发�
 ，就需要网桥，在鲲鹏中称为SLLC，实现在两个总线之间实现数据的“转乘”。这种转乘的
 路线仍是数字电路，但因为经过了网桥的缓存再发，这个效率总是不如在本环之内的。下
 面是一个典型的多Super Cluster的鲲鹏920的连接示意图：</p>
-<div class="figure" id="id3">
+<div class="figure" id="id5">
 <img alt="../_images/kunpeng920_typical_connection.svg" src="../_images/kunpeng920_typical_connection.svg" /><p class="caption"><span class="caption-text">鲲鹏跨Super Cluster互联示意。注意途中的SLLC实际上是通过Super Cluster内
 部的两个部件实现的一个逻辑概念。</span></p>
 </div>
@@ -265,7 +276,7 @@ Flit中有本站的数据，就取走自己的数据，然后补充本站要发�
 <div class="figure">
 <img alt="../_images/kunpeng920_4p.svg" src="../_images/kunpeng920_4p.svg" /></div>
 <p>通过这样一个结构，无论是同一个芯片内部还是多个芯片互联，系统里的任意两个单元都
-是可以互相访问的，但跨SCL就会更慢，而跨片，就会更慢。</p>
+是可以互相访问的，但跨SCL就会慢一些，而跨片，就会更慢。</p>
 <p>内存控制器（DDRC）也是挂在SCCL上的，这样，不同的CPU核和设备访问内存的速度就是不
 一样的。这样的系统，就称为NUMA系统。在NUMA系统上，软件需要意识到访问不同的内存
 地址，速度是不一样的。考虑前面提到的NoC的特点，我们几乎可以认为，如果基础技术不
@@ -295,8 +306,53 @@ Flit中有本站的数据，就取走自己的数据，然后补充本站要发�
 +——————+—–+</p>
 <p>内存地址的访问速度不但和访问者和内存的位置相关，还和Cache的设计相关，这我们在讨
 论Cache和计算子系统的时候再来讨论。</p>
-<p>总线的概念还可以进一步扩展，比如，通过背板甚至Ethernet网桥，可以把总线延伸到整个
-机架，乃至整个数据中心，但语义如何呈现，还是看这些通讯的效率。</p>
+</div>
+<div class="section" id="pcie">
+<h2>PCIe总线<a class="headerlink" href="#pcie" title="永久链接至标题">¶</a></h2>
+<p>PCI总线，Peripheral Component Interconnect，是Intel早年推出的一种外设总线，用于
+连接外部高速设备。这种总线后来逐步成为高速外设的一种标准。PCI是一种并行总线，速
+度有限，最后一个版本PCI-66也就支持533MB/s的传输速度。</p>
+<div class="figure" id="id6">
+<img alt="认识鲲鹏920：一个服务器SoC/kp_pcie_port.png" src="认识鲲鹏920：一个服务器SoC/kp_pcie_port.png" />
+<p class="caption"><span class="caption-text">鲲鹏服务器上的组合PCIE端口</span></p>
+</div>
+<p>PCIe总线是PCI的发展，它改用了串行DerDes的物理层，鲲鹏实现的PCIe的总线速度就可以
+达到6GB/s。它可以级联，构成多样的组合和物理布局。</p>
+<div class="figure" id="id7">
+<img alt="../_images/kp920_pcie_raiser.png" src="../_images/kp920_pcie_raiser.png" />
+<p class="caption"><span class="caption-text">鲲鹏服务器上PCIE扩展器</span></p>
+</div>
+<p>在鲲鹏920的实现中，PCIe总线作为网桥连接在NoC上：</p>
+<div class="figure">
+<img alt="../_images/kp_pcie_on_noc.svg" src="../_images/kp_pcie_on_noc.svg" /></div>
+<p>PCIe总线和系统设备通向MMIO空间，所以PCIE设备和总线上的设备非常接近，其他总线设
+备可以直接访问PCIe设备的的MMIO空间，而PCIe设备也可以访问其他的总线空间，包括其
+他设备的MMIO空间或者总线控制器后面的内存。很多时候，我们都可以认为PCIe总线是NoC
+的一部分。</p>
+</div>
+<div class="section" id="usb">
+<h2>USB<a class="headerlink" href="#usb" title="永久链接至标题">¶</a></h2>
+<p>USB总线是更灵活的总线，但带宽和可靠性无法发PCIe相比，一般用于临时的维护。</p>
+<div class="figure" id="id8">
+<img alt="认识鲲鹏920：一个服务器SoC/kp_usb_port.png" src="认识鲲鹏920：一个服务器SoC/kp_usb_port.png" />
+<p class="caption"><span class="caption-text">鲲鹏服务器上USB端口</span></p>
+</div>
+<p>鲲鹏920的USB实现在辅助设备ICL中：</p>
+<div class="figure">
+<img alt="../_images/kp_usb_on_noc.svg" src="../_images/kp_usb_on_noc.svg" /></div>
+<p>从软件的角度看，USB和PCIe总线不同，USB的控制器是USB总线的代理，要和USB设备通讯，
+只能通过USB向设备发送消息。每个USB设备的用户其实只是USB控制器的一个用户，通过
+USB控制器和目标设备通讯，从而完成功能的提供。这和PCIe直接为设备封装一套地址访问
+接口是不同的。</p>
+</div>
+<div class="section" id="id3">
+<h2>其他总线<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>除了前述的标准总线，服务器中还会存在一些非常规的总线，比如I2C，GPIO，SGPIO等，
+这些总线一般用于各种管理功能。比如鲲鹏920用SGPIO来控制各种LED灯的状态。</p>
+<div class="figure">
+<img alt="../_images/kp_sgpio_on_noc.svg" src="../_images/kp_sgpio_on_noc.svg" /></div>
+<p>这部分总线，和大部分应用无关，本书不深入讨论。</p>
+</div>
 </div>
 
 

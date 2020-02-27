@@ -231,10 +231,15 @@ GNU/Linux的情形，对应的考量，也可以适用于其他软件生态。</
 终的程序的运行效率。这仍是前面说到的改变规则的延续。这一点也对硬件设计提出了很
 高的要求。因为改变这种规则的成本很高，如果硬件的未来改进不能充分利用这种规则，
 这些努力都是浪费的。</p>
-<p>尽管有这么多的分支，最终我们还是需要考虑选择的gcc和llvm的版本。首先，鲲鹏兼容
-ARMv8，所以两个版本都使用aarch64作为目标平台的ARCH类型，如果是GNU/Linux，操作系
-统平台可以选择linux-gnu…todo：分别那些分支版本之后可以支持鲲鹏920?</p>
-<p>todo：能否公开介绍鲲鹏专用的gcc版本和它的设计？</p>
+<p>每个Linux发行版都使用不同的gcc和llvm分支，这些gcc分支中加入了各自的修改，但大部
+分都跟随主线gcc和llvm发展。华为自己提供的EulerOS也提供了自己的分支，它的源代码
+在这里：:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">gitee</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">src</span><span class="o">-</span><span class="n">openeuler</span><span class="o">/</span><span class="n">gcc</span>
+</pre></div>
+</div>
+<p>如果做商用功能，可以选择这些有商业维护的分支，也可以基于这些商业分支自行维护。
+如果要做的是学术验证等方面的工作，更多人会考虑直接从主线分支上做fork，然后合并
+其他开发分支的修改。</p>
 </div>
 <div class="section" id="linux-kernel">
 <h2>Linux Kernel<a class="headerlink" href="#linux-kernel" title="永久链接至标题">¶</a></h2>
@@ -265,7 +270,10 @@ ARMv8，所以两个版本都使用aarch64作为目标平台的ARCH类型，如�
 <p>其他部分还包含其他改变规则，修正Bug的修改，读者可以通过git log –author查找来自
 hisilicon或者huawei的修改（还有部分来自Linaro的修改），可以找到这些修改，他们会
 涉及比如中断子系统，Cache管理，SMMU，ACPI等。</p>
-<p>todo：如何考虑使用那个版本的Kernel去支持鲲鹏920</p>
+<p>和编译器一样，软件开发人员可以根据需要选择主线还是特定的分支进行对应的开发。</p>
+<p>华为用于提供自己的选择的分支也通过Open-Euler提供，这个分支在这里维护：</p>
+<blockquote>
+<div>todo: fixme</div></blockquote>
 </div>
 <div class="section" id="glibc">
 <h2>glibc<a class="headerlink" href="#glibc" title="永久链接至标题">¶</a></h2>
