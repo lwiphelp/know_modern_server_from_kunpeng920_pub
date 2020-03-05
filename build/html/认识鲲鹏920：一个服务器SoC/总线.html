@@ -37,7 +37,7 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
-    <link rel="next" title="地址空间" href="地址空间.html" />
+    <link rel="next" title="软件架构" href="软件构架.html" />
     <link rel="prev" title="综述" href="综述.html" /> 
 </head>
 
@@ -100,6 +100,8 @@
 <li class="toctree-l3"><a class="reference internal" href="#id3">其他总线</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="软件构架.html">软件架构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Linux内核软件架构基础.html">Linux内核软件架构基础</a></li>
 <li class="toctree-l2"><a class="reference internal" href="地址空间.html">地址空间</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Cache.html">Cache</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Cache.html#cache-coherency">Cache Coherency</a></li>
@@ -208,17 +210,17 @@ SoC会根据自己的需求特点，选择不同的技术方案和参数。本�
 <img alt="../_images/network_bridge.svg" src="../_images/network_bridge.svg" /></div>
 </div></blockquote>
 <p>由于NoC作为数字电路的这个特点，现代计算机NoC之外的高速总线几乎没有使用NoC这种方
-式连接的，而采用串行总线。串行总线没有复杂的时钟同步问题，对拉线的要求就低得多
-。这种设计形成了很标准化的设计模式，称为SerDes。SerDes是SERializer-DESerializer
-的缩写，表示把片内的并行总线信号转化为串行信号，到了目标端，再重新变成同步的数
-字并行信号，从而完成整个通讯。</p>
+式连接的。它们大部分采用串行总线。串行总线没有复杂的时钟同步问题，对拉线的要求
+就低得多。这种设计形成了很标准化的设计模式，称为SerDes。SerDes是
+SERializer-DESerializer的缩写，表示把片内的并行总线信号转化为串行信号，到了目标
+端，再重新变成同步的数字并行信号，从而完成整个通讯。</p>
 <p>这种标准化的方法可以给不同的设计人员各自的自由度。片内设计师专心控制数字电路的
 逻辑，通讯介质的设计师专心控制介质提高通讯效率。但串行通讯的速度理论肯定是比不
-上并行通讯的。这样一个自然的想法是多用几个SerDes就好了。所以，片外总线常常有
-Lane的概念，一个Lane，就是一个SerDes的通道。只要在通讯的两端做一个调度器，把数
-据重新排序，就可以扩展通讯带宽了。这种靠一个或者多个Lane构成的通道，称为一个链
-路，Link。增加Lane只是能提高链路的带宽，并不能提高链路的时延。当然这也看角度，
-因为如果因为带宽不足造成了等待，低带宽也可以带来高时延。</p>
+上并行通讯的。这样一个自然的想法是多用几个SerDes。所以，片外总线常常有Lane的概
+念，一个Lane，就是一个SerDes的通道。只要在通讯的两端做一个调度器，把数据重新排
+序，就可以扩展通讯带宽了。这种靠一个或者多个Lane构成的通道，称为一个链路，Link
+。增加Lane只是能提高链路的带宽，并不能提高链路的时延。当然这也看角度，因为如果
+因为带宽不足造成了等待，低带宽也可以带来高时延。</p>
 <p>总线通讯协议大致可以分成两层，下层提供基本的通讯能力，上层在这个通讯能力上提供
 读、写，IO，Cache同步等软件语义。</p>
 <p>NoC通讯可以有不同的拓扑结构和通讯协议，不同SoC在这些方案上有不同的选择，从而达
@@ -251,9 +253,9 @@ Lane的概念，一个Lane，就是一个SerDes的通道。只要在通讯的两
 <img alt="Kungpeng Ring Bus" src="../_images/kunpeng_ring_bus.svg" /><p class="caption"><span class="caption-text">鲲鹏环状总线示意图</span></p>
 </div>
 <p>这个结构有点像城市里的环线地铁：列车在一个环线上一直循环，在每个车站停车上下乘
-客，无限循环。数据在总线时钟的驱动下，从一个Station发到下一个Station。每次从一
-个Station到下一个Station的数据称为一个Flit。上一个Flit到达本站，如果本站发现
-Flit中有本站的数据，就取走自己的数据，然后补充本站要发出去的数据，发向下一站。</p>
+客，周而复始。数据在总线时钟的驱动下，以成组的数据为单位（称为一个Flit），从一
+个Station发到下一个Station。一个Flit到达本站，取走以本站为目的地的数据，发走需
+要发出去的数据，从而完成任意两个节点的通讯需求。</p>
 <p>即使是相同的总线结构，选择不同的参数都会对通讯效率带来很大的不同。比如鲲鹏920对
 时延的要求很高，它设计上会保证Flit的空载率在70%左右，这样每次数据都可以上车，
 这需要留很大的通讯余量。而使用相同技术的Hi1980（市场上所知的达芬奇AI芯片），重
@@ -264,11 +266,11 @@ Flit中有本站的数据，就取走自己的数据，然后补充本站要发�
 路线仍是数字电路，但因为经过了网桥的缓存再发，这个效率总是不如在本环之内的。下
 面是一个典型的多Super Cluster的鲲鹏920的连接示意图：</p>
 <div class="figure" id="id5">
-<img alt="../_images/kunpeng920_typical_connection.svg" src="../_images/kunpeng920_typical_connection.svg" /><p class="caption"><span class="caption-text">鲲鹏跨Super Cluster互联示意。注意途中的SLLC实际上是通过Super Cluster内
-部的两个部件实现的一个逻辑概念。</span></p>
+<img alt="../_images/kunpeng920_typical_connection.svg" src="../_images/kunpeng920_typical_connection.svg" /><p class="caption"><span class="caption-text">鲲鹏跨Super Cluster互联示意图。注意图中的SLLC实际上是通过Super Cluster
+内部的两个部件实现的一个逻辑概念。</span></p>
 </div>
 <p>它包含了两个Super CPU Cluster和一个Super IO Cluster。每个环内有多个Station连接
-了网桥提供转乘功能。SLLC按一定的平衡转发的流量，达成全片互联的目的。</p>
+了SLLC网桥提供转发功能。SLLC按一定的平衡算法调度Flit连通多个环状总线。</p>
 <p>如果需要多片互联，总线就需要延伸到片外，就需要片间互联的网桥。如前所述，片间互
 联需要使用SerDes。鲲鹏920在SICL中设计了一个用于片间互联的模块，称为Hydra。Hydra
 对外提供3个端口，每个端口可以提供8个Lane。这样，鲲鹏920最大可以连成4个芯片组成
@@ -293,17 +295,76 @@ Flit中有本站的数据，就取走自己的数据，然后补充本站要发�
 <div class="line">件可见的物理地址空间，分散在多片物理内存上。</div>
 </div>
 </div></blockquote>
-<p>下图是鲲鹏920上测试的不同距离内存访问的Latency，可以作为编程上的一种定性的参考：</p>
-<p>（单位: 纳秒）
-+——————+—–+
-| 同ring访问       | 89  |
-+——————+—–+
-| 跨SCCL访问       | 106 |
-+——————+—–+
-| 跨Hydra访问      | 184 |
-+——————+—–+
-| 跨SCCL+Hydra访问 | 221 |
-+——————+—–+</p>
+<p>下面是在鲲鹏920上用不同距离内存运行lmbench的结果，读者可以从中看到不同具体的内存
+对性能的影响是怎么样的：</p>
+<p>首先我们用numactl -H看看这个设备的NUMA节点分布：:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">available</span><span class="p">:</span> <span class="mi">4</span> <span class="n">nodes</span> <span class="p">(</span><span class="mi">0</span><span class="o">-</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">node</span> <span class="mi">0</span> <span class="n">cpus</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">10</span> <span class="mi">11</span> <span class="mi">12</span> <span class="mi">13</span> <span class="mi">14</span> <span class="mi">15</span> <span class="mi">16</span> <span class="mi">17</span> <span class="mi">18</span> <span class="mi">19</span> <span class="mi">20</span> <span class="mi">21</span> <span class="mi">22</span> <span class="mi">23</span> <span class="mi">24</span> <span class="mi">25</span> <span class="mi">26</span> <span class="mi">27</span> <span class="mi">28</span> <span class="mi">29</span> <span class="mi">30</span> <span class="mi">31</span>
+<span class="n">node</span> <span class="mi">0</span> <span class="n">size</span><span class="p">:</span> <span class="mi">128667</span> <span class="n">MB</span>
+<span class="n">node</span> <span class="mi">0</span> <span class="n">free</span><span class="p">:</span> <span class="mi">126037</span> <span class="n">MB</span>
+<span class="n">node</span> <span class="mi">1</span> <span class="n">cpus</span><span class="p">:</span> <span class="mi">32</span> <span class="mi">33</span> <span class="mi">34</span> <span class="mi">35</span> <span class="mi">36</span> <span class="mi">37</span> <span class="mi">38</span> <span class="mi">39</span> <span class="mi">40</span> <span class="mi">41</span> <span class="mi">42</span> <span class="mi">43</span> <span class="mi">44</span> <span class="mi">45</span> <span class="mi">46</span> <span class="mi">47</span> <span class="mi">48</span> <span class="mi">49</span> <span class="mi">50</span> <span class="mi">51</span> <span class="mi">52</span> <span class="mi">53</span> <span class="mi">54</span> <span class="mi">55</span> <span class="mi">56</span> <span class="mi">57</span> <span class="mi">58</span> <span class="mi">59</span> <span class="mi">60</span> <span class="mi">61</span> <span class="mi">62</span> <span class="mi">63</span>
+<span class="n">node</span> <span class="mi">1</span> <span class="n">size</span><span class="p">:</span> <span class="mi">129001</span> <span class="n">MB</span>
+<span class="n">node</span> <span class="mi">1</span> <span class="n">free</span><span class="p">:</span> <span class="mi">127782</span> <span class="n">MB</span>
+<span class="n">node</span> <span class="mi">2</span> <span class="n">cpus</span><span class="p">:</span> <span class="mi">64</span> <span class="mi">65</span> <span class="mi">66</span> <span class="mi">67</span> <span class="mi">68</span> <span class="mi">69</span> <span class="mi">70</span> <span class="mi">71</span> <span class="mi">72</span> <span class="mi">73</span> <span class="mi">74</span> <span class="mi">75</span> <span class="mi">76</span> <span class="mi">77</span> <span class="mi">78</span> <span class="mi">79</span> <span class="mi">80</span> <span class="mi">81</span> <span class="mi">82</span> <span class="mi">83</span> <span class="mi">84</span> <span class="mi">85</span> <span class="mi">86</span> <span class="mi">87</span> <span class="mi">88</span> <span class="mi">89</span> <span class="mi">90</span> <span class="mi">91</span> <span class="mi">92</span> <span class="mi">93</span> <span class="mi">94</span> <span class="mi">95</span>
+<span class="n">node</span> <span class="mi">2</span> <span class="n">size</span><span class="p">:</span> <span class="mi">129020</span> <span class="n">MB</span>
+<span class="n">node</span> <span class="mi">2</span> <span class="n">free</span><span class="p">:</span> <span class="mi">126513</span> <span class="n">MB</span>
+<span class="n">node</span> <span class="mi">3</span> <span class="n">cpus</span><span class="p">:</span> <span class="mi">96</span> <span class="mi">97</span> <span class="mi">98</span> <span class="mi">99</span> <span class="mi">100</span> <span class="mi">101</span> <span class="mi">102</span> <span class="mi">103</span> <span class="mi">104</span> <span class="mi">105</span> <span class="mi">106</span> <span class="mi">107</span> <span class="mi">108</span> <span class="mi">109</span> <span class="mi">110</span> <span class="mi">111</span> <span class="mi">112</span> <span class="mi">113</span> <span class="mi">114</span> <span class="mi">115</span> <span class="mi">116</span> <span class="mi">117</span> <span class="mi">118</span> <span class="mi">119</span> <span class="mi">120</span> <span class="mi">121</span> <span class="mi">122</span> <span class="mi">123</span> <span class="mi">124</span> <span class="mi">125</span> <span class="mi">126</span> <span class="mi">127</span>
+<span class="n">node</span> <span class="mi">3</span> <span class="n">size</span><span class="p">:</span> <span class="mi">127993</span> <span class="n">MB</span>
+<span class="n">node</span> <span class="mi">3</span> <span class="n">free</span><span class="p">:</span> <span class="mi">125024</span> <span class="n">MB</span>
+<span class="n">node</span> <span class="n">distances</span><span class="p">:</span>
+<span class="n">node</span>   <span class="mi">0</span>   <span class="mi">1</span>   <span class="mi">2</span>   <span class="mi">3</span>
+  <span class="mi">0</span><span class="p">:</span>  <span class="mi">10</span>  <span class="mi">12</span>  <span class="mi">20</span>  <span class="mi">22</span>
+  <span class="mi">1</span><span class="p">:</span>  <span class="mi">12</span>  <span class="mi">10</span>  <span class="mi">22</span>  <span class="mi">24</span>
+  <span class="mi">2</span><span class="p">:</span>  <span class="mi">20</span>  <span class="mi">22</span>  <span class="mi">10</span>  <span class="mi">12</span>
+  <span class="mi">3</span><span class="p">:</span>  <span class="mi">22</span>  <span class="mi">24</span>  <span class="mi">12</span>  <span class="mi">10</span>
+</pre></div>
+</div>
+<p>这里有4个不同的节点，每个拥有32个CPU核。然后我们用不同距离的内存来看内存访问的速度，这是代码：:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">numactl</span> <span class="o">-</span><span class="n">C</span> <span class="mi">1</span><span class="o">-</span><span class="mi">10</span> <span class="o">-</span><span class="n">m</span> <span class="mi">0</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">lmbench</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">stream</span> <span class="o">-</span><span class="n">M</span> <span class="mi">100</span><span class="n">M</span>
+<span class="n">numactl</span> <span class="o">-</span><span class="n">C</span> <span class="mi">1</span><span class="o">-</span><span class="mi">10</span> <span class="o">-</span><span class="n">m</span> <span class="mi">1</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">lmbench</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">stream</span> <span class="o">-</span><span class="n">M</span> <span class="mi">100</span><span class="n">M</span>
+<span class="n">numactl</span> <span class="o">-</span><span class="n">C</span> <span class="mi">1</span><span class="o">-</span><span class="mi">10</span> <span class="o">-</span><span class="n">m</span> <span class="mi">2</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">lmbench</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">stream</span> <span class="o">-</span><span class="n">M</span> <span class="mi">100</span><span class="n">M</span>
+<span class="n">numactl</span> <span class="o">-</span><span class="n">C</span> <span class="mi">1</span><span class="o">-</span><span class="mi">10</span> <span class="o">-</span><span class="n">m</span> <span class="mi">3</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">lmbench</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">stream</span> <span class="o">-</span><span class="n">M</span> <span class="mi">100</span><span class="n">M</span>
+</pre></div>
+</div>
+<p>程序都运行在node 0上，然后我们尝试把内存分配在node 0，1, 2, 3上，这是运行结果：:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">STREAM</span> <span class="n">copy</span> <span class="n">latency</span><span class="p">:</span> <span class="mf">1.69</span> <span class="n">nanoseconds</span>
+<span class="n">STREAM</span> <span class="n">copy</span> <span class="n">bandwidth</span><span class="p">:</span> <span class="mf">9465.66</span> <span class="n">MB</span><span class="o">/</span><span class="n">sec</span>
+<span class="n">STREAM</span> <span class="n">scale</span> <span class="n">latency</span><span class="p">:</span> <span class="mf">1.71</span> <span class="n">nanoseconds</span>
+<span class="n">STREAM</span> <span class="n">scale</span> <span class="n">bandwidth</span><span class="p">:</span> <span class="mf">9360.66</span> <span class="n">MB</span><span class="o">/</span><span class="n">sec</span>
+<span class="n">STREAM</span> <span class="n">add</span> <span class="n">latency</span><span class="p">:</span> <span class="mf">2.76</span> <span class="n">nanoseconds</span>
+<span class="n">STREAM</span> <span class="n">add</span> <span class="n">bandwidth</span><span class="p">:</span> <span class="mf">8699.43</span> <span class="n">MB</span><span class="o">/</span><span class="n">sec</span>
+<span class="n">STREAM</span> <span class="n">triad</span> <span class="n">latency</span><span class="p">:</span> <span class="mf">2.85</span> <span class="n">nanoseconds</span>
+<span class="n">STREAM</span> <span class="n">triad</span> <span class="n">bandwidth</span><span class="p">:</span> <span class="mf">8434.55</span> <span class="n">MB</span><span class="o">/</span><span class="n">sec</span>
+
+<span class="n">STREAM</span> <span class="n">copy</span> <span class="n">latency</span><span class="p">:</span> <span class="mf">5.10</span> <span class="n">nanoseconds</span>
+<span class="n">STREAM</span> <span class="n">copy</span> <span class="n">bandwidth</span><span class="p">:</span> <span class="mf">3138.88</span> <span class="n">MB</span><span class="o">/</span><span class="n">sec</span>
+<span class="n">STREAM</span> <span class="n">scale</span> <span class="n">latency</span><span class="p">:</span> <span class="mf">5.16</span> <span class="n">nanoseconds</span>
+<span class="n">STREAM</span> <span class="n">scale</span> <span class="n">bandwidth</span><span class="p">:</span> <span class="mf">3101.78</span> <span class="n">MB</span><span class="o">/</span><span class="n">sec</span>
+<span class="n">STREAM</span> <span class="n">add</span> <span class="n">latency</span><span class="p">:</span> <span class="mf">7.98</span> <span class="n">nanoseconds</span>
+<span class="n">STREAM</span> <span class="n">add</span> <span class="n">bandwidth</span><span class="p">:</span> <span class="mf">3007.97</span> <span class="n">MB</span><span class="o">/</span><span class="n">sec</span>
+<span class="n">STREAM</span> <span class="n">triad</span> <span class="n">latency</span><span class="p">:</span> <span class="mf">6.11</span> <span class="n">nanoseconds</span>
+<span class="n">STREAM</span> <span class="n">triad</span> <span class="n">bandwidth</span><span class="p">:</span> <span class="mf">3926.80</span> <span class="n">MB</span><span class="o">/</span><span class="n">sec</span>
+
+<span class="n">STREAM</span> <span class="n">copy</span> <span class="n">latency</span><span class="p">:</span> <span class="mf">6.25</span> <span class="n">nanoseconds</span>
+<span class="n">STREAM</span> <span class="n">copy</span> <span class="n">bandwidth</span><span class="p">:</span> <span class="mf">2561.84</span> <span class="n">MB</span><span class="o">/</span><span class="n">sec</span>
+<span class="n">STREAM</span> <span class="n">scale</span> <span class="n">latency</span><span class="p">:</span> <span class="mf">6.38</span> <span class="n">nanoseconds</span>
+<span class="n">STREAM</span> <span class="n">scale</span> <span class="n">bandwidth</span><span class="p">:</span> <span class="mf">2509.00</span> <span class="n">MB</span><span class="o">/</span><span class="n">sec</span>
+<span class="n">STREAM</span> <span class="n">add</span> <span class="n">latency</span><span class="p">:</span> <span class="mf">11.22</span> <span class="n">nanoseconds</span>
+<span class="n">STREAM</span> <span class="n">add</span> <span class="n">bandwidth</span><span class="p">:</span> <span class="mf">2139.68</span> <span class="n">MB</span><span class="o">/</span><span class="n">sec</span>
+<span class="n">STREAM</span> <span class="n">triad</span> <span class="n">latency</span><span class="p">:</span> <span class="mf">7.49</span> <span class="n">nanoseconds</span>
+<span class="n">STREAM</span> <span class="n">triad</span> <span class="n">bandwidth</span><span class="p">:</span> <span class="mf">3202.56</span> <span class="n">MB</span><span class="o">/</span><span class="n">sec</span>
+
+<span class="n">STREAM</span> <span class="n">copy</span> <span class="n">latency</span><span class="p">:</span> <span class="mf">7.90</span> <span class="n">nanoseconds</span>
+<span class="n">STREAM</span> <span class="n">copy</span> <span class="n">bandwidth</span><span class="p">:</span> <span class="mf">2024.93</span> <span class="n">MB</span><span class="o">/</span><span class="n">sec</span>
+<span class="n">STREAM</span> <span class="n">scale</span> <span class="n">latency</span><span class="p">:</span> <span class="mf">6.74</span> <span class="n">nanoseconds</span>
+<span class="n">STREAM</span> <span class="n">scale</span> <span class="n">bandwidth</span><span class="p">:</span> <span class="mf">2374.25</span> <span class="n">MB</span><span class="o">/</span><span class="n">sec</span>
+<span class="n">STREAM</span> <span class="n">add</span> <span class="n">latency</span><span class="p">:</span> <span class="mf">13.79</span> <span class="n">nanoseconds</span>
+<span class="n">STREAM</span> <span class="n">add</span> <span class="n">bandwidth</span><span class="p">:</span> <span class="mf">1740.70</span> <span class="n">MB</span><span class="o">/</span><span class="n">sec</span>
+<span class="n">STREAM</span> <span class="n">triad</span> <span class="n">latency</span><span class="p">:</span> <span class="mf">9.22</span> <span class="n">nanoseconds</span>
+<span class="n">STREAM</span> <span class="n">triad</span> <span class="n">bandwidth</span><span class="p">:</span> <span class="mf">2603.96</span> <span class="n">MB</span><span class="o">/</span><span class="n">sec</span>
+</pre></div>
+</div>
+<p>可以看到，这个差距还是非常明显的。</p>
 <p>内存地址的访问速度不但和访问者和内存的位置相关，还和Cache的设计相关，这我们在讨
 论Cache和计算子系统的时候再来讨论。</p>
 </div>
@@ -313,7 +374,7 @@ Flit中有本站的数据，就取走自己的数据，然后补充本站要发�
 连接外部高速设备。这种总线后来逐步成为高速外设的一种标准。PCI是一种并行总线，速
 度有限，最后一个版本PCI-66也就支持533MB/s的传输速度。</p>
 <div class="figure" id="id6">
-<img alt="认识鲲鹏920：一个服务器SoC/kp_pcie_port.png" src="认识鲲鹏920：一个服务器SoC/kp_pcie_port.png" />
+<img alt="../_images/kp920_pcie_port.png" src="../_images/kp920_pcie_port.png" />
 <p class="caption"><span class="caption-text">鲲鹏服务器上的组合PCIE端口</span></p>
 </div>
 <p>PCIe总线是PCI的发展，它改用了串行DerDes的物理层，鲲鹏实现的PCIe的总线速度就可以
@@ -334,7 +395,7 @@ Flit中有本站的数据，就取走自己的数据，然后补充本站要发�
 <h2>USB<a class="headerlink" href="#usb" title="永久链接至标题">¶</a></h2>
 <p>USB总线是更灵活的总线，但带宽和可靠性无法发PCIe相比，一般用于临时的维护。</p>
 <div class="figure" id="id8">
-<img alt="认识鲲鹏920：一个服务器SoC/kp_usb_port.png" src="认识鲲鹏920：一个服务器SoC/kp_usb_port.png" />
+<img alt="../_images/kp920_usb_port.png" src="../_images/kp920_usb_port.png" />
 <p class="caption"><span class="caption-text">鲲鹏服务器上USB端口</span></p>
 </div>
 <p>鲲鹏920的USB实现在辅助设备ICL中：</p>
@@ -363,7 +424,7 @@ USB控制器和目标设备通讯，从而完成功能的提供。这和PCIe直�
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="地址空间.html" class="btn btn-neutral float-right" title="地址空间" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="软件构架.html" class="btn btn-neutral float-right" title="软件架构" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="综述.html" class="btn btn-neutral float-left" title="综述" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

@@ -28,7 +28,7 @@ Cache
 
 .. figure:: layered_classed.svg
 
-Cache既是一种分层也是一种分类的而优化手段。这是从架构设计角度看Cache，从实现的
+Cache既是一种分层也是一种分类的而优化手段。这是从架构设计角度看Cache。从实现的
 角度看Cache，不少设计者会认为Cache的存在是因为存储介质的成本原因。DDR的成本远远
 低于速度更快的入SRAM等介质，这是在CPU中引入的Cache的一个重要原因。这恰恰是架构
 设计的特点：每个决策都是一个多个多维度决策要素共同决定的。但决定只能有一个选择
@@ -100,7 +100,11 @@ Cache的访问长度总是固定，而且比较长的，这个长度就称为Cac
 
 在Linux下，可以通过下面命令读到这个长度：::
 
-        getconf LEVEL1_DCACHE_LINESIZE获得这个长度
+        getconf LEVEL1_DCACHE_LINESIZE
+
+下面是在鲲鹏920上运行getconf的结果：::
+
+        todo: 待测试
 
 在指令一级，ARMv8架构定义ctr_el0提供Cacheline的长度，鲲鹏920上可以通过读这个寄
 存器获得这个长度。
@@ -108,8 +112,12 @@ Cache的访问长度总是固定，而且比较长的，这个长度就称为Cac
 .. code-block:: c
 
         asm volatile ("mrs\t%0, ctr_el0" : "=r" (ctr_value))        
+        icache = 4 << (ctr_value & 0xF)
+        dcache = 4 << ((ctr_value>>16) & 0xF)
 
-todo: 寄存器格式和代码运行结果
+这个程序的运行结果是：::
+
+        ctr=0x84448004, icache=64, dcache=64
 
 Cacheline的地址有两种可能的设计，一种是基于虚拟地址，一种是基于物理地址。一般用
 物理地址比较常见。在鲲鹏920上，除了L1指令Cache，都是基于物理地址寻址的。而指令

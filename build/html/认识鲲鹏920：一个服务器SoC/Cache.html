@@ -94,6 +94,8 @@
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">认识鲲鹏920：一个服务器SoC</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="综述.html">综述</a></li>
 <li class="toctree-l2"><a class="reference internal" href="总线.html">总线</a></li>
+<li class="toctree-l2"><a class="reference internal" href="软件构架.html">软件架构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Linux内核软件架构基础.html">Linux内核软件架构基础</a></li>
 <li class="toctree-l2"><a class="reference internal" href="地址空间.html">地址空间</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Cache</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id1">介绍</a></li>
@@ -106,7 +108,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#cache-coherency">Cache Coherency</a></li>
 <li class="toctree-l2"><a class="reference internal" href="中断.html">中断</a></li>
-<li class="toctree-l2"><a class="reference internal" href="设备.html">设备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="设备和设备总线.html">设备和设备总线</a></li>
 <li class="toctree-l2"><a class="reference internal" href="管理系统.html">管理系统</a></li>
 </ul>
 </li>
@@ -209,7 +211,7 @@
 于功能分解的，而是基于语义空间进行分解的，这是另一个维度。</p>
 <div class="figure">
 <img alt="../_images/layered_classed.svg" src="../_images/layered_classed.svg" /></div>
-<p>Cache既是一种分层也是一种分类的而优化手段。这是从架构设计角度看Cache，从实现的
+<p>Cache既是一种分层也是一种分类的而优化手段。这是从架构设计角度看Cache。从实现的
 角度看Cache，不少设计者会认为Cache的存在是因为存储介质的成本原因。DDR的成本远远
 低于速度更快的入SRAM等介质，这是在CPU中引入的Cache的一个重要原因。这恰恰是架构
 设计的特点：每个决策都是一个多个多维度决策要素共同决定的。但决定只能有一个选择
@@ -271,15 +273,24 @@ Cache的访问长度总是固定，而且比较长的，这个长度就称为Cac
 <p>对于程序员来说，让数据结构尽量Cacheline对齐，这对性能会有帮助。但具体对齐那个长
 度，会不一样。一般来说，按L1对齐是比较安全的。</p>
 <p>在Linux下，可以通过下面命令读到这个长度：:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">getconf</span> <span class="n">LEVEL1_DCACHE_LINESIZE获得这个长度</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">getconf</span> <span class="n">LEVEL1_DCACHE_LINESIZE</span>
+</pre></div>
+</div>
+<p>下面是在鲲鹏920上运行getconf的结果：:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">todo</span><span class="p">:</span> <span class="n">待测试</span>
 </pre></div>
 </div>
 <p>在指令一级，ARMv8架构定义ctr_el0提供Cacheline的长度，鲲鹏920上可以通过读这个寄
 存器获得这个长度。</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">asm</span> <span class="k">volatile</span> <span class="p">(</span><span class="s">&quot;mrs</span><span class="se">\t</span><span class="s">%0, ctr_el0&quot;</span> <span class="o">:</span> <span class="s">&quot;=r&quot;</span> <span class="p">(</span><span class="n">ctr_value</span><span class="p">))</span>
+<span class="n">icache</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">ctr_value</span> <span class="o">&amp;</span> <span class="mh">0xF</span><span class="p">)</span>
+<span class="n">dcache</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">&lt;&lt;</span> <span class="p">((</span><span class="n">ctr_value</span><span class="o">&gt;&gt;</span><span class="mi">16</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xF</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>todo: 寄存器格式和代码运行结果</p>
+<p>这个程序的运行结果是：:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ctr</span><span class="o">=</span><span class="mh">0x84448004</span><span class="p">,</span> <span class="n">icache</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">dcache</span><span class="o">=</span><span class="mi">64</span>
+</pre></div>
+</div>
 <p>Cacheline的地址有两种可能的设计，一种是基于虚拟地址，一种是基于物理地址。一般用
 物理地址比较常见。在鲲鹏920上，除了L1指令Cache，都是基于物理地址寻址的。而指令
 Cache比较特别，它有时基于物理地址，有时基于虚拟地址，这个取决于指令译码器的行为

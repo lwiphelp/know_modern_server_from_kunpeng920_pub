@@ -9,9 +9,9 @@
 中断是一种重要的异步通讯机制。我们从没有中断的系统的通讯方式来理解中断在计算机
 系统中的作用：
 
-总线把计算机中的CPU和设备连接在一起，对于总线，CPU和设备其实没有什么区别，所以，
-我们也可以把CPU看做是一种设备。总线上的每个设备是独立的实体，它们如果要配合完成同一个工作，
-就需要把工作分成多个任务，分别分配给不同的设备执行。
+总线把计算机中的CPU和设备连接在一起，对于总线，CPU和设备其实没有什么区别，所以
+，我们也可以把CPU看做是一种设备。总线上的每个设备是独立的实体，它们如果要配合完
+成同一个工作，就需要把工作分成多个任务，分别分配给不同的设备执行。
 
 那么，如果设备B完成了一个任务要告知A，这应该怎么办呢？一般有两种方法：
 
@@ -137,7 +137,7 @@ MSI和PCIe的MSI-X就是典型的消息中断。它把设备的中断请求转�
 基于总线消息的中断报告形态，就叫消息中断。
 
 早期GIC标准定义GICD的时候，对消息中断的支持考虑不多，后期要增强的时候也不适合修
-改GICD的定义了。所以从GICv3开始，GIC标准就引入了ITS来解决问题。
+改GICD的定义了。所以从GICv3开始，GIC标准就引入了ITS来解决消息中断的问题。
 
         | ITS
         | Interrrupt Translation Service
@@ -152,34 +152,75 @@ ITS可以直接支持MSI/MSI-X，我们可以从鲲鹏920对GICv3的实现理解
 和GICD不同，ITS直接作为一个通讯节点挂在总线上，MSI/MSI-X中断可以直接写到它的中
 断物理地址上，就可以直接产生中断了。
 
+从泰山920服务器运行Linux 5.0一个启动记录中我们可以看到泰山920的ITS分布实例： ::
+
+        [    0.000000] SRAT: PXM 0 -> ITS 0 -> Node 0
+        [    0.000000] SRAT: PXM 2 -> ITS 1 -> Node 2
+        [    0.000000] ITS [mem 0x202100000-0x20211ffff]
+        [    0.000000] ITS@0x0000000202100000: Using ITS number 0
+        [    0.000000] ITS@0x0000000202100000: allocated 65536 Devices @3f7e400000 (flat, esz 8, psz 16K, shr 1)
+        [    0.000000] ITS@0x0000000202100000: allocated 65536 Virtual CPUs @3f7e500000 (flat, esz 16, psz 4K, shr 1)
+        [    0.000000] ITS@0x0000000202100000: allocated 256 Interrupt Collections @3f7e387000 (flat, esz 16, psz 4K, shr 1)
+        [    0.000000] ITS [mem 0x200202100000-0x20020211ffff]
+        [    0.000000] ITS@0x0000200202100000: Using ITS number 1
+        [    0.000000] ITS@0x0000200202100000: allocated 65536 Devices @3f7e480000 (flat, esz 8, psz 16K, shr 1)
+        [    0.000000] ITS@0x0000200202100000: allocated 65536 Virtual CPUs @3f7e600000 (flat, esz 16, psz 4K, shr 1)
+        [    0.000000] ITS@0x0000200202100000: allocated 256 Interrupt Collections @3f7e388000 (flat, esz 16, psz 4K, shr 1)
+
+这个硬件包含两个Socket，每个Socket中包含一个ITS。所以这里包含两个独立的ITS。理
+论上我们应该把本Socket的设备绑定到本Socket的ITS上，但由于都是总线关联，实际上软
+件可以根据需要进行想要的任何绑定。
+
 为了把片内部分设备简单的电平或者边缘触发中断转化为这种消息，鲲鹏920中设计了一些
-中断收集器，称为MBIGEN, Message-Based Interrupt Gernerator，它可以把收集的线路
-中断转化为ITS认可的消息。这样一来GICD就只留给一些系统级的，或者传统的中断使用了。
+中断收集器，称为MBIGEN, Message-Based Interrupt Gernerator。它可以把收集的线路
+中断转化为ITS认可的消息。这样一来GICD就只留给一些系统级的，或者传统的中断使用了
+。鲲鹏920大量使用MBIGEN，这些设备在主线Linux Kernel中实现为平台设备，如果开启
+平台设备调试，可以看到这些设备的发现过程。
 
-todo：920ITS的分布情况和中断号的分布情况。
+下面是泰山920服务器中运行Linux Kernel 5.0的相关启动记录： ::
 
-消息中断
-上面这种方案很“顺理成章”，但灵活性并不好，既然都已经有无处不在的总线了，为什么
-不直接利用总线本身的功能来发中断呢？
+        [    8.892866] bus: 'platform': add driver Hisilicon MBIGEN-V2
+        [    8.892957] bus: 'platform': driver_probe_device: matched device HISI0152:00 with driver Hisilicon MBIGEN-V2
+        [    8.892959] bus: 'platform': really_probe: probing driver Hisilicon MBIGEN-V2 with device HISI0152:00
+        [    8.892982] irq: Added domain \_SB_.MB30
+        [    8.892992] ITS: alloc 8192:32
+        [    8.892995] ITT 32 entries, 5 bits
+        [    8.892996] driver: 'Hisilicon MBIGEN-V2': driver_bound: bound to device 'HISI0152:00'
+        [    8.893003] bus: 'platform': really_probe: bound device HISI0152:00 to driver Hisilicon MBIGEN-V2
+        [    8.893006] bus: 'platform': driver_probe_device: matched device HISI0152:01 with driver Hisilicon MBIGEN-V2
+        [    8.893008] bus: 'platform': really_probe: probing driver Hisilicon MBIGEN-V2 with device HISI0152:01
+        [    8.893018] irq: Added domain \_SB_.MB31
+        [    8.893021] ITS: alloc 8224:32
+        [    8.893024] ITT 32 entries, 5 bits
+        ...
+        [    8.894746] bus: 'platform': driver_probe_device: matched device HISI0152:38 with driver Hisilicon MBIGEN-V2
+        [    8.894748] bus: 'platform': really_probe: probing driver Hisilicon MBIGEN-V2 with device HISI0152:38
+        [    8.894750] Hisilicon MBIGEN-V2 HISI0152:38: no default pinctrl state
+        [    8.894759] irq: Added domain \_SB_.MB5E
+        [    8.894776] ITS: alloc 9984:32
+        [    8.894779] ITT 32 entries, 5 bits
+        [    8.894780] driver: 'Hisilicon MBIGEN-V2': driver_bound: bound to device 'HISI0152:38'
 
-这样就引入了消息中断的概念：只要增加一个设备，给这个设备分配一个物理地址，只要
-访问这个地址（通常是对这个地址写中断号一类的信息），这个设备负责给路由器发一个
-中断要求就可以了。
+这个过程遵循Linux标准的driver-bus-device逻辑：mbigen driver（在
+drivers/irqchip/irq-mbigen.c中实现）先绑定platform总线，然后ACPI初始化程序发现
+设备的定义：HISI0152:xx，注册到总线中，匹配到驱动，驱动的probe程序初始化设备，
+然后增加一个\_SB_.MBxx的irq domain，对中断进行管理。
 
-有了ITS和GICR，我们可以对不同的中断进行不同调度，但这些属于GIC的具体编程接口，
-不是原理，本书就不深入介绍了。
 
 软件实现
 --------
 
 todo：需要对照代码细化一次：
 
-仍用Linux Kernel作为我们的例子。中断处理的过程我们留到计算子系统来讨论。这里我们
-主要讨论GIC的驱动本身如何工作的。
+我们仍用Linux Kernel作为我们的软件实现研究对象。中断处理的过程我们留到计算子系
+统来讨论。这里我们主要讨论GIC的驱动本身如何工作的。
 
 Linux把中断控制器抽象成两种对象来管理，一个是irq_chip，一个是irq_domain。前者代
 表一个中断控制单元，比如前面的GICD，ITS等对象，而后者代表一段中断号的空间，重点
 是把设备认为的中断号转化为Linux认可的软件的中断号。
+
+我们前面看到了，现代的服务器处理器不依靠CPU的中断线来判断发生了几号中断，CPU的
+中断线只表示类型，而中断控制器上的中断号才表示实际哪个设备发生了中断。
 
 irq_chip本身不是Linux内核中的device，Linux Kernel使用专有的通用方法发现它们，可
 以是device tree，也可以是ACPI接口。

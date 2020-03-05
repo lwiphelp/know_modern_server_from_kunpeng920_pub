@@ -38,7 +38,7 @@
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
     <link rel="next" title="计算子系统" href="../计算子系统/index.html" />
-    <link rel="prev" title="设备" href="设备.html" /> 
+    <link rel="prev" title="设备和设备总线" href="设备和设备总线.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -93,13 +93,14 @@
 <li class="toctree-l1"><a class="reference internal" href="../认识服务器/index.html">认识服务器</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">认识鲲鹏920：一个服务器SoC</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="综述.html">综述</a></li>
-<li class="toctree-l2"><a class="reference internal" href="软件构架设计.html">软件架构设计</a></li>
 <li class="toctree-l2"><a class="reference internal" href="总线.html">总线</a></li>
+<li class="toctree-l2"><a class="reference internal" href="软件构架.html">软件架构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Linux内核软件架构基础.html">Linux内核软件架构基础</a></li>
 <li class="toctree-l2"><a class="reference internal" href="地址空间.html">地址空间</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Cache系统.html">Cache系统</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Cache系统.html#cache-coherency">Cache Coherency</a></li>
-<li class="toctree-l2"><a class="reference internal" href="中断系统.html">GIC和总线的关系</a></li>
-<li class="toctree-l2"><a class="reference internal" href="设备.html">设备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Cache.html">Cache</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Cache.html#cache-coherency">Cache Coherency</a></li>
+<li class="toctree-l2"><a class="reference internal" href="中断.html">中断</a></li>
+<li class="toctree-l2"><a class="reference internal" href="设备和设备总线.html">设备和设备总线</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">管理系统</a></li>
 </ul>
 </li>
@@ -176,7 +177,31 @@
             
   <div class="section" id="id1">
 <h1>管理系统<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
-<p>BMC通过IPMB总线连接IMU子系统，todo…</p>
+<p>服务器和一般PC一个很大的区别是它有BMC。BMC本质上也是一台计算机，它和主系统并行
+运行在服务器中，一般它也不包含电源开关，只要接通电源，BMC就会进入工作。</p>
+<p>下面是泰山服务器上的Hi1710 BMC芯片：</p>
+<div class="figure">
+<img alt="../_images/kp920-hi1710.jpg" src="../_images/kp920-hi1710.jpg" />
+</div>
+<p>BMC有自己的CPU，存储，内存等所有设施，它可以直接控制主CPU和各种外设的电源，可以
+读取传感器的值，它还通过连通鲲鹏920的PCIe设备提供显卡，键盘等虚拟设备，但它无法
+直接控制鲲鹏920内部的设备。</p>
+<p>在鲲鹏920芯片内部，还设计了另一个独立的系统负责配合BMC的工作，这个系统称为IMU，
+负责配合BMC的工作。它也有自己的CPU，存储，有独立的线路连接片内的各个设备和传感
+器，可以单独复位，挂起每个设备。它还包含Secure Boot Engine和Watch Dog等设施，
+可以完成安全启动和死锁监控等功能。</p>
+<blockquote>
+<div><div class="line-block">
+<div class="line">eFuse</div>
+<div class="line">todo</div>
+</div>
+</div></blockquote>
+<p>IMU集成在SICL中，可以复用总线进行全局通讯，但在内部，它有自己的总线和其他控制总
+线，很多通讯不需要经过系统总线。当有多个SICL的时候，全系统只有一个IMU会被投入工
+作。</p>
+<p>这个子系统的结构如下：</p>
+<div class="figure">
+<img alt="../_images/kp920_imu.svg" src="../_images/kp920_imu.svg" /></div>
 </div>
 
 
@@ -190,7 +215,7 @@
         <a href="../计算子系统/index.html" class="btn btn-neutral float-right" title="计算子系统" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="设备.html" class="btn btn-neutral float-left" title="设备" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="设备和设备总线.html" class="btn btn-neutral float-left" title="设备和设备总线" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
