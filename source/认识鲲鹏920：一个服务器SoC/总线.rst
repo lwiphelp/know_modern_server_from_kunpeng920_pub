@@ -124,19 +124,77 @@ NoC通讯可以有不同的拓扑结构和通讯协议，不同SoC在这些方�
         | 相关，因为硬件可以已通过总线的上层协议实现内存访问的interleave，把软
         | 件可见的物理地址空间，分散在多片物理内存上。
 
-下图是鲲鹏920上测试的不同距离内存访问的Latency，可以作为编程上的一种定性的参考：
+下面是在鲲鹏920上用不同距离内存运行lmbench的结果，读者可以从中看到不同具体的内存
+对性能的影响是怎么样的：
 
-（单位: 纳秒）
+首先我们用numactl -H看看这个设备的NUMA节点分布：::
 
-+------------------+-----+
-| 同ring访问       | 89  | 
-+------------------+-----+
-| 跨SCCL访问       | 106 |
-+------------------+-----+
-| 跨Hydra访问      | 184 |
-+------------------+-----+
-| 跨SCCL+Hydra访问 | 221 |
-+------------------+-----+
+        available: 4 nodes (0-3)
+        node 0 cpus: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31
+        node 0 size: 128667 MB
+        node 0 free: 126037 MB
+        node 1 cpus: 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63
+        node 1 size: 129001 MB
+        node 1 free: 127782 MB
+        node 2 cpus: 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95
+        node 2 size: 129020 MB
+        node 2 free: 126513 MB
+        node 3 cpus: 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127
+        node 3 size: 127993 MB
+        node 3 free: 125024 MB
+        node distances:
+        node   0   1   2   3 
+          0:  10  12  20  22 
+          1:  12  10  22  24 
+          2:  20  22  10  12 
+          3:  22  24  12  10 
+
+这里有4个不同的节点，每个拥有32个CPU核。然后我们用不同距离的内存来看内存访问的速度，这是代码：::
+
+        numactl -C 1-10 -m 0 /usr/lib/lmbench/bin/stream -M 100M
+        numactl -C 1-10 -m 1 /usr/lib/lmbench/bin/stream -M 100M
+        numactl -C 1-10 -m 2 /usr/lib/lmbench/bin/stream -M 100M
+        numactl -C 1-10 -m 3 /usr/lib/lmbench/bin/stream -M 100M
+
+程序都运行在node 0上，然后我们尝试把内存分配在node 0，1, 2, 3上，这是运行结果：::
+
+        STREAM copy latency: 1.69 nanoseconds
+        STREAM copy bandwidth: 9465.66 MB/sec
+        STREAM scale latency: 1.71 nanoseconds
+        STREAM scale bandwidth: 9360.66 MB/sec
+        STREAM add latency: 2.76 nanoseconds
+        STREAM add bandwidth: 8699.43 MB/sec
+        STREAM triad latency: 2.85 nanoseconds
+        STREAM triad bandwidth: 8434.55 MB/sec
+
+        STREAM copy latency: 5.10 nanoseconds
+        STREAM copy bandwidth: 3138.88 MB/sec
+        STREAM scale latency: 5.16 nanoseconds
+        STREAM scale bandwidth: 3101.78 MB/sec
+        STREAM add latency: 7.98 nanoseconds
+        STREAM add bandwidth: 3007.97 MB/sec
+        STREAM triad latency: 6.11 nanoseconds
+        STREAM triad bandwidth: 3926.80 MB/sec
+
+        STREAM copy latency: 6.25 nanoseconds
+        STREAM copy bandwidth: 2561.84 MB/sec
+        STREAM scale latency: 6.38 nanoseconds
+        STREAM scale bandwidth: 2509.00 MB/sec
+        STREAM add latency: 11.22 nanoseconds
+        STREAM add bandwidth: 2139.68 MB/sec
+        STREAM triad latency: 7.49 nanoseconds
+        STREAM triad bandwidth: 3202.56 MB/sec
+
+        STREAM copy latency: 7.90 nanoseconds
+        STREAM copy bandwidth: 2024.93 MB/sec
+        STREAM scale latency: 6.74 nanoseconds
+        STREAM scale bandwidth: 2374.25 MB/sec
+        STREAM add latency: 13.79 nanoseconds
+        STREAM add bandwidth: 1740.70 MB/sec
+        STREAM triad latency: 9.22 nanoseconds
+        STREAM triad bandwidth: 2603.96 MB/sec
+
+可以看到，这个差距还是非常明显的。
 
 内存地址的访问速度不但和访问者和内存的位置相关，还和Cache的设计相关，这我们在讨
 论Cache和计算子系统的时候再来讨论。
@@ -171,7 +229,7 @@ USB
 ----
 USB总线是更灵活的总线，但带宽和可靠性无法发PCIe相比，一般用于临时的维护。
 
-.. figure:: kp_usb_port.png
+.. figure:: kp920_usb_port.png
 
         鲲鹏服务器上USB端口
 

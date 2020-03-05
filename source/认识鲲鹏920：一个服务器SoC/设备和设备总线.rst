@@ -27,7 +27,7 @@ P2P串行总线。图示如下：
 
 所以PCIe总线和鲲鹏的系统总线不同，它是一个树状的分层架构：
 
-.. figure:: pcie-arch.svg
+.. figure:: pcie_arch.svg
 
 其中的RC是一个虚拟的概念，相当于软件对于PCI设备访问的一个抽象，实现相关，之后是
 链接出去的独立的终点（EP，End Point）或者网桥，网桥复制这个结构，就形成整个网络
@@ -58,8 +58,8 @@ P2P串行总线。图示如下：
 
 但对于PCIe总线，这个问题比一般的系统总线设备会复杂得多。系统总线是固定的，有多
 少设备一开始就可以知道，配合DAW机制，我们可以给每个设备固定的地址空间。而对于
-PCIe的网桥，我们可以给它一个地址空间。但当数据发到这个网桥本身的时候，它怎么知道
-这个数据属于下属的哪个设备或者哪个网桥呢？
+PCIe的网桥，我们可以给它一个地址空间。但当数据发到这个网桥本身的时候，它怎么知
+道这个数据属于下属的哪个设备或者哪个网桥呢？
 
 这涉及PCIe总线控制器的枚举过程，BIOS或者OS在使用PCIE设备前，需要扫描整个总线结
 构，找到每个通讯节点，给它指定地址，这样未来再发地址请求过来，PCIe的设备和网桥
@@ -200,9 +200,8 @@ DAW把各个根桥的地址分配到不同的Station上，之后不同的地址�
 备上了。
 
 总线地址完成分配后，在Linux中可以通过lspci看到整个分配的过程。比如，下面是一个
-插了外置设备的泰山服务器的lspci结果：
+插了外置设备的泰山服务器的lspci结果：::
 
-        ::
         00:00.0 PCI bridge: Huawei Technologies Co., Ltd. HiSilicon PCIe Root Port with Gen4 (rev 21)
         00:08.0 PCI bridge: Huawei Technologies Co., Ltd. HiSilicon PCIe Root Port with Gen4 (rev 21)
         00:0c.0 PCI bridge: Huawei Technologies Co., Ltd. HiSilicon PCIe Root Port with Gen4 (rev 21)
@@ -268,6 +267,7 @@ DAW把各个根桥的地址分配到不同的Station上，之后不同的地址�
         bd:00.2 Ethernet controller: Huawei Technologies Co., Ltd. HNS GE/10GE/25GE RDMA Network Controller (rev 21)
         bd:00.3 Ethernet controller: Huawei Technologies Co., Ltd. HNS GE/10GE/25GE Network Controller (rev 21)
 
+
 把它绘制成一个完整的连接图，就是这样的：
 
 .. figure:: taishan920_bus_id_example.svg
@@ -278,6 +278,9 @@ DAW把各个根桥的地址分配到不同的Station上，之后不同的地址�
 
 中断处理
 ---------
+
+我们再看看设备中断如何透过PCIe总线进入系统的中断控制系统。前面我们提到，传统的
+中断其实是信号线上的电平变化。在PCI的时代，中断
 
 IO虚拟化
 --------

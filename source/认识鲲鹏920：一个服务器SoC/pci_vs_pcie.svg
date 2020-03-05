@@ -9,9 +9,9 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="504.89368mm"
+   width="521.7663mm"
    height="483.59433mm"
-   viewBox="0 0 504.8937 483.59436"
+   viewBox="0 0 521.76632 483.59436"
    version="1.1"
    id="svg8"
    inkscape:version="0.92.3 (2405546, 2018-03-11)"
@@ -117,8 +117,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.98994949"
-     inkscape:cx="838.43489"
-     inkscape:cy="856.72168"
+     inkscape:cx="1323.3081"
+     inkscape:cy="533.4729"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -518,6 +518,203 @@
          id="tspan2117-0-8-2-3"
          x="213.19795"
          y="161.5403"
-         style="stroke-width:0.26458332">PCI网络结构（基于SerDes的P2P互联）</tspan></text>
+         style="stroke-width:0.26458332">PCIe网络结构（基于SerDes的P2P互联）</tspan></text>
+    <path
+       sodipodi:type="star"
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.86518127;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="path6075-9-0"
+       sodipodi:sides="6"
+       sodipodi:cx="-68.545898"
+       sodipodi:cy="-230.86491"
+       sodipodi:r1="22.144695"
+       sodipodi:r2="19.177872"
+       sodipodi:arg1="1.0531472"
+       sodipodi:arg2="1.576746"
+       inkscape:flatsided="true"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="m -57.587848,-211.62151 -22.144303,-0.13175 -10.958051,-19.24341 11.186253,-19.11165 22.144303,0.13175 10.958051,19.24341 z"
+       inkscape:transform-center-x="1.0559066e-06"
+       transform="matrix(2.6575771,0,0,2.7666606,663.39353,586.79283)"
+       inkscape:transform-center-y="-8.3914977e-06" />
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.68800002;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-36-7-93-8-0-2-3-6-0-1-6-4-7-3-7"
+       width="32.482136"
+       height="15.513777"
+       x="445.87668"
+       y="-82.406853" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:7.27527952px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.18188199"
+       x="466.77118"
+       y="-68.919502"
+       id="text8189-8"
+       transform="scale(0.96782505,1.0332446)"><tspan
+         sodipodi:role="line"
+         id="tspan8187-8"
+         x="466.77118"
+         y="-68.919502"
+         style="stroke-width:0.18188199">PortCtl</tspan></text>
+    <path
+       style="fill:none;stroke:#0000ff;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 451.02606,-105.2523 345.4546,8.8717873"
+       id="path8170"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#0000ff;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 510.49353,2.4573202 366.43525,47.091332"
+       id="path8170-3"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.68800002;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-36-7-93-8-0-2-3-6-0-1-6-4-7-3-7-6"
+       width="32.482136"
+       height="15.513777"
+       x="437.99225"
+       y="-43.385475" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:7.27527952px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.18188199"
+       x="458.6246"
+       y="-31.153643"
+       id="text8189-8-7"
+       transform="scale(0.96782505,1.0332446)"><tspan
+         sodipodi:role="line"
+         id="tspan8187-8-5"
+         x="458.6246"
+         y="-31.153643"
+         style="stroke-width:0.18188199">PortCtl</tspan></text>
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.68800002;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-36-7-93-8-0-2-3-6-0-1-6-4-7-3-7-3"
+       width="32.482136"
+       height="15.513777"
+       x="463.11557"
+       y="-19.598486" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:7.27527952px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.18188199"
+       x="484.58316"
+       y="-8.131999"
+       id="text8189-8-5"
+       transform="scale(0.96782505,1.0332446)"><tspan
+         sodipodi:role="line"
+         id="tspan8187-8-6"
+         x="484.58316"
+         y="-8.131999"
+         style="stroke-width:0.18188199">PortCtl</tspan></text>
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.68800002;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-36-7-93-8-0-2-3-6-0-1-6-4-7-3-7-2"
+       width="32.482136"
+       height="15.513777"
+       x="487.70435"
+       y="-42.316395" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:7.27527952px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.18188199"
+       x="509.98941"
+       y="-30.118959"
+       id="text8189-8-9"
+       transform="scale(0.96782505,1.0332446)"><tspan
+         sodipodi:role="line"
+         id="tspan8187-8-1"
+         x="509.98941"
+         y="-30.118959"
+         style="stroke-width:0.18188199">PortCtl</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.26499999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 438.19713,-35.361319 -31.97162,18.458815"
+       id="path1735"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.66499996;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 520.51613,-32.955898 563.03528,-8.40746"
+       id="path1737"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.76499999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 478.02028,-4.6253346 V 32.257873"
+       id="path1739"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.66499996;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 403.84134,-99.485821 42.51915,24.54843"
+       id="path1737-2"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 460.91502,-67.166394 -6.00652,22.416706"
+       id="path1756"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 469.73493,-67.968203 12.43539,46.409535"
+       id="path1758"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 476.14938,-67.166394 23.51974,23.519728"
+       id="path1760"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="483.67133"
+       y="23.17804"
+       id="text2119-4-6-2-9-2-1-7-4-6-2-3-7"><tspan
+         sodipodi:role="line"
+         id="tspan2117-0-7-9-3-9-0-6-5-3-0-6-0"
+         x="483.67133"
+         y="23.17804"
+         style="stroke-width:0.26458332">SerDes</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:7.14846325px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.17871158"
+       x="471.92361"
+       y="-49.894505"
+       id="text2119-4-6-2-9-2-1-7-4-6-2-3-7-9"
+       transform="scale(0.96807004,1.0329831)"><tspan
+         sodipodi:role="line"
+         id="tspan2117-0-7-9-3-9-0-6-5-3-0-6-0-3"
+         x="471.92361"
+         y="-49.894505"
+         style="stroke-width:0.17871158">内部交换网络</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="405.43301"
+       y="-2.3448548"
+       id="text2119-4-6-2-9-2-1-7-4-6-2-3-7-6"><tspan
+         sodipodi:role="line"
+         id="tspan2117-0-7-9-3-9-0-6-5-3-0-6-0-0"
+         x="405.43301"
+         y="-2.3448548"
+         style="stroke-width:0.26458332">SerDes</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="543.61133"
+       y="-25.864574"
+       id="text2119-4-6-2-9-2-1-7-4-6-2-3-7-62"><tspan
+         sodipodi:role="line"
+         id="tspan2117-0-7-9-3-9-0-6-5-3-0-6-0-6"
+         x="543.61133"
+         y="-25.864574"
+         style="stroke-width:0.26458332">SerDes</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="384.58597"
+       y="-79.585747"
+       id="text2119-4-6-2-9-2-1-7-4-6-2-3-7-1"><tspan
+         sodipodi:role="line"
+         id="tspan2117-0-7-9-3-9-0-6-5-3-0-6-0-8"
+         x="384.58597"
+         y="-79.585747"
+         style="stroke-width:0.26458332">SerDes</tspan></text>
   </g>
 </svg>
