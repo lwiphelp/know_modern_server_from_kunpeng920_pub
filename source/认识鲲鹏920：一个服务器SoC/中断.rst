@@ -210,38 +210,79 @@ drivers/irqchip/irq-mbigen.c中实现）先绑定platform总线，然后ACPI初�
 软件实现
 --------
 
-todo：需要对照代码细化一次：
-
 我们仍用Linux Kernel作为我们的软件实现研究对象。中断处理的过程我们留到计算子系
 统来讨论。这里我们主要讨论GIC的驱动本身如何工作的。
 
-Linux把中断控制器抽象成两种对象来管理，一个是irq_chip，一个是irq_domain。前者代
-表一个中断控制单元，比如前面的GICD，ITS等对象，而后者代表一段中断号的空间，重点
-是把设备认为的中断号转化为Linux认可的软件的中断号。
+对软件来说，中断控制器上报一个中断，对应的驱动处理这个中断，同时响应相应的中断
+控制器完成中断过程，这个逻辑是比较简单直接的。但真正麻烦的事情是怎么把设备，中
+断号，中断控制器对应起来。一个设备报告一个中断，可以告诉它是MBIGEN的第10号引脚
+，但全局来说，它怎么知道这个第10号引脚对应全局的几号中断？
 
-我们前面看到了，现代的服务器处理器不依靠CPU的中断线来判断发生了几号中断，CPU的
-中断线只表示类型，而中断控制器上的中断号才表示实际哪个设备发生了中断。
+Linux把这个关系封装为两个关键数据结构：irq_chip和irq_domain。前者代表一个中断控
+制单元，比如前面提到的GICD，ITS和MBIGEN等对象，而后者代表一段中断号的空间。要解
+决前面的问题，关键就是给每个irq_chip分配一个irq_domain，只要保证irq_domain之间
+的irq号没有冲突，全局所有irq上报的内容就是没有冲突的。
 
-irq_chip本身不是Linux内核中的device，Linux Kernel使用专有的通用方法发现它们，可
-以是device tree，也可以是ACPI接口。
+irq_domain的中断号分配必须有一个全局的分配算法，irq_domain只是一个数据库，用于
+按这个既定的管理策略配合代码进行分配。这个管理的核心是中断处理程序怎么获得hwirq，
+然后按什么策略进行irq_domain的查表。这个每个平台都不同。
 
-        | device tree接口
-        | todo
+GIC兼容的系统在Linux中用gic_handle_irq进行中断处理，这里的算法逻辑是首先GIC定义
+了一个hwirq的分配规则，GIC的中断是唯一的。对于多个中断控制器，每个加入系统的时
+候GIC的算法负责告知它hwirq是什么。这个GIC中断唯一的规矩仍成立。这样，
+gic_handle_irq()处理中断的时候首先从CPUIF获得的中断ID（SYS_ICC_IAR1_EL1）就是全
+局唯一的，通过这个ID作为hwirq翻查irq_domain数据库，就可以定位到对应的中断控制器
+。这样关联就建立起来了。
 
-        | ACPI接口
-        | todo
+每个具体的中断，当设备从总线设备配置空间，或者从配置文件中获得中断号的时候，通过
+配置空间或者配置文件可以获知对应的中断控制器是什么，调用中断控制器的map函数，
+就可以具体建立hwirq和virq的映射了。
 
-作为服务器芯片，鲲鹏920使用ACPI作为设备发现接口，从ACPI的MADT表中获得所有XX的定
-义：
+看两个具体的例子，作为平台设备，SMMU的驱动就是这样获得中断号的：
 
-todo: 需要MADT表的部分内容展示
+.. code-block:: c
 
-GICD设备发现后，GICD驱动会创建对应的irq_domain，并把这个GIDC的信息封装为irq_chip
-放到这个irq_domain中，未来上层软件控制irq_domain，就可以成为对GICD的控制了。
+        //drivers/iommu/arm-smmu-v3.c
+	irq = platform_get_irq_byname_optional(pdev, "combined");
+	if (irq > 0)
+		smmu->combined_irq = irq;
+	else {
+		irq = platform_get_irq_byname_optional(pdev, "eventq");
+		if (irq > 0)
+			smmu->evtq.q.irq = irq;
 
-这个驱动在drivers/irqchip/irq-gic-v3.c中。
+		irq = platform_get_irq_byname_optional(pdev, "priq");
+		if (irq > 0)
+			smmu->priq.q.irq = irq;
 
-ITS的驱动在drivers/irqchip/irq-gic-v3-its.c中，它同样创建属于它那部分的
-irq_domain，把ITS的信息封装为irq_chip放到这个irq_domain中。
+		irq = platform_get_irq_byname_optional(pdev, "gerror");
+		if (irq > 0)
+			smmu->gerr_irq = irq;
+	}
 
-todo：补充一张irq_domain的对象图。
+这里的platform_get_irq_byname_optional()通过配置文件获得中断控制器，然后调用对应
+的map文件完成映射。
+
+对于PCIE设备，鲲鹏920网卡是这样的：
+
+.. code-block:: c
+
+        //drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
+        static void hclgevf_get_misc_vector(struct hclgevf_dev *hdev)
+        {
+                struct hclgevf_misc_vector *vector = &hdev->misc_vector;
+
+                vector->vector_irq = pci_irq_vector(hdev->pdev,
+                                                    HCLGEVF_MISC_VECTOR_NUM);
+                vector->addr = hdev->hw.io_base + HCLGEVF_MISC_VECTOR_REG_BASE;
+                /* vector status always valid for Vector 0 */
+                hdev->vector_status[HCLGEVF_MISC_VECTOR_NUM] = 0;
+                hdev->vector_irq[HCLGEVF_MISC_VECTOR_NUM] = vector->vector_irq;
+
+                hdev->num_msi_left -= 1;
+                hdev->num_msi_used += 1;
+        }
+
+这里通过pci_irq_vector()来实现映射，说到底是调用PCIe驱动的msi驱动的irq_domain来
+实现映射。总的来说，是把irq号的获取封装在设备配置之内，让一般的驱动感受不到这个
+映射的过程。
