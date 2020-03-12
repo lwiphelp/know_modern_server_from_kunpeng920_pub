@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="704.12231mm"
+   height="235.31053mm"
+   viewBox="0 0 704.12234 235.31055"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   sodipodi:docname="vio_vs_novio.svg">
+  <defs
+     id="defs2">
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker3534"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path3532"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker3452"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lstart">
+      <path
+         transform="matrix(0.8,0,0,0.8,10,0)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path3450"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker3374"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path3372"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Lend"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path923"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow2Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow2Lend"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path941"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Lend-2"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         inkscape:connector-curvature="0"
+         id="path923-7"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)" />
+    </marker>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="1392.3227"
+     inkscape:cy="200.70655"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="3830"
+     inkscape:window-height="2062"
+     inkscape:window-x="0"
+     inkscape:window-y="42"
+     inkscape:window-maximized="0"
+     fit-margin-top="2"
+     fit-margin-left="2"
+     fit-margin-bottom="2"
+     fit-margin-right="2"
+     inkscape:snap-global="false" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(75.452342,1009.296)">
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot1825"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+       transform="matrix(0.26458333,0,0,0.26458333,57.872585,-398.19998)"><flowRegion
+         id="flowRegion1827"><rect
+           id="rect1829"
+           width="539.28571"
+           height="467.85715"
+           x="229.28572"
+           y="-52.817604" /></flowRegion><flowPara
+         id="flowPara1831" /></flowRoot>    <path
+       style="opacity:1;fill:#0000ff;fill-opacity:1;stroke:#0000ff;stroke-width:0.56677568;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       d="m 30.478556,-951.14826 c -2.683219,0 -4.843277,3.14327 -4.843277,7.04782 v 12.92128 c 0,1.10304 0.172754,7.24748 0.48063,8.17531 h -4.241245 l 10.218225,17.70619 10.219334,-17.70539 h -3.434776 c 0.308014,-0.92799 0.480634,-7.07282 0.480634,-8.17611 v -12.92128 c 0,-3.90455 -2.160058,-7.04782 -4.843277,-7.04782 z"
+       id="rect1212"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ssscccccssss" />
+    <rect
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect1685"
+       width="136.04019"
+       height="62.541069"
+       x="-73.252342"
+       y="-1005.3176" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="-67.606323"
+       y="-987.19952"
+       id="text2119-4-9-3"><tspan
+         sodipodi:role="line"
+         id="tspan2117-0-1-6"
+         x="-67.606323"
+         y="-987.19952"
+         style="stroke-width:0.26458332">VM</tspan></text>
+    <rect
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.58853215;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect1685-7"
+       width="295.39203"
+       height="62.352539"
+       x="-72.489899"
+       y="-919.69714" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="-66.938148"
+       y="-901.67328"
+       id="text2119-4-9-3-5"><tspan
+         sodipodi:role="line"
+         id="tspan2117-0-1-6-3"
+         x="-66.938148"
+         y="-901.67328"
+         style="stroke-width:0.26458332">Hypervisor</tspan></text>
+    <rect
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect1685-5"
+       width="41.142151"
+       height="29.115025"
+       x="10.411695"
+       y="-910.29468" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="16.182669"
+       y="-892.05164"
+       id="text2119-4-9-3-6"><tspan
+         sodipodi:role="line"
+         id="tspan2117-0-1-6-2"
+         x="16.182669"
+         y="-892.05164"
+         style="stroke-width:0.26458332">Vdev</tspan></text>
+    <rect
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect1685-5-9"
+       width="41.142151"
+       height="29.115025"
+       x="111.97411"
+       y="-910.56195" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="120.41779"
+       y="-891.51709"
+       id="text2119-4-9-3-6-1"><tspan
+         sodipodi:role="line"
+         id="tspan2117-0-1-6-2-2"
+         x="120.41779"
+         y="-891.51709"
+         style="stroke-width:0.26458332">Vdev</tspan></text>
+    <rect
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect1685-70"
+       width="136.04019"
+       height="62.541073"
+       x="85.639389"
+       y="-1004.5159" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="91.285408"
+       y="-986.39777"
+       id="text2119-4-9-3-9"><tspan
+         sodipodi:role="line"
+         id="tspan2117-0-1-6-36"
+         x="91.285408"
+         y="-986.39777"
+         style="stroke-width:0.26458332">VM</tspan></text>
+    <rect
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.42368656;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect1685-5-0"
+       width="46.196587"
+       height="29.091337"
+       x="63.877445"
+       y="-841.32733" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="69.636574"
+       y="-823.09613"
+       id="text2119-4-9-3-6-6"><tspan
+         sodipodi:role="line"
+         id="tspan2117-0-1-6-2-26"
+         x="69.636574"
+         y="-823.09613"
+         style="stroke-width:0.26458332">device</tspan></text>
+    <path
+       style="opacity:1;fill:#0000ff;fill-opacity:1;stroke:#0000ff;stroke-width:0.56677574;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       d="m 130.41833,-951.94546 c -2.68322,0 -4.84328,3.14327 -4.84328,7.04782 v 12.92128 c 0,1.10304 0.17275,7.24748 0.48063,8.17531 h -4.24125 l 10.21823,17.70619 10.21933,-17.70539 h -3.43477 c 0.30801,-0.92799 0.48063,-7.07282 0.48063,-8.17611 v -12.92128 c 0,-3.90455 -2.16006,-7.04782 -4.84328,-7.04782 z"
+       id="rect1212-1"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ssscccccssss" />
+    <path
+       style="opacity:1;fill:#0000ff;fill-opacity:1;stroke:#000000;stroke-width:1.46530068;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       d="m 863.21484,-650.1543 v 38.90625 H 509.28516 v -37.11914 H 490 v 62.14258 h 7.11914 v 0.73633 h 192.20508 v 29.17383 c 0,2.57491 0.63302,30.13289 1.125,32.29883 h -6.77539 l 15.96875,28.11914 16.68359,-28.11719 h -5.48828 c 0.4921,-2.16628 0.41211,-29.72526 0.41211,-32.30078 v -29.17383 h 172.34375 v -25.75977 H 882.5 v -38.90625 z"
+       id="rect1825"
+       inkscape:connector-curvature="0"
+       transform="matrix(0.26458333,0,0,0.26458333,-98.91022,-708.57211)" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="-70.546295"
+       y="-778.46198"
+       id="text2119-4-9-9"><tspan
+         sodipodi:role="line"
+         id="tspan2117-0-1-20"
+         x="-70.546295"
+         y="-778.46198"
+         style="stroke-width:0.26458332">没有VIO支持，Hypervisor必须通过软件接收和合并不同VM的请求</tspan></text>
+    <path
+       style="opacity:1;fill:#0000ff;fill-opacity:1;stroke:#0000ff;stroke-width:0.75218672;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       d="m 420.17036,-952.91372 c -2.64412,0 -4.7727,5.61806 -4.7727,12.59679 v 23.0946 c 0,1.9715 0.0366,22.70899 0.34,24.36732 h -4.17944 l 10.20294,21.89149 9.93676,-21.89006 h -3.38471 c 0.30352,-1.65862 0.60725,-22.39681 0.60725,-24.36875 v -23.0946 c 0,-6.97873 -2.12858,-12.59679 -4.77269,-12.59679 z"
+       id="rect1212-4"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ssscccccssss" />
+    <rect
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect1685-50"
+       width="136.04019"
+       height="62.541073"
+       x="316.41592"
+       y="-1007.096" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="322.06195"
+       y="-988.97791"
+       id="text2119-4-9-3-3"><tspan
+         sodipodi:role="line"
+         id="tspan2117-0-1-6-6"
+         x="322.06195"
+         y="-988.97791"
+         style="stroke-width:0.26458332">VM</tspan></text>
+    <rect
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.40785208;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect1685-7-1"
+       width="295.57275"
+       height="29.926336"
+       x="317.08804"
+       y="-921.56586" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="322.7301"
+       y="-903.45166"
+       id="text2119-4-9-3-5-0"><tspan
+         sodipodi:role="line"
+         id="tspan2117-0-1-6-3-6"
+         x="322.7301"
+         y="-903.45166"
+         style="stroke-width:0.26458332">Hypervisor</tspan></text>
+    <rect
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect1685-70-5"
+       width="136.04019"
+       height="62.541077"
+       x="475.30765"
+       y="-1006.2943" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="480.95367"
+       y="-988.17615"
+       id="text2119-4-9-3-9-4"><tspan
+         sodipodi:role="line"
+         id="tspan2117-0-1-6-36-7"
+         x="480.95367"
+         y="-988.17615"
+         style="stroke-width:0.26458332">VM</tspan></text>
+    <rect
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-width:1.23612761;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect1685-5-0-6"
+       width="178.48438"
+       height="64.093018"
+       x="388.73816"
+       y="-878.51367" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="461.17572"
+       y="-854.27417"
+       id="text2119-4-9-3-6-6-5"><tspan
+         sodipodi:role="line"
+         id="tspan2117-0-1-6-2-26-6"
+         x="461.17572"
+         y="-854.27417"
+         style="stroke-width:0.26458332">device</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="319.12198"
+       y="-780.24036"
+       id="text2119-4-9-9-7"><tspan
+         sodipodi:role="line"
+         id="tspan2117-0-1-20-4"
+         x="319.12198"
+         y="-780.24036"
+         style="stroke-width:0.26458332">有VIO支持，VM可以在分配后越过Hypervisor直接访问硬件</tspan></text>
+    <rect
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect1685-5-4"
+       width="41.142151"
+       height="29.115025"
+       x="403.83246"
+       y="-872.07513" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="409.60342"
+       y="-853.83209"
+       id="text2119-4-9-3-6-7"><tspan
+         sodipodi:role="line"
+         id="tspan2117-0-1-6-2-4"
+         x="409.60342"
+         y="-853.83209"
+         style="stroke-width:0.26458332">Vdev</tspan></text>
+    <rect
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect1685-5-43"
+       width="41.142151"
+       height="29.115025"
+       x="505.92941"
+       y="-872.87695" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="511.70038"
+       y="-854.63391"
+       id="text2119-4-9-3-6-0"><tspan
+         sodipodi:role="line"
+         id="tspan2117-0-1-6-2-7"
+         x="511.70038"
+         y="-854.63391"
+         style="stroke-width:0.26458332">Vdev</tspan></text>
+    <path
+       style="opacity:1;fill:#0000ff;fill-opacity:1;stroke:#0000ff;stroke-width:0.75218672;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       d="m 526.11507,-953.81218 c -2.64412,0 -4.7727,5.61806 -4.7727,12.59679 v 23.0946 c 0,1.9715 0.0366,22.70899 0.34,24.36732 h -4.17944 l 10.20294,21.89149 9.93676,-21.89006 h -3.38471 c 0.30352,-1.65862 0.60725,-22.39681 0.60725,-24.36875 v -23.0946 c 0,-6.97873 -2.12858,-12.59679 -4.77269,-12.59679 z"
+       id="rect1212-4-8"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ssscccccssss" />
+    <path
+       style="opacity:1;fill:#0000ff;fill-opacity:1;stroke:#000000;stroke-width:0.38769415;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       d="m 521.80013,-843.9335 v 10.29399 h -93.64389 v -9.82109 h -5.10253 v 16.44188 h 1.8836 v 0.19482 h 50.85426 v 7.71891 c 0,0.68128 0.16749,7.97266 0.29766,8.54573 h -1.79266 l 4.22507,7.43986 4.4142,-7.43934 h -1.45211 c 0.1302,-0.57317 0.10904,-7.86481 0.10904,-8.54625 v -7.71891 h 45.59928 v -6.81561 h -0.28938 v -10.29399 z"
+       id="rect1825-6"
+       inkscape:connector-curvature="0" />
+  </g>
+</svg>

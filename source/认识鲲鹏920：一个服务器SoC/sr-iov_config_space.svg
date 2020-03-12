@@ -1,0 +1,690 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="232.23024mm"
+   height="319.59583mm"
+   viewBox="0 0 232.23025 319.59584"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   sodipodi:docname="sr-iov_config_space.svg">
+  <defs
+     id="defs2">
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker3534"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path3532"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker3452"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lstart">
+      <path
+         transform="matrix(0.8,0,0,0.8,10,0)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path3450"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker3374"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path3372"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Lend"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path923"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow2Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow2Lend"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path941"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Lend-2"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         inkscape:connector-curvature="0"
+         id="path923-7"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)" />
+    </marker>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.4"
+     inkscape:cx="933.78518"
+     inkscape:cy="939.93841"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="3830"
+     inkscape:window-height="2062"
+     inkscape:window-x="0"
+     inkscape:window-y="42"
+     inkscape:window-maximized="0"
+     fit-margin-top="2"
+     fit-margin-left="2"
+     fit-margin-bottom="2"
+     fit-margin-right="2"
+     inkscape:snap-global="true" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-146.60568,571.84928)">
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-36-7-93-8-0-2-3-6-0-1-6-4-7-1-4-8-1-5"
+       width="227.80029"
+       height="18.821554"
+       x="148.83554"
+       y="-536.77698" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot1825"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+       transform="matrix(0.26458333,0,0,0.26458333,57.872585,-398.19998)"><flowRegion
+         id="flowRegion1827"><rect
+           id="rect1829"
+           width="539.28571"
+           height="467.85715"
+           x="229.28572"
+           y="-52.817604" /></flowRegion><flowPara
+         id="flowPara1831" /></flowRoot>    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-36-7-93-8-0-2-3-6-0-1-6-4-7-1-4-0"
+       width="82.154816"
+       height="18.8813"
+       x="148.80568"
+       y="-555.62836" />
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-36-7-93-8-0-2-3-6-0-1-6-4-7-1-4-8-3"
+       width="113.90015"
+       height="18.821554"
+       x="262.73569"
+       y="-555.59851" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:8.99306774px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.22482668"
+       x="153.65131"
+       y="-543.81482"
+       id="text2840"
+       transform="scale(1.0012583,0.99874328)"><tspan
+         sodipodi:role="line"
+         id="tspan2838"
+         x="153.65131"
+         y="-543.81482"
+         style="font-size:7.19445372px;stroke-width:0.22482668">Next Capability Offset</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="300.14197"
+       y="-542.20599"
+       id="text2840-0"><tspan
+         sodipodi:role="line"
+         id="tspan2838-4"
+         x="300.14197"
+         y="-542.20599"
+         style="font-size:8.46666622px;stroke-width:0.26458332">Capability ID</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="368.19101"
+       y="-561.30682"
+       id="text2862"><tspan
+         sodipodi:role="line"
+         id="tspan2860"
+         x="368.19101"
+         y="-561.30682"
+         style="font-size:9.87777805px;stroke-width:0.26458332">0</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="267.17615"
+       y="-562.40637"
+       id="text2862-4"><tspan
+         sodipodi:role="line"
+         id="tspan2860-4"
+         x="267.17615"
+         y="-562.40637"
+         style="font-size:9.87777805px;stroke-width:0.26458332">15</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="246.12582"
+       y="-562.47058"
+       id="text2862-4-4"><tspan
+         sodipodi:role="line"
+         id="tspan2860-4-7"
+         x="246.12582"
+         y="-562.47058"
+         style="font-size:9.87777805px;stroke-width:0.26458332">16</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="151.58238"
+       y="-562.21741"
+       id="text2862-4-4-6"><tspan
+         sodipodi:role="line"
+         id="tspan2860-4-7-3"
+         x="151.58238"
+         y="-562.21741"
+         style="font-size:9.87777805px;stroke-width:0.26458332">31</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="228.28654"
+       y="-524.60968"
+       id="text2840-5"><tspan
+         sodipodi:role="line"
+         id="tspan2838-9"
+         x="228.28654"
+         y="-524.60968"
+         style="font-size:8.46666622px;stroke-width:0.26458332">SR-IOV Capabilities</tspan></text>
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4362"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"><flowRegion
+         id="flowRegion4364"><rect
+           id="rect4366"
+           width="976.8175"
+           height="108.08632"
+           x="1003.0815"
+           y="1048.7413" /></flowRegion><flowPara
+         id="flowPara4368" /></flowRoot>    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-36-7-93-8-0-2-3-6-0-1-6-4-7-1-4-0-3"
+       width="32.301605"
+       height="19.007488"
+       x="230.9469"
+       y="-555.74097" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:7.21060514px;line-height:1;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.18026513"
+       x="251.77603"
+       y="-536.42096"
+       id="text2840-6"
+       transform="scale(0.97980861,1.0206075)"><tspan
+         sodipodi:role="line"
+         id="tspan2838-7"
+         x="251.77603"
+         y="-536.42096"
+         style="font-size:5.76848412px;line-height:1;text-align:center;text-anchor:middle;stroke-width:0.18026513">Capability</tspan><tspan
+         sodipodi:role="line"
+         x="251.77603"
+         y="-529.21033"
+         style="font-size:5.76848412px;line-height:1;text-align:center;text-anchor:middle;stroke-width:0.18026513"
+         id="tspan1130">Version</tspan></text>
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-36-7-93-8-0-2-3-6-0-1-6-4-7-1-4-0-1-0-3"
+       width="113.90015"
+       height="18.821554"
+       x="148.83557"
+       y="-517.95544" />
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-36-7-93-8-0-2-3-6-0-1-6-4-7-1-4-8-3-7-9-5"
+       width="113.90015"
+       height="18.821554"
+       x="262.73572"
+       y="-517.95544" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="181.51437"
+       y="-505.78815"
+       id="text2840-5-2-6"><tspan
+         sodipodi:role="line"
+         id="tspan2838-9-5-2"
+         x="181.51437"
+         y="-505.78815"
+         style="font-size:8.46666622px;stroke-width:0.26458332">SR-IOV Status</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="292.09055"
+       y="-505.80756"
+       id="text2840-0-6-4-9"><tspan
+         sodipodi:role="line"
+         id="tspan2838-4-2-0-1"
+         x="292.09055"
+         y="-505.80756"
+         style="font-size:8.46666622px;stroke-width:0.26458332">SR-IOV Control</tspan></text>
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-36-7-93-8-0-2-3-6-0-1-6-4-7-1-4-0-1-0-3-2"
+       width="113.90015"
+       height="18.821554"
+       x="148.83557"
+       y="-499.13388" />
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-36-7-93-8-0-2-3-6-0-1-6-4-7-1-4-8-3-7-9-5-7"
+       width="113.90015"
+       height="18.821554"
+       x="262.73572"
+       y="-499.13388" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="181.51437"
+       y="-486.96658"
+       id="text2840-5-2-6-0"><tspan
+         sodipodi:role="line"
+         id="tspan2838-9-5-2-9"
+         x="181.51437"
+         y="-486.96658"
+         style="font-size:8.46666622px;stroke-width:0.26458332">Total VFs (RO)</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="292.09058"
+       y="-486.98599"
+       id="text2840-0-6-4-9-3"><tspan
+         sodipodi:role="line"
+         id="tspan2838-4-2-0-1-6"
+         x="292.09058"
+         y="-486.98599"
+         style="font-size:8.46666622px;stroke-width:0.26458332">Initial VFs (RO)</tspan></text>
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot1207"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+       transform="matrix(0.26458333,0,0,0.26458333,146.63556,-574.75394)"><flowRegion
+         id="flowRegion1209"><rect
+           id="rect1211"
+           width="1031.3657"
+           height="110.10663"
+           x="-36.36549"
+           y="341.63464" /></flowRegion><flowPara
+         id="flowPara1213"></flowPara></flowRoot>    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-36-7-93-8-0-2-3-6-0-1-6-4-7-1-3-0"
+       width="56.950062"
+       height="18.821554"
+       x="148.8356"
+       y="-480.31232" />
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-36-7-93-8-0-2-3-6-0-1-6-4-7-1-5-6-6"
+       width="56.950062"
+       height="18.821554"
+       x="205.78564"
+       y="-480.31232" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="163.37195"
+       y="-467.94049"
+       id="text2840-5-5-2-2"><tspan
+         sodipodi:role="line"
+         id="tspan2838-9-9-1-6"
+         x="163.37195"
+         y="-467.94049"
+         style="font-size:8.46666622px;stroke-width:0.26458332">RsvdP</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:5.92457342px;line-height:1;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.14811432"
+       x="217.64479"
+       y="-513.00348"
+       id="text2840-5-75-0-1"
+       transform="scale(1.0804356,0.9255526)"><tspan
+         sodipodi:role="line"
+         id="tspan2838-9-3-5-8"
+         x="217.64479"
+         y="-513.00348"
+         style="font-size:4.73965836px;line-height:1;text-align:center;text-anchor:middle;stroke-width:0.14811432">Function</tspan><tspan
+         sodipodi:role="line"
+         x="218.17708"
+         y="-507.07892"
+         style="font-size:4.73965836px;line-height:1;text-align:center;text-anchor:middle;stroke-width:0.14811432"
+         id="tspan1266">Dependency </tspan><tspan
+         sodipodi:role="line"
+         x="217.64479"
+         y="-501.15433"
+         style="font-size:4.73965836px;line-height:1;text-align:center;text-anchor:middle;stroke-width:0.14811432"
+         id="tspan1268">Link (RO)</tspan></text>
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-36-7-93-8-0-2-3-6-0-1-6-4-7-1-4-8-3-7-9-5-7-7"
+       width="113.90015"
+       height="18.821554"
+       x="262.73578"
+       y="-480.31232" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="292.09064"
+       y="-468.16443"
+       id="text2840-0-6-4-9-3-9"><tspan
+         sodipodi:role="line"
+         id="tspan2838-4-2-0-1-6-2"
+         x="292.09064"
+         y="-468.16443"
+         style="font-size:8.46666622px;stroke-width:0.26458332">Num of VFs (RW)</tspan></text>
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-36-7-93-8-0-2-3-6-0-1-6-4-7-1-4-0-1-0-3-0"
+       width="113.90015"
+       height="18.821554"
+       x="148.8356"
+       y="-461.49075" />
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-36-7-93-8-0-2-3-6-0-1-6-4-7-1-4-8-3-7-9-5-2"
+       width="113.90015"
+       height="18.821554"
+       x="262.73578"
+       y="-461.49075" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="181.5144"
+       y="-449.32346"
+       id="text2840-5-2-6-3"><tspan
+         sodipodi:role="line"
+         id="tspan2838-9-5-2-7"
+         x="181.5144"
+         y="-449.32346"
+         style="font-size:8.46666622px;stroke-width:0.26458332">VF Stride (RO)</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="292.09061"
+       y="-449.34286"
+       id="text2840-0-6-4-9-5"><tspan
+         sodipodi:role="line"
+         id="tspan2838-4-2-0-1-9"
+         x="292.09061"
+         y="-449.34286"
+         style="font-size:8.46666622px;stroke-width:0.26458332">First VF Offset (RO)</tspan></text>
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-36-7-93-8-0-2-3-6-0-1-6-4-7-1-4-0-1-0-3-2-2"
+       width="113.90015"
+       height="18.821554"
+       x="148.8356"
+       y="-442.66916" />
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-36-7-93-8-0-2-3-6-0-1-6-4-7-1-4-8-3-7-9-5-7-2"
+       width="113.90015"
+       height="18.821554"
+       x="262.73578"
+       y="-442.66916" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="181.5144"
+       y="-430.50186"
+       id="text2840-5-2-6-0-8"><tspan
+         sodipodi:role="line"
+         id="tspan2838-9-5-2-9-9"
+         x="181.5144"
+         y="-430.50186"
+         style="font-size:8.46666622px;stroke-width:0.26458332">VF Device ID (RO)</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="311.33405"
+       y="-429.98672"
+       id="text2840-0-6-4-9-3-7"><tspan
+         sodipodi:role="line"
+         id="tspan2838-4-2-0-1-6-3"
+         x="311.33405"
+         y="-429.98672"
+         style="font-size:8.46666622px;stroke-width:0.26458332">RsvdP</tspan></text>
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-36-7-93-8-0-2-3-6-0-1-6-4-7-1-4-8-1-8-61"
+       width="227.80029"
+       height="18.821554"
+       x="148.8356"
+       y="-423.8476" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="218.16766"
+       y="-410.79419"
+       id="text2840-5-7-3-8-2"><tspan
+         sodipodi:role="line"
+         id="tspan2838-9-4-3-6-9"
+         x="218.16766"
+         y="-410.79419"
+         style="font-size:8.46666622px;stroke-width:0.26458332">Supported Page Sizes (RO)</tspan></text>
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-36-7-93-8-0-2-3-6-0-1-6-4-7-1-4-8-1-8-61-3"
+       width="227.80029"
+       height="18.821554"
+       x="148.8356"
+       y="-405.02603" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="218.16766"
+       y="-391.97263"
+       id="text2840-5-7-3-8-2-1"><tspan
+         sodipodi:role="line"
+         id="tspan2838-9-4-3-6-9-9"
+         x="218.16766"
+         y="-391.97263"
+         style="font-size:8.46666622px;stroke-width:0.26458332">System Page Size (RW)</tspan></text>
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-36-7-93-8-0-2-3-6-0-1-6-4-7-1-4-8-1-8-4"
+       width="227.80029"
+       height="18.821554"
+       x="148.8356"
+       y="-386.20447" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="245.75992"
+       y="-372.96207"
+       id="text2840-5-7-3-8-7"><tspan
+         sodipodi:role="line"
+         id="tspan2838-9-4-3-6-8"
+         x="245.75992"
+         y="-372.96207"
+         style="font-size:8.46666622px;stroke-width:0.26458332">VF BAR 0</tspan></text>
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-36-7-93-8-0-2-3-6-0-1-6-4-7-1-4-8-1-8-4-4"
+       width="227.80029"
+       height="18.821554"
+       x="148.8356"
+       y="-367.3829" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="245.75995"
+       y="-354.14047"
+       id="text2840-5-7-3-8-7-5"><tspan
+         sodipodi:role="line"
+         id="tspan2838-9-4-3-6-8-0"
+         x="245.75995"
+         y="-354.14047"
+         style="font-size:8.46666622px;stroke-width:0.26458332">VF BAR 1</tspan></text>
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-36-7-93-8-0-2-3-6-0-1-6-4-7-1-4-8-1-8-4-3"
+       width="227.80029"
+       height="18.821554"
+       x="148.8356"
+       y="-348.56134" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="245.75992"
+       y="-335.31891"
+       id="text2840-5-7-3-8-7-6"><tspan
+         sodipodi:role="line"
+         id="tspan2838-9-4-3-6-8-1"
+         x="245.75992"
+         y="-335.31891"
+         style="font-size:8.46666622px;stroke-width:0.26458332">VF BAR 2</tspan></text>
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-36-7-93-8-0-2-3-6-0-1-6-4-7-1-4-8-1-8-4-4-0"
+       width="227.80029"
+       height="18.821554"
+       x="148.8356"
+       y="-329.73975" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="245.75995"
+       y="-316.49731"
+       id="text2840-5-7-3-8-7-5-6"><tspan
+         sodipodi:role="line"
+         id="tspan2838-9-4-3-6-8-0-3"
+         x="245.75995"
+         y="-316.49731"
+         style="font-size:8.46666622px;stroke-width:0.26458332">VF BAR 3</tspan></text>
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-36-7-93-8-0-2-3-6-0-1-6-4-7-1-4-8-1-8-4-2"
+       width="227.80029"
+       height="18.821554"
+       x="148.8356"
+       y="-310.91818" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="245.75993"
+       y="-297.67575"
+       id="text2840-5-7-3-8-7-0"><tspan
+         sodipodi:role="line"
+         id="tspan2838-9-4-3-6-8-6"
+         x="245.75993"
+         y="-297.67575"
+         style="font-size:8.46666622px;stroke-width:0.26458332">VF BAR 4</tspan></text>
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-36-7-93-8-0-2-3-6-0-1-6-4-7-1-4-8-1-8-4-4-1"
+       width="227.80029"
+       height="18.821554"
+       x="148.8356"
+       y="-292.09659" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="245.75996"
+       y="-278.85416"
+       id="text2840-5-7-3-8-7-5-5"><tspan
+         sodipodi:role="line"
+         id="tspan2838-9-4-3-6-8-0-5"
+         x="245.75996"
+         y="-278.85416"
+         style="font-size:8.46666622px;stroke-width:0.26458332">VF BAR 5</tspan></text>
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot1448"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+       transform="matrix(0.26458333,0,0,0.26458333,146.63556,-574.75394)"><flowRegion
+         id="flowRegion1450"><rect
+           id="rect1452"
+           width="982.14288"
+           height="117.14286"
+           x="-40.714287"
+           y="1512.4363" /></flowRegion><flowPara
+         id="flowPara1454"></flowPara></flowRoot>    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-36-7-93-8-0-2-3-6-0-1-6-4-7-1-4-8-1-8-3-6-8-4"
+       width="227.80029"
+       height="18.821554"
+       x="148.8356"
+       y="-273.27502" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="205.51457"
+       y="-260.52475"
+       id="text2840-5-7-7-8-7"><tspan
+         sodipodi:role="line"
+         id="tspan2838-9-4-7-9-6"
+         x="205.51457"
+         y="-260.52475"
+         style="font-size:8.46666622px;stroke-width:0.26458332">VF Migration State Array Offset (RO)</tspan></text>
+  </g>
+</svg>

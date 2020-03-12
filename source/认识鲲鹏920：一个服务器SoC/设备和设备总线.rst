@@ -279,21 +279,347 @@ DAW把各个根桥的地址分配到不同的Station上，之后不同的地址�
 中断处理
 ---------
 
-我们再看看设备中断如何透过PCIe总线进入系统的中断控制系统。前面我们提到，传统的
-中断其实是信号线上的电平变化。所以，一种方法是直接把设备的中断信号线拉到中断控
-制器上，比如拉到前面提到的GICD上。
+PCIe兼容旧式的INTx中断上报协议，但鲲鹏的根桥不需要实现这些复杂的兼容性功能，无
+论是真实的PCIE根桥，还是片上设备的根桥，都是MSI-X接口，最终都变成内存地址的写请
+求。所以，整个中断问题仅仅转化为设备写物理地址的问题了。
 
-但GICD全局唯一，多Socket的时候没法用。第二种选择是是把线信号转化为消息信号，路
-由到ITS上。在鲲鹏920中就是发给MBIGEN，由MBIGEN发信号给ITS。
-
-而对于PCIE上的设备，我们前面介绍中断系统的时候就介绍过了，可以使用MSI/MSI-X协议
-：总线控制器和RC（也就是总线的管理者本身）约定一个物理地址，只要总线控制器写这
-个地址，就认为是这是某个中断。这样，中断发送就转化为地址读写了。这个问题就直接
-解决了。
-
-todo: 不同鲲鹏设备的具体方案
 
 IO虚拟化
 --------
-todo
 
+IO虚拟化是在IO设备上进行特殊的设计以提高IO性能的方法。以网卡为例，比如系统中有
+一张物理网卡，现在创建了两个虚拟机，VM1和VM2，每个都需要一张网卡，虚拟机可以怎
+么做？
+
+不依靠IO设备的支持，我们只能在虚拟机中模拟两个设备，设备的IO空间实现为不可访问
+空间。当虚拟机访问这个空间的时候，从虚拟机退出到Hypervisor（虚拟机管理程序），
+在Hypervisor中仿真这个IO行为。这个仿真过程很慢，但大部分时候是可以接受的，因为
+真正的IO空间访问除了配置就是Doorbell，配置在初始化的时候才会做，而Doorbell只是
+一个通知，真正的发送工作是从内存中把消息发出去。所以Hypervisor需要在网络协议栈
+中仿真另一个设备（比如Linux中可以用veth仿真一个虚拟的Ethernet设备），模拟从外部
+收到一个报文，然后经过Linux内核的调度过程，再发送到本地的应用上，或者转发到真实
+的那个物理网口上，这个地方经过多次内存拷贝，也会降低系统的性能。
+
+IO虚拟化的意思是：真实的物理设备的IO空间分成多份，给每个虚拟机一份，这样
+Hypervisor就不需要仿真IO行为了，物理硬件收到这个请求，直接根据要求，直接发出去
+或者路由回本地就可以了，整个过程都不需要软件参与。
+
+        .. figure:: vio_vs_novio.svg
+
+可以看到IO虚拟化的要求其实就是要求硬件一开始准备多份自己的IO空间，直接把每个IO
+空间作为一个虚拟设备进行处理。
+
+但仅这样理解也是不够的，因为其实用一个真实设备的IO空间是不能作用虚拟IO设备来用
+的。这个区别在于，当VM的驱动向IO空间中写入一个地址，这个地址并非是一个物理地址，
+而是Hypervisor给VM生成的“中间物理地址”（下面简称IPA）。所以，虚拟设备不但要给VM
+一个真实的IO空间，还需要可以解释IPA。这就是IO虚拟化的主要内涵了。
+
+每种硬件可以有自己的独特IO虚拟化方案。PCIE把这个功能标准化，定义为一个设备特性。
+IO Virtualization。它有两个标准，Multi-Root IOV和Single-Root IOV，后者是前者的
+子集，但实际使用中大部分平台都只实现后者，所以本文主要讨论的也是后者。
+
+这里所谓Multi-root和Single Root主要是说有多少个RC，Root Complex。Root Complex在
+PCI/PCIE标准中是个实现相关的虚拟概念，用于指代一个独立管理整个PCI/PCIE总线的对
+象，比如一个操作系统和它管理之下的整个计算子系统。对于大部分服务器，包括泰山服
+务器，我们也只有一个这样的对象。
+
+SR-IOV实现为一个PCIE的Capability。我们先解释一下PCIE的Capability的概念是什么。
+
+Capability的概念从PCI标准继承。这是个很简单直接的设计：PCI的配置空间定义了一个
+标准的数据结构，定义了基本的访问接口，比如Device ID，Vendor ID，BAR空间，等等。
+但如果要增加新的可选功能，就需要有一个动态的方法可以在这个标准的头部后面增加新
+的数据结构。PCI在标准头上放了一个指针：Capabilties Point，指向下一个Capability
+的配置结构，这些Capability配置结构每个有相同的头，给出Capability的ID和下一个
+Capability的指针，这样所有的Capability就构成一条单链表。顺着链表就可以枚举所有
+的Capability，然后根据那种Capability的具体定义进行配置就可以了。
+
+Linux下lspci -vvv命令可以输出每个设备的Capabilities。比如下面是一个鲲鹏920内置
+SAS控制器的Capabilties：::
+
+        74:02.0 Serial Attached SCSI controller: Huawei Technologies Co., Ltd. HiSilicon SAS 3.0 HBA (rev 21)
+                Control: I/O- Mem+ BusMaster+ SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx-
+                Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+                Latency: 0
+                Interrupt: pin ? routed to IRQ 1360
+                NUMA node: 0
+                Region 5: Memory at a2000000 (32-bit, non-prefetchable) [size=32K]
+                Capabilities: [40] Express (v2) Root Complex Integrated Endpoint, MSI 00
+                        DevCap:	MaxPayload 128 bytes, PhantFunc 0
+                                ExtTag+ RBE+
+                        DevCtl:	Report errors: Correctable- Non-Fatal- Fatal- Unsupported-
+                                RlxdOrd+ ExtTag+ PhantFunc- AuxPwr- NoSnoop-
+                                MaxPayload 128 bytes, MaxReadReq 512 bytes
+                        DevSta:	CorrErr- UncorrErr- FatalErr- UnsuppReq- AuxPwr- TransPend-
+                        DevCap2: Completion Timeout: Not Supported, TimeoutDis+, LTR-, OBFF Not Supported
+                        DevCtl2: Completion Timeout: 50us to 50ms, TimeoutDis-, LTR-, OBFF Disabled
+                Capabilities: [80] MSI: Enable+ Count=32/32 Maskable+ 64bit+
+                        Address: 00000000fdfff040  Data: 0000
+                        Masking: 0000f7f9  Pending: 00000000
+                Capabilities: [b0] Power Management version 3
+                        Flags: PMEClk- DSI- D1- D2- AuxCurrent=0mA PME(D0-,D1-,D2-,D3hot-,D3cold-)
+                        Status: D0 NoSoftRst- PME-Enable- DSel=0 DScale=0 PME-
+                Kernel driver in use: hisi_sas_v3_hw
+                Kernel modules: hisi_sas_v3_hw
+
+SR-IOV也是一种Capability，鲲鹏920的网卡系统就支持这个Capability，我们同样可以通
+过lspci看到它：::
+
+	Capabilities: [200 v1] Single Root I/O Virtualization (SR-IOV)
+		IOVCap:	Migration-, Interrupt Message Number: 000
+		IOVCtl:	Enable- Migration- Interrupt- MSE- ARIHierarchy-
+		IOVSta:	Migration-
+		Initial VFs: 3, Total VFs: 3, Number of VFs: 0, Function Dependency Link: 03
+		VF offset: 14, stride: 1, Device ID: a22e
+		Supported Page Size: 00000553, System Page Size: 00000001
+		Region 0: Memory at 00002001210d0000 (64-bit, prefetchable)
+		Region 2: Memory at 0000200120d00000 (64-bit, prefetchable)
+		VF Migration: offset: 00000000, BIR: 0
+
+它的配置空间如下：
+
+.. figure:: sr-iov_config_space.svg
+
+在SR-IOV的定义中，原来的Function称为Physical Function，PF，而创建的虚拟功能称为
+Virtual Function， VF。使用者通过配置PF的SR-IOV Capabilty的配置空间创建新的VF。
+
+其中，这里的Total VFs给出总共支持多少个VF。使用者可以通过写入不超过Total VFs的
+数值到Num of VFs域中创建VF。新的VF会获得自己的BDF。PF的硬件基于这个范围的BDF
+处理对应VF的配置请求即可。
+
+上面的逻辑解决了IO空间怎么分配的问题，还没有讨论IPA怎么翻译的问题。地址翻译是
+计算子系统的工作，PCIE总线本身不能解决这个问题，所以，它把这个问题推给RC。下图
+是一个示意：
+
+.. figure:: pcie_ats_atc.svg
+
+SR-IOV认为EP发到RC去的内存请求不会被直接认为是一个物理地址，而需要经过一个地址
+翻译服务，ATS，转换为真正的物理地址再进行寻址。而EP可以选择内置或者不内置Cache，
+这个Cache称为ATC，如果有ATC，地址可以就近翻译。PCIE的ATS标准定义了ATS和ATC需要
+支持的页表的特性和互相交换的格式，但它不定义两者的访问接口。这个部分留给实现者。
+
+鲲鹏920使用ARM SMMU标准来完成这个实现，ATS服务由SMMU单元响应，而SMMU的配置则使用
+SMMU标准的接口，它同时兼容PCIE标准的要求和ARMv8 MMU单元的页表格式。
+
+todo：ssid和vmid的对应关系是否正确，需要确认一下。
+
+Linux下使用虚拟设备
+````````````````````
+Linux的SR-IOV接口更新速度相当快，很多设备驱动没有跟随升级，所以不是每种设备的用
+法相同的。鲲鹏920至少到Linux 5.6都是直接支持最新的用法的，本小结我们看看这个工
+作逻辑是什么样的。
+
+我们用鲲鹏内置网卡作为例子来研究这个过程。
+
+首先，Linux PCI子系统进行设备发现，会找到每个PF，比如这个：::
+
+        bd:00.0 Ethernet controller: Huawei Technologies Co., Ltd. HNS GE/10GE/25GE RDMA Network Controller (rev 21)
+        bd:00.1 Ethernet controller: Huawei Technologies Co., Ltd. HNS GE/10GE/25GE Network Controller (rev 21)
+        bd:00.2 Ethernet controller: Huawei Technologies Co., Ltd. HNS GE/10GE/25GE RDMA Network Controller (rev 21)
+        bd:00.3 Ethernet controller: Huawei Technologies Co., Ltd. HNS GE/10GE/25GE Network Controller (rev 21)
+
+我们可以lspci直接从配置空间里看到这个设备是否支持SR-IOV。当然，作为操作系统的用
+户我们应该从操作系统的接口上看，我们可以通过/sys/bus/pci/devices里面找到这四个
+设备：::
+
+        lrwxrwxrwx 1 root root 0 Mar 12 01:08 0000:bd:00.0 -> ../../../devices/pci0000:bc/0000:bc:00.0/0000:bd:00.0
+        lrwxrwxrwx 1 root root 0 Mar 12 01:08 0000:bd:00.1 -> ../../../devices/pci0000:bc/0000:bc:00.0/0000:bd:00.1
+        lrwxrwxrwx 1 root root 0 Mar 12 01:08 0000:bd:00.2 -> ../../../devices/pci0000:bc/0000:bc:00.0/0000:bd:00.2
+        lrwxrwxrwx 1 root root 0 Mar 12 01:08 0000:bd:00.3 -> ../../../devices/pci0000:bc/0000:bc:00.0/0000:bd:00.3
+
+我们拿最后一个设备bd:00.3作为研究对象，查看它的内容：::
+
+        root@host:/sys/bus/pci/devices/0000:bd:00.3# ls -l sriov_*
+        -rw-rw-r-- 1 root root 4096 Mar 12 02:25 sriov_drivers_autoprobe
+        -rw-rw-r-- 1 root root 4096 Mar 12 02:25 sriov_numvfs
+        -r--r--r-- 1 root root 4096 Mar 12 02:25 sriov_offset
+        -r--r--r-- 1 root root 4096 Mar 12 02:25 sriov_stride
+        -r--r--r-- 1 root root 4096 Mar 12 02:25 sriov_totalvfs
+        -r--r--r-- 1 root root 4096 Mar 12 02:25 sriov_vf_device
+
+其中的sriov_开头的文件就是操作系统暴露的SR-IOV相关控制属性，我们先看sriov_totalvfs：::
+
+        root@host:/sys/bus/pci/devices/0000:bd:00.3# cat sriov_totalvfs 
+        3
+        root@host:/sys/bus/pci/devices/0000:bd:00.3# cat sriov_numvfs
+        0
+
+这个设备支持最多3个VF，现在的配置是0。我们把3个都创建了：::
+
+        root@host:/sys/bus/pci/devices/0000:bd:00.3# echo 3 > sriov_numvfs
+        root@host:/sys/bus/pci/devices/0000:bd:00.3# ls -l
+        ...
+        lrwxrwxrwx 1 root root       0 Mar 12 02:29 virtfn0 -> ../0000:bd:02.1
+        lrwxrwxrwx 1 root root       0 Mar 12 02:29 virtfn1 -> ../0000:bd:02.2
+        lrwxrwxrwx 1 root root       0 Mar 12 02:29 virtfn2 -> ../0000:bd:02.3
+
+可以看到，PF的bdf是bd:00.3，创建的虚拟设备的BDF是bd:02.1,2,3。这里分配了新的
+device id，并复用这个id创建了三个Function。用lspci看virtfn0的配置是这样的：::
+
+        bd:02.1 Ethernet controller: Huawei Technologies Co., Ltd. HNS Network Controller (Virtual Function) (rev 21)
+                Subsystem: Huawei Technologies Co., Ltd. Device 0000
+                Control: I/O- Mem- BusMaster+ SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx-
+                Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+                Latency: 0
+                NUMA node: 2
+                Region 0: [virtual] Memory at 2001210d0000 (64-bit, prefetchable) [size=64K]
+                Region 2: [virtual] Memory at 200120d00000 (64-bit, prefetchable) [size=1M]
+                Capabilities: [40] Express (v2) Endpoint, MSI 00
+                        DevCap:	MaxPayload 128 bytes, PhantFunc 0, Latency L0s <64ns, L1 <1us
+                                ExtTag+ AttnBtn- AttnInd- PwrInd- RBE+ FLReset+ SlotPowerLimit 0.000W
+                        DevCtl:	Report errors: Correctable- Non-Fatal- Fatal- Unsupported-
+                                RlxdOrd- ExtTag- PhantFunc- AuxPwr- NoSnoop- FLReset-
+                                MaxPayload 128 bytes, MaxReadReq 128 bytes
+                        DevSta:	CorrErr- UncorrErr- FatalErr- UnsuppReq- AuxPwr- TransPend-
+                        LnkCap:	Port #0, Speed 2.5GT/s, Width x1, ASPM not supported, Exit Latency L0s <64ns, L1 <1us
+                                ClockPM- Surprise- LLActRep- BwNot- ASPMOptComp+
+                        LnkCtl:	ASPM Disabled; RCB 64 bytes Disabled- CommClk-
+                                ExtSynch- ClockPM- AutWidDis- BWInt- AutBWInt-
+                        LnkSta:	Speed unknown, Width x0, TrErr- Train- SlotClk- DLActive- BWMgmt- ABWMgmt-
+                        DevCap2: Completion Timeout: Not Supported, TimeoutDis+, LTR-, OBFF Not Supported
+                        DevCtl2: Completion Timeout: 50us to 50ms, TimeoutDis-, LTR-, OBFF Disabled
+                        LnkSta2: Current De-emphasis Level: -6dB, EqualizationComplete-, EqualizationPhase1-
+                                 EqualizationPhase2-, EqualizationPhase3-, LinkEqualizationRequest-
+                Capabilities: [a0] MSI-X: Enable+ Count=67 Masked-
+                        Vector table: BAR=0 offset=00000000
+                        PBA: BAR=0 offset=00008000
+                Capabilities: [b0] Power Management version 3
+                        Flags: PMEClk- DSI- D1- D2- AuxCurrent=0mA PME(D0-,D1-,D2-,D3hot-,D3cold-)
+                        Status: D0 NoSoftRst- PME-Enable- DSel=0 DScale=0 PME-
+                Capabilities: [100 v1] Access Control Services
+                        ACSCap:	SrcValid- TransBlk- ReqRedir- CmpltRedir- UpstreamFwd- EgressCtrl- DirectTrans-
+                        ACSCtl:	SrcValid- TransBlk- ReqRedir- CmpltRedir- UpstreamFwd- EgressCtrl- DirectTrans-
+                Capabilities: [300 v1] Transaction Processing Hints
+                        Device specific mode supported
+                        No steering table available
+                Capabilities: [450 v1] Alternative Routing-ID Interpretation (ARI)
+                        ARICap:	MFVC- ACS-, Next Function: 0
+                        ARICtl:	MFVC- ACS-, Function Group: 0
+                Kernel driver in use: hns3
+                Kernel modules: hclgevf, hns3
+
+这个信息显示，这个设备已经绑定了驱动hns3，所以其实这个设备已经可以用了，用
+ifconfig或者ip命令都可以看到它：::
+
+	enp189s0f3: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
+		ether 44:00:4d:a7:95:43  txqueuelen 1000  (Ethernet)
+		RX packets 0  bytes 0 (0.0 B)
+		RX errors 0  dropped 0  overruns 0  frame 0
+		TX packets 0  bytes 0 (0.0 B)
+		TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+	enp189s2f1: flags=4098<BROADCAST,MULTICAST>  mtu 1500
+		ether 5a:21:6d:a7:84:1d  txqueuelen 1000  (Ethernet)
+		RX packets 0  bytes 0 (0.0 B)
+		RX errors 0  dropped 0  overruns 0  frame 0
+		TX packets 0  bytes 0 (0.0 B)
+		TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+	enp189s2f2: flags=4098<BROADCAST,MULTICAST>  mtu 1500
+		ether c2:a1:d0:1f:8f:7b  txqueuelen 1000  (Ethernet)
+		RX packets 0  bytes 0 (0.0 B)
+		RX errors 0  dropped 0  overruns 0  frame 0
+		TX packets 0  bytes 0 (0.0 B)
+		TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+如果读者不能确定这些就是增加的链路，可以用ethtool -i去确认：::
+
+	# ethtool -i enp189s2f1
+	driver: hns3
+	version: 5.0.0-23-generic SMP mod_unload
+	firmware-version: 0x01091d10
+	expansion-rom-version:
+	bus-info: 0000:bd:02.1
+	supports-statistics: yes
+	supports-test: no
+	supports-eeprom-access: no
+	supports-register-dump: yes
+	supports-priv-flags: no
+
+这和一个真实的网卡没有什么区别，用户直接给它配置地址也可以当做一个真正的网卡来
+用，只是它对外并没有真实的物理链路而已。
+
+现在我们看怎么把这个网卡用于虚拟机。首先我们不能让本地系统直接使用它，所以我们
+首先把它的驱动绑定去掉：
+
+我们先进入它的驱动目录，然后把设备名称写入unbind：::
+
+        cd /sys/devices/pci0000:bc/0000:bc:00.0/0000:bd:00.3/virtfn0/driver
+        echo "0000:bd:00.3" > unbind
+
+/sys/devices/pci0000:bc/0000:bc:00.0/0000:bd:00.3/virtfn0中driver这个链接就会消
+失。virtfn0仍是一个pci设备，但没有pci驱动绑定它。
+
+然后给它绑定vfio-pci驱动，这个驱动把任何pci设备暴露为一个vfio接口，供虚拟机使用
+。为了做到这一点，我们需要做三个事情：
+
+* 保证vfio-pci驱动在内核中
+* 设置这个设备的driver_override为vfio-pci，要求它不要绑定默认的驱动
+* 要求pci总线对这个设备重新probe
+
+::
+        modprobe vfio-pci
+        cd /sys/devices/pci0000:bc/0000:bc:00.0/0000:bd:00.3/virtfn0
+        echo "vfio-pci" > driver_override
+        echo "0000:bd:02.1" > /sys/bus/pci/drivers_probe
+
+最后我们把这个设备“种入”虚拟机中：::
+
+        qemu-system-aarch64 -machine virt,kernel_irqchip=on,gic-version=3 \
+                -cpu host -enable-kvm -smp 1 \
+                -nographic -machine virt \
+                -m 1024m -kernel ~/work/mainline-kernel/arch/arm64/boot/Image \
+                -drive if=none,file=../ubuntu-14.04-server-cloudimg-arm64-uefi1.img,id=hd0 \
+                -device virtio-blk-device,drive=hd0 \
+                -append "root=/dev/vda1 init=/bin/sh console=ttyAMA0 earlycon=pl011,0x90000000" \
+                -device vfio-pci,host=0000:bd:02.1,id=net0,bus=pcie.0,addr=0x8 \
+
+前面的参数和这里的讨论无关，我们留给讨论计算子系统的时候再来讨论，这里仅讨论最
+后一行。这里-device为系统定义了一个设备，设备类型是vfio-pci，这是要求qemu本身
+用vfio-pci驱动的接口去访问本地的设备设备。host给出本地的设备名称，这里是
+0000:bd:02.1。id给出设备名称，bus给出虚拟PCIE总线的总线编号，这里用了pcie.0，
+表示这是连在虚拟根桥上的设备，最后addr是根桥设备上的设备号。
+
+进入虚拟机后，我们再用lspci来看虚拟机里面的PCI总线接口，就是这样的：::
+
+        root@(none):/sys/bus/pci/devices# lspci
+        00:00.0 Host bridge: Red Hat, Inc. Device 0008
+        00:01.0 Ethernet controller: Red Hat, Inc Virtio network device
+        00:08.0 Ethernet controller: Device 19e5:a22e (rev 21)
+
+        root@(none):/sys/bus/pci/devices# lspci -t
+        -[0000:00]-+-00.0
+                   +-01.0
+                   \-08.0
+
+00.0和01.0是虚拟机本身创建的节点，08是我们前面指定的设备地址，这个设备的配置空间
+被直接暴露给了虚拟机，我们可以对照它的配置空间信息：::
+
+	00:08.0 Ethernet controller: Device 19e5:a22e (rev 21)
+		Subsystem: Device 19e5:0000
+		Control: I/O- Mem- BusMaster- SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx-
+		Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+		Region 0: Memory at 8000100000 (64-bit, prefetchable) [disabled] [size=64K]
+		Region 2: Memory at 8000000000 (64-bit, prefetchable) [disabled] [size=1M]
+		Capabilities: [40] Express (v2) Root Complex Integrated Endpoint, MSI 00
+			DevCap: MaxPayload 128 bytes, PhantFunc 0
+				ExtTag+ RBE+
+			DevCtl: Report errors: Correctable- Non-Fatal- Fatal- Unsupported-
+				RlxdOrd- ExtTag- PhantFunc- AuxPwr- NoSnoop-
+				MaxPayload 128 bytes, MaxReadReq 128 bytes
+			DevSta: CorrErr- UncorrErr- FatalErr- UnsuppReq- AuxPwr- TransPend-
+			DevCap2: Completion Timeout: Not Supported, TimeoutDis+, LTR-, OBFF Not Supported
+			DevCtl2: Completion Timeout: 50us to 50ms, TimeoutDis-, LTR-, OBFF Disabled
+		Capabilities: [a0] MSI-X: Enable- Count=67 Masked-
+			Vector table: BAR=0 offset=00000000
+			PBA: BAR=0 offset=00008000
+		Capabilities: [b0] Power Management version 3
+			Flags: PMEClk- DSI- D1- D2- AuxCurrent=0mA PME(D0-,D1-,D2-,D3hot-,D3cold-)
+			Status: D0 NoSoftRst- PME-Enable- DSel=0 DScale=0 PME-
+		Capabilities: [100 v1] Access Control Services
+			ACSCap: SrcValid- TransBlk- ReqRedir- CmpltRedir- UpstreamFwd- EgressCtrl- DirectTrans-
+			ACSCtl: SrcValid- TransBlk- ReqRedir- CmpltRedir- UpstreamFwd- EgressCtrl- DirectTrans-
+		Capabilities: [300 v1] Transaction Processing Hints
+			Device specific mode supported
+			No steering table available
+
+除了动态Probe的内容，大部分的设置都是一样的。
