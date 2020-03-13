@@ -82,7 +82,7 @@ Linux内核的代码从init/main.c:start_kernel()开始执行，然后一个模�
 运行参数
 --------
 
-C的main函数有argc和argc，Linux Kernel使用cmdline作为输入参数，这些参数由
+C的main函数有argc和argv，Linux Kernel使用cmdline作为输入参数，这些参数由
 Bootloader负责加载到内存中，通过特定的寄存器告知内核。
 
 在服务器解决方案中，常见的方法是BIOS把Grub作为二级Bootloader进行加载，然后用

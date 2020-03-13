@@ -321,7 +321,8 @@ IO Virtualization。它有两个标准，Multi-Root IOV和Single-Root IOV，后�
 这里所谓Multi-root和Single Root主要是说有多少个RC，Root Complex。Root Complex在
 PCI/PCIE标准中是个实现相关的虚拟概念，用于指代一个独立管理整个PCI/PCIE总线的对
 象，比如一个操作系统和它管理之下的整个计算子系统。对于大部分服务器，包括泰山服
-务器，我们也只有一个这样的对象。
+务器，我们也只有一个这样的对象。所以，大部分是后我们谈PCIE的IOV功能，都是指
+SR-IOV功能。
 
 SR-IOV实现为一个PCIE的Capability。我们先解释一下PCIE的Capability的概念是什么。
 
@@ -386,21 +387,26 @@ Virtual Function， VF。使用者通过配置PF的SR-IOV Capabilty的配置空�
 数值到Num of VFs域中创建VF。新的VF会获得自己的BDF。PF的硬件基于这个范围的BDF
 处理对应VF的配置请求即可。
 
-上面的逻辑解决了IO空间怎么分配的问题，还没有讨论IPA怎么翻译的问题。地址翻译是
+上面的逻辑解决了IO空间怎么分配的问题，但没有讨论IPA怎么翻译的问题。地址翻译是
 计算子系统的工作，PCIE总线本身不能解决这个问题，所以，它把这个问题推给RC。下图
 是一个示意：
 
 .. figure:: pcie_ats_atc.svg
 
-SR-IOV认为EP发到RC去的内存请求不会被直接认为是一个物理地址，而需要经过一个地址
-翻译服务，ATS，转换为真正的物理地址再进行寻址。而EP可以选择内置或者不内置Cache，
-这个Cache称为ATC，如果有ATC，地址可以就近翻译。PCIE的ATS标准定义了ATS和ATC需要
-支持的页表的特性和互相交换的格式，但它不定义两者的访问接口。这个部分留给实现者。
+Address Translation Service，ATS是一个独立的服务，EP认为RC中存在这个服务，支持
+虚拟化的设备通过PCIe的链路层消息向这个服务请求地址翻译，翻译后会得到物理地址和
+一个Tag，之后地址请求就以这个物理地址和Tag为基础发出，RC根据物理地址和Tag决定是
+否允许这个访问过程。
 
-鲲鹏920使用ARM SMMU标准来完成这个实现，ATS服务由SMMU单元响应，而SMMU的配置则使用
-SMMU标准的接口，它同时兼容PCIE标准的要求和ARMv8 MMU单元的页表格式。
+PCIe允许EP中Cache这个被翻译的地址，这个Cache称为ATC，Address Translation Client
+。它需要响应RC的Cache Invalidate等命令。
 
-todo：ssid和vmid的对应关系是否正确，需要确认一下。
+我们要注意到，ATS是一个服务，而不是地址访问代理，所以实际上一个非法的EP完全可以
+发出一个物理地址，说自己有这个能力。所以真正起拒绝作用的是RC的设计，而且这只能
+保护内存，而不能保护网桥中的其他硬件设备。(todo：请硬件的通讯确认一下这个判断）
+
+鲲鹏920使用ARM SMMU标准来完成这个实现，ATS服务由SMMU单元响应，而最终送到RC的内存
+地址请求，也由SMMU作最后的确认，从而防止非法的硬件攻击计算子系统。
 
 Linux下使用虚拟设备
 ````````````````````
@@ -623,3 +629,11 @@ ifconfig或者ip命令都可以看到它：::
 			No steering table available
 
 除了动态Probe的内容，大部分的设置都是一样的。
+
+在前面例子中，也许读者们会注意到一个细节：这里每个鲲鹏网卡的PF只支持3个VF。这在
+很多场合（比如IaaS）不够用。这其实是个设置问题：我们可以选择更多的VF，每个VF有
+更少的队列，也可以选择更多的VF，每个VF有更少的队列。这种类型的配置PCIe层面不支
+持，鲲鹏通过Boot Loader（或者一般PC用户理解的BIOS）对此进行选择。说到底，要支持
+多少VF，是以硬件能力决定的：
+
+.. figure:: kp920_hns3_boot_config.png
