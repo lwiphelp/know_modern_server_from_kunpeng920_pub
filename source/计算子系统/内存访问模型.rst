@@ -3,6 +3,24 @@
 内存访问模型
 ============
 
+内存访问的的原子化行为
+----------------------
+todo：cas，指令的原子性行为，exclusive算法
+
+内存Cache和Cache Coherency设计
+------------------------------
+todo：Cache组织，ICache和D Cache的独立性，CC，设备CC，prefetch算法
+
+内存顺序模型
+------------
+todo: tso, twm
+
+NUMA
+----
+todo
+
+内存交织
+--------
 todo
 
 .. vim: fo+=mM tw=78
