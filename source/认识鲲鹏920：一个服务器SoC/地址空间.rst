@@ -198,13 +198,13 @@ ARMv8支持双Stage页表翻译，每个Stage支持多种页表格式，每种�
 
 内存：
 
-* MemAttr[1:0]=00 Outter内存
+* MemAttr[1:0]=00 Outer内存
         * MemAttr[3:2]=01 Inner或者Outer NonCacheable
         * MemAttr[3:2]=10 Outer Write-through Cacheable
         * MemAttr[3:2]=11 Outer Write-back Cacheable
-* MemAttr[1:0]=01 NonCacheable Outter内存
-* MemAttr[1:0]=10 Write-through Cacheable Outter内存
-* MemAttr[1:0]=11 Write-back Cacheable Outter内存
+* MemAttr[1:0]=01 NonCacheable Outer内存
+* MemAttr[1:0]=10 Write-through Cacheable Outer内存
+* MemAttr[1:0]=11 Write-back Cacheable Outer内存
 
 设备：
 
