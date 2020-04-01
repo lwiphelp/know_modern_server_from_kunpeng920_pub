@@ -9,9 +9,9 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="303.74283mm"
-   height="164.83418mm"
-   viewBox="0 0 303.74284 164.8342"
+   width="233.41692mm"
+   height="172.2011mm"
+   viewBox="0 0 233.41692 172.20111"
    version="1.1"
    id="svg8"
    inkscape:version="0.92.3 (2405546, 2018-03-11)"
@@ -117,8 +117,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.979899"
-     inkscape:cx="625.36778"
-     inkscape:cy="349.46938"
+     inkscape:cx="653.30641"
+     inkscape:cy="381.80349"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -148,7 +148,7 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-119.83401,718.41525)">
+     transform="translate(-112.44191,717.22709)">
     <flowRoot
        xml:space="preserve"
        id="flowRoot1825"
@@ -165,8 +165,8 @@
        id="rect873-36-7-93-8-0-2-3"
        width="220.13116"
        height="18.026546"
-       x="122.33401"
-       y="-704.83929" />
+       x="122.46764"
+       y="-704.70569" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
@@ -232,7 +232,7 @@
          id="tspan2117-0-5-3"
          x="270.40091"
          y="-709.28632"
-         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.46666622px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Italic';fill:#0000ff;stroke-width:0.26458332">包括MMU等</tspan></text>
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Italic';fill:#0000ff;stroke-width:0.26458332">包括MMU，L2Cache等</tspan></text>
     <rect
        style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:1.05507505;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
        id="rect873-36-7-93-8-0-2-3-3-5-60"
@@ -319,17 +319,6 @@
        sodipodi:nodetypes="ssscccccssss"
        inkscape:transform-center-x="40.981094"
        inkscape:transform-center-y="52.919379" />
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="184.00217"
-       y="-556.487"
-       id="text2119-4-7-9-5"><tspan
-         sodipodi:role="line"
-         id="tspan2117-0-5-3-9"
-         x="184.00217"
-         y="-556.487"
-         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.46666622px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Italic';fill:#0000ff;stroke-width:0.26458332">原来画好的图不知道为什么不见了，临时放一个示意，晚点重画</tspan></text>
     <path
        style="opacity:1;fill:#00ceff;fill-opacity:1;stroke:none;stroke-width:0.32764122;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
        d="m 317.70077,-663.56548 c -1.50959,0 -2.72486,-1.86703 -2.72486,-4.18624 v -7.67495 c 0,-0.65519 0.0972,-4.30485 0.27041,-4.85596 h -2.38615 l 5.74884,-10.51707 5.74945,10.5166 h -1.93242 c 0.17329,0.5512 0.27041,4.2011 0.27041,4.85643 v 7.67495 c 0,2.31921 -1.21527,4.18624 -2.72486,4.18624 z"
@@ -346,5 +335,45 @@
        sodipodi:nodetypes="ssscccccssss"
        inkscape:transform-center-x="52.91938"
        inkscape:transform-center-y="-40.981093" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="113.73636"
+       y="-596.31299"
+       id="text2119-4-7-9-3"><tspan
+         sodipodi:role="line"
+         id="tspan2117-0-5-3-6"
+         x="113.73636"
+         y="-596.31299"
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Italic';fill:#0000ff;stroke-width:0.26458332">ICache也在这里</tspan></text>
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-36-7-93-8-0-2-3-7"
+       width="220.13116"
+       height="18.026546"
+       x="121.88799"
+       y="-575.55695" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="199.4449"
+       y="-562.38306"
+       id="text2119-4-7-5"><tspan
+         sodipodi:role="line"
+         id="tspan2117-0-5-35"
+         x="199.4449"
+         y="-562.38306"
+         style="stroke-width:0.26458332">其他辅助设施</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="211.84656"
+       y="-547.78094"
+       id="text2119-4-7-9-6"><tspan
+         sodipodi:role="line"
+         id="tspan2117-0-5-3-2"
+         x="211.84656"
+         y="-547.78094"
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Italic';fill:#0000ff;stroke-width:0.26458332">包括调试，时钟，中断，消息处理等机制</tspan></text>
   </g>
 </svg>
