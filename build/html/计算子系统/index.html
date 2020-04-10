@@ -26,6 +26,7 @@
         <script type="text/javascript" src="../_static/doctools.js"></script>
         <script type="text/javascript" src="../_static/language_data.js"></script>
         <script type="text/javascript" src="../_static/translations.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -37,7 +38,7 @@
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
     <link rel="next" title="综述" href="综述.html" />
-    <link rel="prev" title="软件架构设计" href="../认识鲲鹏920：一个服务器SoC/软件构架设计.html" /> 
+    <link rel="prev" title="管理系统" href="../认识鲲鹏920：一个服务器SoC/管理系统.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -93,10 +94,13 @@
 <li class="toctree-l1"><a class="reference internal" href="../认识鲲鹏920：一个服务器SoC/index.html">认识鲲鹏920：一个服务器SoC</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">计算子系统</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="综述.html">综述</a></li>
-<li class="toctree-l2"><a class="reference internal" href="权限设计.html">权限设计</a></li>
+<li class="toctree-l2"><a class="reference internal" href="处理器执行模型.html">处理器执行模型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="通用计算.html">通用计算</a></li>
+<li class="toctree-l2"><a class="reference internal" href="安全和权限设计.html">权限设计</a></li>
 <li class="toctree-l2"><a class="reference internal" href="内存访问模型.html">内存访问模型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="虚拟化设计.html">虚拟化设计</a></li>
 <li class="toctree-l2"><a class="reference internal" href="计算特性子集.html">计算特性子集</a></li>
-<li class="toctree-l2"><a class="reference internal" href="地址空间模型.html">地址空间模型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="加速器.html">加速器</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../网络子系统/index.html">网络子系统</a></li>
@@ -173,20 +177,43 @@
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="综述.html">综述</a></li>
-<li class="toctree-l1"><a class="reference internal" href="权限设计.html">权限设计</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="权限设计.html#cpu">CPU特权级</a></li>
-<li class="toctree-l2"><a class="reference internal" href="权限设计.html#id2">安全模式</a></li>
-<li class="toctree-l2"><a class="reference internal" href="权限设计.html#id3">侧信道攻击问题</a></li>
+<li class="toctree-l1"><a class="reference internal" href="处理器执行模型.html">处理器执行模型</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="处理器执行模型.html#id2">冯诺依曼计算机</a></li>
+<li class="toctree-l2"><a class="reference internal" href="处理器执行模型.html#id3">流水线</a></li>
+<li class="toctree-l2"><a class="reference internal" href="处理器执行模型.html#super-scalar">Super Scalar处理器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="处理器执行模型.html#id4">小结</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="内存访问模型.html">内存访问模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="通用计算.html">通用计算</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="通用计算.html#id2">寻址方式</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="安全和权限设计.html">权限设计</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="安全和权限设计.html#cpu">CPU特权级</a></li>
+<li class="toctree-l2"><a class="reference internal" href="安全和权限设计.html#id2">安全模式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="安全和权限设计.html#id3">侧信道攻击</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="内存访问模型.html">内存访问模型</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="内存访问模型.html#id2">内存访问的的原子化行为</a></li>
+<li class="toctree-l2"><a class="reference internal" href="内存访问模型.html#cachecache-coherency">内存Cache和Cache Coherency设计</a></li>
+<li class="toctree-l2"><a class="reference internal" href="内存访问模型.html#id6">内存顺序模型</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="虚拟化设计.html">虚拟化设计</a></li>
 <li class="toctree-l1"><a class="reference internal" href="计算特性子集.html">计算特性子集</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="计算特性子集.html#id2">综述</a></li>
 <li class="toctree-l2"><a class="reference internal" href="计算特性子集.html#id3">主计算核能力</a></li>
 <li class="toctree-l2"><a class="reference internal" href="计算特性子集.html#id4">加速器能力</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="地址空间模型.html">地址空间模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="加速器.html">加速器</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="加速器.html#id2">加速器和协处理器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="加速器.html#warpdrive">WarpDrive框架</a></li>
+<li class="toctree-l2"><a class="reference internal" href="加速器.html#id3">内存距离问题</a></li>
+<li class="toctree-l2"><a class="reference internal" href="加速器.html#id4">核内加速器</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -202,7 +229,7 @@
         <a href="综述.html" class="btn btn-neutral float-right" title="综述" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../认识鲲鹏920：一个服务器SoC/软件构架设计.html" class="btn btn-neutral float-left" title="软件架构设计" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../认识鲲鹏920：一个服务器SoC/管理系统.html" class="btn btn-neutral float-left" title="管理系统" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

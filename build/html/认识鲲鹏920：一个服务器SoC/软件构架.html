@@ -36,7 +36,9 @@
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="索引" href="../genindex.html" />
-    <link rel="search" title="搜索" href="../search.html" /> 
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="Linux内核软件架构基础" href="Linux内核软件架构基础.html" />
+    <link rel="prev" title="总线" href="总线.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -85,11 +87,31 @@
             
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../序.html">序</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../感谢.html">感谢</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../认识服务器/index.html">认识服务器</a></li>
-<li class="toctree-l1"><a class="reference internal" href="index.html">认识鲲鹏920：一个服务器SoC</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">认识鲲鹏920：一个服务器SoC</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="综述.html">综述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="总线.html">总线</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">软件架构</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">综述</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">编译器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#linux-kernel">Linux Kernel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#glibc">glibc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">架构分支和战地分支</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">小结</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Linux内核软件架构基础.html">Linux内核软件架构基础</a></li>
+<li class="toctree-l2"><a class="reference internal" href="地址空间.html">地址空间</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Cache.html">Cache</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Cache.html#cache-coherency">Cache Coherency</a></li>
+<li class="toctree-l2"><a class="reference internal" href="中断.html">中断</a></li>
+<li class="toctree-l2"><a class="reference internal" href="设备和设备总线.html">设备和设备总线</a></li>
+<li class="toctree-l2"><a class="reference internal" href="管理系统.html">管理系统</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../计算子系统/index.html">计算子系统</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../网络子系统/index.html">网络子系统</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../存储子系统/index.html">存储子系统</a></li>
@@ -140,6 +162,8 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
+          <li><a href="index.html">认识鲲鹏920：一个服务器SoC</a> &raquo;</li>
+        
       <li>软件架构</li>
     
     
@@ -163,20 +187,22 @@
 <h1>软件架构<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
 <div class="section" id="id2">
 <h2>综述<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
-<p>在我们仅一步介绍更多鲲鹏的硬件设计前，我们先介绍一下鲲鹏的软件构架是怎么考虑的。</p>
+<p>在我们进一步介绍更多鲲鹏的硬件设计前，我们先介绍一下鲲鹏的软件构架是怎么设计的。</p>
 <p>正如我们在上一章服务器介绍中提到的，服务器软件生态最大的问题在于其复杂性。为了
-应对这种复杂性，鲲鹏使用了一个很简单的构架设计作为它设计逻辑的第一层。这个简单
-的构架逻辑是：采用全兼容，全主线的软件支持策略。简单总结，就是如果某种接口已经
-有标准了，鲲鹏在可能的情况下完全兼容已有的标准，如果某种接口没有标准，或者必须
-为了更好的功能或者特性需要对接口做出改变，那么相关的软件设计都直接合入对应软件
-分支的主线。</p>
+应对这种复杂性，鲲鹏使用了一个很简单的构架设计策略作为它设计逻辑的第一层。这个
+简单的构架逻辑是：采用全兼容，全主线的软件支持策略。也就是说，就是如果某种接口
+已经有标准了，鲲鹏在可能的情况下完全兼容已有的标准，如果某种接口没有标准，或者
+必须为了更好的功能或者特性需要对接口做出改变，那么相关的软件设计都直接合入对应
+软件分支的主线。</p>
 <blockquote>
 <div><div class="line-block">
 <div class="line">主线</div>
+<div class="line"><br /></div>
 <div class="line">Mainline，Mainstream分支称为主线。</div>
-<div class="line">主线是对某种类型分支的，不总是严格的，通俗叫法。</div>
-<div class="line">开源开发模式让分支的数量事实上增加了很多，</div>
-<div class="line">但很多分支并没有足够的工程师支持其发展，</div>
+<div class="line">主线是对某种类型的分支的，不总是严格的通俗叫法。</div>
+<div class="line"><br /></div>
+<div class="line">开源开发模式让分支的数量事实上大幅增加，</div>
+<div class="line">但很多这些分支并没有足够的工程师支持其发展，</div>
 <div class="line">所以很多分支采用跟随其他分支的发展方式，</div>
 <div class="line">这种跟随可以是本分支增加的功能和上游分支关系不密切，</div>
 <div class="line">然后用接近git fast-forward这样的方式快速合并上游的修改。</div>
@@ -185,15 +211,45 @@
 <div class="line">这样，所有这些分支共同形成一个近似的树状关联结构。这个树状结构的根，</div>
 <div class="line">就称为“主线”，它代表了这个软件的所有分支的“根”。</div>
 <div class="line">合入主线的特性被认为具有最长的生命周期。</div>
-<div class="line">当然，这是个不清晰的描述，但主流的软件，</div>
+<div class="line">当然，这是个不清晰的描述，但大部分的软件，无论是否开源，</div>
 <div class="line">事实上就是几乎都可以找到一个“主线”。</div>
 </div>
 </div></blockquote>
-<p>所以，鲲鹏920的主CPU选择的是生态成熟的ARMv8全指令集，设备接口选择被广泛使用的
-PCIE接口，Boot Loader和OS之间的接口选择服务器领域广发使用的ACPI接口，其他的网络
-，存储等接口，都是业界广泛使用的接口，以便完全融入到已有的软件生态中。这个生态
-不仅包括GNU/Linux生态，也包括其他生态，但为了授权的方便，本书聚焦到介绍
-GNU/Linux的情形，对应的考量，也可以适用于其他软件生态。</p>
+<p>这个设计的逻辑是当前软件高度复杂和高度抽象下的一种自然选择。软件（其实包括硬件）
+广泛地进行抽象后，就会形成下图这样一个组织结构：</p>
+<blockquote>
+<div><div class="figure">
+<img alt="../_images/sw_arch_struct.svg" src="../_images/sw_arch_struct.svg" /></div>
+</div></blockquote>
+<p>软件的的最初版本实现成功后，为了保证过去的投资可以被利用，后续的修改会以原来的
+结构为基础进行发展，每次升级会有限选择维系原来的外部关联不变，改变其中一组部件
+的内部的结构。由于关联可以发生在多种层面，最后这个系统会变得非常复杂，每次修改
+都不太可能进行全部的更新了，而只能是在这个关联结构中找到一个层次，在这个层面上
+模拟所有的外部关联，替换原来的组成部分。</p>
+<p>兼容接口就保证了最大程度的软件支持，这种支持甚至不需要提供者拥有这个代码。</p>
+<p>但并非所有接口是标准的，因为现代软件的发展速度非常快，每个参与者都希望尽快获得
+优势。而且，如果某个部件进行创新，就算接口保持不变，它的性能发生变化了，标准接
+口就会变得低效。比如如果磁盘技术发生了变化，速度接近内存了，磁盘Cache这个模块的
+价值就不存在了。但原来的软件并不会立即淘汰，这样分支就发生了：</p>
+<blockquote>
+<div><div class="figure">
+<img alt="../_images/sw_arch_struct_with_branches.svg" src="../_images/sw_arch_struct_with_branches.svg" /></div>
+</div></blockquote>
+<p>这种分支结合开源模式的广泛运用，就构成这样一种开发模型：每个创新者，首先把结构
+中所有的软件部件都复制一份，形成自己的分支，然后插入自己的创新逻辑。这个逻辑模
+拟了部分接口，实现对那个部分的替换，但由于这个部分的性能发生了变化，整个软件运
+行压力也会发生变化。这个创新者的分支就会有自己的发展取向，和其他人不一样了。等
+它的结构相对稳定了，这个创新如果和其他人不冲突，就会被聚合到相对统一的分支上。
+最终会构成这个领域的一个或者一组主线。如果我们希望某个技术被更多的人使用和获得
+长远发展，我们就需要让这个技术进入主线，否则除非它有独一无二的竞争力，它会被大
+部分软件边缘化。但在软件高度复杂的通用计算领域，这几乎是不可能的。</p>
+<p>鲲鹏920要支持更多的领域，要成为通用计算服务器，就必须选择标准化，主线化的软硬件
+设计。</p>
+<p>所以，鲲鹏920的对外接口基本上都是标准接口：主CPU选择的是生态成熟的ARMv8全指令集
+，设备和CPU之间选择被广泛使用的PCIE接口，Boot Loader和OS之间选择服务器领域常见
+的ACPI接口，其他的网络，存储等接口，都是业界通用的，以便可以完全融入到已有的软
+件生态中。这个生态不仅包括GNU/Linux生态，也包括其他生态，但为了授权的方便，本书
+聚焦到介绍GNU/Linux的情形。但对应的考量，也可以适用于其他软件生态。</p>
 <p>所以，并没有一个特殊的，专门用于鲲鹏的Linux Kernel，专门用于鲲鹏的gcc，专门用于
 鲲鹏的glibc，等等。鲲鹏920被这些软件的主线版本所支持，从而派生的各种GNU/Linux发
 行版都可以被相应支持。本书会用主线软件的设计来介绍相关软件解决方案是如何解决具
@@ -207,15 +263,21 @@ GNU/Linux的情形，对应的考量，也可以适用于其他软件生态。</
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">gcc</span><span class="o">/</span><span class="n">config</span><span class="o">/</span><span class="n">aarch64</span><span class="o">/</span><span class="n">tsv110</span><span class="o">.</span><span class="n">md</span>
 </pre></div>
 </div>
-<p>这里的tsv110是泰山V110的缩写（泰山是鲲鹏920的CPU核的名字），里面的定义主要每个
-计算需要的时间，这个东西帮助gcc的后端程序决定指令的排列顺序，从而让生成的二进制
-指令序列更好发挥泰山核的处理能力。</p>
+<p>这里的tsv110是泰山V110的缩写（泰山是鲲鹏920的CPU核的名字，但也是使用鲲鹏920芯片
+的一个服务器系列的名字）。上面的文件中主要定义了每个计算需要的时间，这个东西帮
+助gcc的后端程序决定指令的排列顺序，从而让生成的二进制指令序列更好匹配泰山核的流
+水线。</p>
 <p>其实没有这个补丁，编译一个通用ARM64的二进制程序也是可以在鲲鹏上运行的，只是性能
 没有那么高而已。这个观察给我们一个很好的例子，让我们看到开源和标准是怎么发挥作
-用的。如果鲲鹏要使用gcc，就必须遵守gcc代码设计的标准，只能根据gcc定义的流水线的
-标准和允许的参数决定如何排流水线。如果鲲鹏不想遵循这个原则，鲲鹏的工程师可以开
-发自己的分支，但这个分支建立了另一套规则，这套规则无法和gcc的其他优化器共同作用
-，这个鲲鹏分支就会部分失去那些优化器所在的生态。</p>
+用的。首先gcc的构架本身一定程度上给了鲲鹏定义自己流水线的机会，但这个机会受gcc
+本身对流水线的抽象的要求。如果鲲鹏要使用gcc，就必须遵守gcc的这个抽象，只能根据
+gcc定义的流水线的标准和允许的参数决定如何排流水线。gcc代表的是很多处理器的共同
+选择，鲲鹏的应用场合并不包括这些处理器，那么鲲鹏就可以选择出一些只给自己用的分
+支，改变上游gcc的依赖。但这个分支改变的这种依赖关系，又会导致这个分支无法合入
+其他为上游gcc写的Patch，持续这样发展下去，这个鲲鹏专有的gcc能否持续发展，就可疑
+了。如果最终鲲鹏gcc的这个优化很好，上游gcc的大部分开发者觉得向这个发展很好，他们
+就会选择合入这个版本，或者用这个版本作为自己版本的base，gcc的主线就会变成鲲鹏的
+这个分支。同样的道理也会出现在其他的分支发展中。</p>
 <p>开源给了一个很好的平衡机会，如果这种分离的分支能找到足够的市场和利益，它就可以
 活下去，形成另一个生态，如果它找不到，就会自然消亡。这个过程中，主线和这种新分
 支仍可以互相学习对方的长处。但任何一种学习，都是对本身发展的一个约束。哪个分支
@@ -224,13 +286,13 @@ GNU/Linux的情形，对应的考量，也可以适用于其他软件生态。</
 户也会因为错误的投资依赖而收到打击。所以，开源的动力是最接近软件的技术本质，而
 不是人的意志的。开源的动力不是某种理想，而是某种先进的生产力。</p>
 <p>所以，软件对硬件的使能并非简单让软件使用硬件的接口。对于做硬件的人来说，使能软
-件更重要的是对软件的规则的改变，让硬件的能力充分发挥出来。硬件的软件团队参与标
-准制定，参与主线的开发，目的都在这里。</p>
-<p>如果跟踪开发人员的上传记录，我们还会发现鲲鹏的工程师还在libgcc中合入了一些cache
-处理的逻辑，这些大部分都是在“改变”规则，修改gcc生成的代码的工作模式，从而提高最
-终的程序的运行效率。这仍是前面说到的改变规则的延续。这一点也对硬件设计提出了很
-高的要求。因为改变这种规则的成本很高，如果硬件的未来改进不能充分利用这种规则，
-这些努力都是浪费的。</p>
+件更重要的是对软件的规则的改变，特别是改变软件的上层抽象，让硬件的能力充分发挥
+出来。硬件的软件团队参与标准制定，参与主线的开发，目的都在这里。</p>
+<p>如果跟踪开发人员的上传记录，我们还会发现鲲鹏的工程师在libgcc中合入了一些cache处
+理的逻辑，这些大部分都是在“改变”规则，修改gcc生成的代码的工作模式，从而提高最终
+的程序的运行效率。这仍是前面说到的改变规则的延续。这一点也对硬件设计提出了很高
+的要求。因为改变这种规则的成本很高，如果硬件的未来改进不能充分利用这种规则，这
+些努力都是浪费的。</p>
 <p>每个Linux发行版都使用不同的gcc和llvm分支，这些gcc分支中加入了各自的修改，但大部
 分都跟随主线gcc和llvm发展。华为自己提供的EulerOS也提供了自己的分支，它的源代码
 在这里：:</p>
@@ -240,6 +302,16 @@ GNU/Linux的情形，对应的考量，也可以适用于其他软件生态。</
 <p>如果做商用功能，可以选择这些有商业维护的分支，也可以基于这些商业分支自行维护。
 如果要做的是学术验证等方面的工作，更多人会考虑直接从主线分支上做fork，然后合并
 其他开发分支的修改。</p>
+<blockquote>
+<div><div class="line-block">
+<div class="line">Fork</div>
+<div class="line"><br /></div>
+<div class="line">git版本管理工具引入的一个概念，表示从某个分支上复制其内容和历史</div>
+<div class="line">修改记录。Fork的分支可以从原分支上持续同步更新，也可以把自己的修改</div>
+<div class="line">回合到原分支，一边本分支发展的时候总可以同步原分支的更新。当然，</div>
+<div class="line">Fork的新分支也可以脱离原分支独立发展。</div>
+</div>
+</div></blockquote>
 </div>
 <div class="section" id="linux-kernel">
 <h2>Linux Kernel<a class="headerlink" href="#linux-kernel" title="永久链接至标题">¶</a></h2>
@@ -249,12 +321,6 @@ GNU/Linux的情形，对应的考量，也可以适用于其他软件生态。</
 ，并不会存在独立的专门用于鲲鹏的二进制版本。</p>
 <p>鲲鹏的片内设备按其他外界设备一样管理，都通过ACPI或者PCIE总线的自动发现机制自动
 发现，然后匹配到对应驱动上。</p>
-<blockquote>
-<div><div class="line-block">
-<div class="line">ACPI</div>
-<div class="line">todo</div>
-</div>
-</div></blockquote>
 <p>鲲鹏920用到的片内驱动包括：</p>
 <ul class="simple">
 <li>drivers/perf/hisilicon/* PMU的驱动，鲲鹏提供了ARM标准的性能计数器，也提供了自
@@ -271,13 +337,66 @@ GNU/Linux的情形，对应的考量，也可以适用于其他软件生态。</
 hisilicon或者huawei的修改（还有部分来自Linaro的修改），可以找到这些修改，他们会
 涉及比如中断子系统，Cache管理，SMMU，ACPI等。</p>
 <p>和编译器一样，软件开发人员可以根据需要选择主线还是特定的分支进行对应的开发。</p>
-<p>华为用于提供自己的选择的分支也通过Open-Euler提供，这个分支在这里维护：</p>
-<blockquote>
-<div>todo: fixme</div></blockquote>
+<p>华为用于提供自己的选择的分支也通过Open-Euler提供，这个分支在这里维护：:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">gitee</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">src</span><span class="o">-</span><span class="n">openeuler</span><span class="o">/</span><span class="n">kernel</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="glibc">
 <h2>glibc<a class="headerlink" href="#glibc" title="永久链接至标题">¶</a></h2>
-<p>todo</p>
+<p>鲲鹏920全兼容ARMv8，在glibc上几乎没有修改，现在可见的修改几乎全部是修改字符串和
+内存处理相关函数的，比如这样：:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">diff</span> <span class="o">--</span><span class="n">git</span> <span class="n">a</span><span class="o">/</span><span class="n">sysdeps</span><span class="o">/</span><span class="n">aarch64</span><span class="o">/</span><span class="n">strcpy</span><span class="o">.</span><span class="n">S</span> <span class="n">b</span><span class="o">/</span><span class="n">sysdeps</span><span class="o">/</span><span class="n">aarch64</span><span class="o">/</span><span class="n">strcpy</span><span class="o">.</span><span class="n">S</span>
+<span class="n">index</span> <span class="n">edc16252f68</span><span class="o">..</span><span class="mi">290</span><span class="n">bcf8d236</span> <span class="mi">100644</span>
+<span class="o">---</span> <span class="n">a</span><span class="o">/</span><span class="n">sysdeps</span><span class="o">/</span><span class="n">aarch64</span><span class="o">/</span><span class="n">strcpy</span><span class="o">.</span><span class="n">S</span>
+<span class="o">+++</span> <span class="n">b</span><span class="o">/</span><span class="n">sysdeps</span><span class="o">/</span><span class="n">aarch64</span><span class="o">/</span><span class="n">strcpy</span><span class="o">.</span><span class="n">S</span>
+<span class="o">@@</span> <span class="o">-</span><span class="mi">53</span><span class="p">,</span><span class="mi">6</span> <span class="o">+</span><span class="mi">53</span><span class="p">,</span><span class="mi">12</span> <span class="o">@@</span>
+ <span class="c1">#define len            x16</span>
+ <span class="c1">#define to_align       x17</span>
+
+<span class="o">+/*</span> <span class="n">NEON</span> <span class="n">register</span> <span class="o">*/</span>
+<span class="o">+</span><span class="c1">#define dataq          q2</span>
+<span class="o">+</span><span class="c1">#define datav          v2</span>
+<span class="o">+</span><span class="c1">#define datab2         b3</span>
+<span class="o">+</span><span class="c1">#define datav2         v3</span>
+<span class="o">+</span>
+ <span class="c1">#ifdef BUILD_STPCPY</span>
+ <span class="c1">#define STRCPY __stpcpy</span>
+ <span class="c1">#else</span>
+<span class="o">@@</span> <span class="o">-</span><span class="mi">199</span><span class="p">,</span><span class="mi">7</span> <span class="o">+</span><span class="mi">205</span><span class="p">,</span><span class="mi">6</span> <span class="o">@@</span>  <span class="n">L</span><span class="p">(</span><span class="n">fp_lt2</span><span class="p">):</span>
+ <span class="c1">#endif</span>
+        <span class="n">ret</span>
+
+<span class="o">-</span>       <span class="o">.</span><span class="n">p2align</span> <span class="mi">6</span>
+        <span class="o">/*</span> <span class="n">Aligning</span> <span class="n">here</span> <span class="n">ensures</span> <span class="n">that</span> <span class="n">the</span> <span class="n">entry</span> <span class="n">code</span> <span class="ow">and</span> <span class="n">main</span> <span class="n">loop</span> <span class="nb">all</span> <span class="n">lies</span>
+           <span class="n">within</span> <span class="n">one</span> <span class="mi">64</span><span class="o">-</span><span class="n">byte</span> <span class="n">cache</span> <span class="n">line</span><span class="o">.</span>  <span class="o">*/</span>
+ <span class="n">L</span><span class="p">(</span><span class="n">bulk_entry</span><span class="p">):</span>
+<span class="o">@@</span> <span class="o">-</span><span class="mi">214</span><span class="p">,</span><span class="mi">46</span> <span class="o">+</span><span class="mi">219</span><span class="p">,</span><span class="mi">36</span> <span class="o">@@</span>  <span class="n">L</span><span class="p">(</span><span class="n">bulk_entry</span><span class="p">):</span>
+           <span class="n">especially</span> <span class="n">on</span> <span class="n">cores</span> <span class="k">with</span> <span class="n">a</span> <span class="n">high</span> <span class="n">number</span> <span class="n">of</span> <span class="n">issue</span> <span class="n">slots</span> <span class="n">per</span>
+           <span class="n">cycle</span><span class="p">,</span> <span class="k">as</span> <span class="n">we</span> <span class="n">get</span> <span class="n">much</span> <span class="n">better</span> <span class="n">parallelism</span> <span class="n">out</span> <span class="n">of</span> <span class="n">the</span> <span class="n">operations</span><span class="o">.</span>  <span class="o">*/</span>
+ <span class="n">L</span><span class="p">(</span><span class="n">main_loop</span><span class="p">):</span>
+<span class="o">-</span>       <span class="n">stp</span>     <span class="n">data1</span><span class="p">,</span> <span class="n">data2</span><span class="p">,</span> <span class="p">[</span><span class="n">dst</span><span class="p">],</span> <span class="c1">#16</span>
+<span class="o">+</span>       <span class="nb">str</span>     <span class="n">dataq</span><span class="p">,</span> <span class="p">[</span><span class="n">dst</span><span class="p">],</span> <span class="c1">#16</span>
+ <span class="n">L</span><span class="p">(</span><span class="n">entry_no_page_cross</span><span class="p">):</span>
+<span class="o">-</span>       <span class="n">ldp</span>     <span class="n">data1</span><span class="p">,</span> <span class="n">data2</span><span class="p">,</span> <span class="p">[</span><span class="n">src</span><span class="p">],</span> <span class="c1">#16</span>
+<span class="o">-</span>       <span class="n">sub</span>     <span class="n">tmp1</span><span class="p">,</span> <span class="n">data1</span><span class="p">,</span> <span class="n">zeroones</span>
+<span class="o">-</span>       <span class="n">orr</span>     <span class="n">tmp2</span><span class="p">,</span> <span class="n">data1</span><span class="p">,</span> <span class="c1">#REP8_7f</span>
+<span class="o">-</span>       <span class="n">sub</span>     <span class="n">tmp3</span><span class="p">,</span> <span class="n">data2</span><span class="p">,</span> <span class="n">zeroones</span>
+<span class="o">-</span>       <span class="n">orr</span>     <span class="n">tmp4</span><span class="p">,</span> <span class="n">data2</span><span class="p">,</span> <span class="c1">#REP8_7f</span>
+<span class="o">-</span>       <span class="n">bic</span>     <span class="n">has_nul1</span><span class="p">,</span> <span class="n">tmp1</span><span class="p">,</span> <span class="n">tmp2</span>
+<span class="o">-</span>       <span class="n">bics</span>    <span class="n">has_nul2</span><span class="p">,</span> <span class="n">tmp3</span><span class="p">,</span> <span class="n">tmp4</span>
+<span class="o">-</span>       <span class="n">ccmp</span>    <span class="n">has_nul1</span><span class="p">,</span> <span class="c1">#0, #0, eq    /* NZCV = 0000  */</span>
+<span class="o">-</span>       <span class="n">b</span><span class="o">.</span><span class="n">eq</span>    <span class="n">L</span><span class="p">(</span><span class="n">main_loop</span><span class="p">)</span>
+<span class="o">+</span>       <span class="n">ldr</span>     <span class="n">dataq</span><span class="p">,</span> <span class="p">[</span><span class="n">src</span><span class="p">],</span> <span class="c1">#16</span>
+<span class="o">+</span>       <span class="n">uminv</span>   <span class="n">datab2</span><span class="p">,</span> <span class="n">datav</span><span class="o">.</span><span class="mi">16</span><span class="n">b</span>
+<span class="o">+</span>       <span class="n">mov</span>     <span class="n">tmp3</span><span class="p">,</span> <span class="n">datav2</span><span class="o">.</span><span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="o">+</span>       <span class="n">cbnz</span>    <span class="n">tmp3</span><span class="p">,</span> <span class="n">L</span><span class="p">(</span><span class="n">main_loop</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>这其实是为所有兼容ARM64的软件服务的。这也是一种生态的现象，鲲鹏的开发者希望软件
+在鲲鹏上运行得更快，它可以利用ARM64的指令优势。完成这种优化，其他ARM64兼容硬件
+的软件也会获益，那些软件获益了，那些软件未来也有了更高的移植到鲲鹏的处理器上的
+可能性了。这样就构成了生态。</p>
 </div>
 <div class="section" id="id4">
 <h2>架构分支和战地分支<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
@@ -286,10 +405,10 @@ hisilicon或者huawei的修改（还有部分来自Linaro的修改），可以�
 <p>正如我们在前文介绍开源开发模式的时候提到的，一个软件的源代码树，可以被拷贝成多
 个分支。对于同一个软件的维护者来说，这常常不是一件好事，因为这就意味着，如果他
 发现了一个Bug，他就需要在每个分支上都修复一次这个Bug，才能把这个Bug修复掉。</p>
-<p>但把所有客户都归结在一个版本上，其实也是有它的缺点的。首先，这并不能完全降低测试
-的工作量。比如你有一个软件A，用于三个平台P、Q、R。你在A上修改了一个Bug，你不能仅
-仅在P上测试了，就认为这个修改就是可以的，你还是需要在Q和R上都测试了，才能认为这个
-平台是可以的。</p>
+<p>但把所有客户都归结在一个版本上，其实也是有它的缺点的。首先，这并不能完全降低测
+试的工作量。比如你有一个软件A，用于三个平台P、Q、R。你在A上修改了一个Bug，你不
+能仅仅在P上测试了，就认为这个修改就是可以的，你还是需要在Q和R上都测试了，才能认
+为这个平台是可以的。</p>
 <p>但这样做会影响工程效率，因为可能这个Bug只在P上发生或者用到，P平台的市场域等着尽
 快修复这个Bug，却不得不等待Q、R两个平台都测试完。</p>
 <p>这个问题推广开去，还会有更多的问题。比如A是否需要进行构架调整？调整的过程中，A
@@ -297,26 +416,26 @@ hisilicon或者huawei的修改（还有部分来自Linaro的修改），可以�
 <p>还有，某个P平台的分支版本用于特定的市场竞争的时候，如果考虑Q、R的具体情形，就要
 多做很多判断，要选择对三者都均衡的算法，那么效率不高的问题如何解决？</p>
 <p>所有这些问题，都催生了分支的需求。我们在前面讨论树莓派生态的时候，就发现它并不
-直接支持主线Linux，而是创建了一个新的分支，专门支持树莓派，就是这样的需求催生的
-产物。</p>
-<p>Linux Kernel的创造者Linus Tovards创造的另一个软件，git，大大强化了分支的发展能
+直接支持主线Linux，而是创建了一个新的分支，专门支持树莓派。这种行为就是这样的需
+求催生的产物。</p>
+<p>Linux Kernel的创造者Linus Torvards创造的另一个软件，git，大大强化了分支的发展能
 力。git把每次修改作为一个独立的对象进行管理，Linus还在Linux Kernel的代码管理中
 强化了这种工程实践：他要求开发者提供的每个修改都必须是自恰的。也就是说，每个独
 立的修改必须是最小不可细分的，独立合入后可以编译的，完成独立特性的。这种方式管
 理之下的多个分支，即使有一定程度的分离，他们之上的不同修改也是可以成批转移到同
-一个分支之上的。当然，如果这些修改最终冲突了，仍需要人工干预，但它仍让这种多个
-独立管理的分支可以互相合并成为一种可行的，广泛使用的工程实践。现在这种工程方法
-已经成为一种通用实践，被用于很多的软件开发行为中。</p>
-<p>这样，每个软件都有多个开发分支，这些分支的发展好像生物群一样：它们有共同的基因，
-不同的形态，有时几乎一样，有时差距很大。这完全看这个分支的应用和发展。这些分支
-通常有两种类型，一种是某个软件已经发展成熟了，分离出来主要是为了某个应用场合。
-这种分支通常不再发展了，在这种分支上的修改基本上都是为了修复Bug，这种分支，我们
-称为“战地分支”，这种分支存在的目的就是为了使用。常常不同的市场域还会有不同的战地
-分支。我们经常会看到有些发行版的用户虽然使用某个发行版，但会重新修改这个发行版的
-内核和特定的程序，这些也会构成新的战地分支。</p>
+一个分支之上。当然，如果这些修改最终冲突了，仍需要人工干预，但它仍让这种多个独
+立管理的分支可以互相合并成为一种可行的，广泛使用的工程实践。现在这种工程方法已
+经成为一种通用实践，被用于很多的软件开发行为中。</p>
+<p>这样，每个软件都有多个开发分支，这些分支的发展好像生物群一样：它们有共同的基因
+，不同的形态，有时几乎一样，有时差距很大。这完全看这个分支的应用和发展。这些分
+支通常有两种类型，一种是某个软件已经发展成熟了，分离出来主要是为了某个应用场合
+。这种分支通常不再发展了，在这种分支上的修改基本上都是为了修复Bug，这种分支，我
+们称为“战地分支”，这种分支存在的目的就是为了使用。常常不同的市场域还会有不同的
+战地分支。我们经常会看到有些发行版的用户虽然使用某个发行版，但会重新修改这个发
+行版的内核和特定的程序，这些也会构成新的战地分支。</p>
 <p>另一个类型的分支，它存在的目的就不是为了使用，而是为了开发一个新特性，这种分支
-我们称为“开发分支”，但开发分支不发生交付，不和任何人发生交往，我们通常在工程上
-不怎么需要特别考虑这种分支。</p>
+我们称为“开发分支”，但开发分支不发生交付，不和除开发者以外的任何人发生交往，我
+们通常在工程上不怎么需要特别考虑这种分支。</p>
 <p>还有一种分支，它负责收集各个分支，包括开发分支开发的特性，战地分支修复的Bug等等
 ，它面对的主要问题是权衡，把各个分支的最优实践收集起来，并解决这些独立没有冲突
 ，但收集到一起就会产生逻辑冲突的修改的共存问题。这种分支存在的目的就是为了这个
@@ -347,9 +466,9 @@ hisilicon或者huawei的修改（还有部分来自Linaro的修改），可以�
 gcc的版本支持鲲鹏920，今天可以支持，明天可能就不能支持。所以我们说的支持，都有
 成熟程度的，是有范围的，我们更强调的是这种“依赖”背后还缺乏多少工作量，是要做构
 架性的调整，还是要做兼容性的测试，还是要做压力测试，这背后都是工作量的问题。我
-们必须意识到这一点，我们后面才能找到一个规律，去谈这种技术以及我们对它的判断，
-否则怎么说都可能是错的。
-谈一个</p>
+们必须意识到这一点，我们后面才能找到一个规律，去谈这种技术以及我们对它的判断。
+如果我们严格最初某种不变的“精确”，我们可能无法正确说明这个地方的规律是什么。希望
+读者在后面的阅读中注意到这一点。</p>
 </div>
 </div>
 
@@ -358,6 +477,15 @@ gcc的版本支持鲲鹏920，今天可以支持，明天可能就不能支持�
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="Linux内核软件架构基础.html" class="btn btn-neutral float-right" title="Linux内核软件架构基础" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="总线.html" class="btn btn-neutral float-left" title="总线" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

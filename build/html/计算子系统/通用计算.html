@@ -1,0 +1,382 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>通用计算 &mdash; 从鲲鹏920了解现代服务器实现和应用 0.1a1 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="权限设计" href="安全和权限设计.html" />
+    <link rel="prev" title="处理器执行模型" href="处理器执行模型.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> 从鲲鹏920了解现代服务器实现和应用
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../序.html">序</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../感谢.html">感谢</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../认识服务器/index.html">认识服务器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../认识鲲鹏920：一个服务器SoC/index.html">认识鲲鹏920：一个服务器SoC</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">计算子系统</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="综述.html">综述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="处理器执行模型.html">处理器执行模型</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">通用计算</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">寻址方式</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="安全和权限设计.html">权限设计</a></li>
+<li class="toctree-l2"><a class="reference internal" href="内存访问模型.html">内存访问模型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="虚拟化设计.html">虚拟化设计</a></li>
+<li class="toctree-l2"><a class="reference internal" href="计算特性子集.html">计算特性子集</a></li>
+<li class="toctree-l2"><a class="reference internal" href="加速器.html">加速器</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../网络子系统/index.html">网络子系统</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../存储子系统/index.html">存储子系统</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../RAS设计/index.html">RAS设计</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../未来展望.html">未来展望</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">从鲲鹏920了解现代服务器实现和应用</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">计算子系统</a> &raquo;</li>
+        
+      <li>通用计算</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/计算子系统/通用计算.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1>通用计算<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p>如前所述，鲲鹏920通用计算核基于ARMv8的架构定义设计。ARMv8的指令集在ARMv8的构架
+手册上可以查到，我们这里不打算重复那里的内容。我们从软件架构的角度对这个指令集
+进行一些理解，结合鲲鹏920的具体实现，让读者看到这个领域的控制要素是什么。</p>
+<p>为了减少版权上的流程问题，我们不成段引用ARMv8的定义，我们聚焦到讨论通用的指令
+设计和使用经验，同时我们会引用RISC-V这样的开放指令集作为讨论的类比。</p>
+<p>ARMv8使用32位定长指令格式，支持32个通用寄存器，然则每个寄存器要用5位，假如指令
+类别，包括指令的各种私有分类指示，用8位，那么一条指令最多可以独立索引4个寄存器。
+也可以少索引一些寄存器，把这些寄存器用作立即数，如果所有寄存器都不使用，最大的
+立即数索引就只能是24位。</p>
+<p>ARMv8的指令分6个大类：</p>
+<ul class="simple">
+<li>00xx 未使用</li>
+<li>100x 立即数计算，8位操作码，一到两个寄存器，剩下用于立即数</li>
+<li>101x 分支（条件，无条件），系统行为（比如DSB一类）</li>
+<li>x1x0 内存读写操作</li>
+<li>x101 寄存器计算</li>
+<li>x111 向量和浮点计算</li>
+</ul>
+<p>鲲鹏920内置的泰山核使用这些计算单元来实现这些指令：</p>
+<ul class="simple">
+<li>LSU：内存访问</li>
+<li><dl class="first docutils">
+<dt>ALU：内部包含多个独立单元</dt>
+<dd><ul class="first last">
+<li>ALU/b两个：一般定点运算，支持分支处理</li>
+<li>ALU一个：一般定点计算，不支持分支计算</li>
+<li>MDU一个：复杂定点计算（比如乘除法）</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li>FSU：包含四个独立的不同参数的浮点和向量计算单元</li>
+</ul>
+<p>这些计算单元在OoO和流水线的共同作用下，每个Cycle同步或者异步执行。其中FSU和ALU
+使用不同的寄存器进行运算，只在内存读入写出的时候和LSU有关系，其他时间基本上可
+以和ALU同步使用。这一类的调度机会，就是编译器可以介入帮助的地方。编译器基于“反
+正结果是一样就行”的策略，可以重新排布指令的顺序，保证流水线和OoO的效率更高。</p>
+<p>我们再深入看看ARMv8的指令的设计细节。它具有这样一些特点：</p>
+<ol class="arabic">
+<li><p class="first">大部分指令使用寄存器的时候都可以通过flag控制使用寄存器的字长。</p>
+</li>
+<li><p class="first">如果有不同效果，大部分指令都会有flag处理符号扩展问题。</p>
+</li>
+<li><p class="first">使用独立的条件寄存器，可以用于进位，跳转等功能，但也有非依赖条件寄存器的版本
+，比如TBNZ，但因为编码空间问题，地址范围可能在32KB和128M的不同范围内。</p>
+</li>
+<li><p class="first">支持双寄存器读写</p>
+</li>
+<li><p class="first">支持原子，Exclusive和Aquire/Relase操作（参考下一章“内存访问模型”）</p>
+</li>
+<li><p class="first">支持16位指令（压缩）</p>
+</li>
+<li><p class="first">浮点和向量共寄存器，和通用寄存器独立</p>
+</li>
+<li><p class="first">支持Cache prefetch</p>
+</li>
+<li><p class="first">一般定点主要包括：加减，比较，取负，移位，逻辑运算，寄存器迁移，位操作。还
+有一些特殊的指令：</p>
+<blockquote>
+<div><ul class="simple">
+<li>EXTR：从两个寄存器中取中间一段</li>
+<li>根据条件寄存器决定取寄存器中部分内容</li>
+</ul>
+</div></blockquote>
+</li>
+<li><dl class="first docutils">
+<dt>复杂定点包括：</dt>
+<dd><ul class="first last simple">
+<li>乘除（可以组合一个加减法）</li>
+<li>CRC32</li>
+<li>AES, 椭圆计算，SHA1，SHA256</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p class="first">浮点主要是在IEEE Std-754的基础上进行一些补充</p>
+</li>
+<li><p class="first">向量计算主要是把一般计算用更长的寄存器展开为向量</p>
+</li>
+</ol>
+<p>在ARMv7的时代，大部分指令都带有一个cond条件，用于决定是否执行这个指令，这是一
+种优化流水线的方法，但现实是没有多少场合能用起来，所以最终这个设计在ARMv8中已
+经被抛弃了。读者应该注意到，在指令设计中，这是常态。包括我们今天使用的ARMv8，
+未来也会出现这种抛弃的情况。这不受设计者的意愿和能力所控制，这是被外部需求驱动
+的。</p>
+<p>如果我们对比一下另一个新兴的开放指令集，RISC-V，我们可以从新发展的指令上看到两
+者在取舍上的区别。下面是和The RISC-V Instruction Set Manual Volume I:
+Unprivileged ISA 20180801-draft对比的一个总结（纯比较计算单元能力，不考虑体系
+结构的区别，我们特定对比前面列出的ARM的特性）：</p>
+<ol class="arabic simple">
+<li>字长控制的策略和ARM一样</li>
+<li>符号扩展策略也和ARM一样</li>
+<li>刻意放弃了condition flag，所有的条件都是计算出来的。在ARM上可以先做一个比较
+，更新condition flag，然后做一个基于condition flag的跳转。而RISCV只提供比较
+并跳转这样的操作。</li>
+<li>不支持双寄存器读写。这是个微架构的取舍，一种可能的认识是双寄存器读写的指令
+，在微架构上不见得比发出两条读写指令更快。所以RISCV并不急着支持这条指令。</li>
+<li>支持原子，其中Load Reserved/Store Conditional指令对应ARM的Exclusive指令</li>
+<li>变长指令支持，主要指令是32位的，但也支持更短的16位指令，和更长的指令</li>
+<li>向量指令有独立寄存器，和浮点和通用寄存器都独立</li>
+<li>不支持Cache prefetch。这个设计背后的观点可以是，软件指定prefetch的效果不能
+证明比如比硬件自动判断更优。</li>
+<li>支持加减，移位，逻辑运算。但寄存器迁移靠加减指令解决，位操作还在定义中，没
+有EXTR等数据提取指令，没有比较指令（应为比较和跳转一体了）</li>
+<li>复杂定点支持乘除，但还没有压缩、加解密等专用指令</li>
+<li>浮点完全使用IEEE Std-754的定义</li>
+<li>向量计算的策略和ARM的定义类似</li>
+</ol>
+<p>从这个总结看来，RISCV很多指令还在补充之中，但它的基本功能指令其实和ARM没有太大
+区别，而且是在刻意地做减法，这样省出来的指令空间就可以留给其他的创新了。</p>
+<div class="section" id="id2">
+<h2>寻址方式<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>寻址是指令指令内存地址的方式。寻址方式是不同指令集具有鲜明的特征的特性。本小节
+深入看看这个问题。</p>
+<p>ARMv8一条指令32位，如果要访问一个64位的地址，这肯定是放不下的，那我们可以有两
+种方法，第一种是基于一个寄存器来访问，这叫基指寻址。第二种方法是用当前指令所在
+的位置作为偏移，只访问当前指令附近的地址，这叫偏移寻址。</p>
+<p>寻址本身有两个用途，一个用于定位数据，一个用于定位代码，很明显，偏移寻址比较适
+合后者。</p>
+<p>我们不考虑原子，目标长度等特性，仅从通用读内存指令看ARMv8怎么设计寻址方式
+的：</p>
+<ul>
+<li><p class="first">立即数基变址：LDR &lt;Wt&gt;, [&lt;Xn|SP&gt;], #&lt;Ximm&gt;或者LDR &lt;Wt&gt;, [&lt;Xn|SP&gt;, #&lt;Ximm&gt;]!</p>
+<p>指令类型相关的参数用了13位，两个寄存器每个占用5位，一个用作基地址，一个用作
+加载的结果，Ximm作为偏移剩下9位，如果作为有符号数（simm）用，可以寻址以基址
+为中心512个字节的范围；如果作为无符号（pimm）用，可以从基地址向下访问512个自
+己的内容。</p>
+<p>这个指令支持Post Index和Pre Index两种形式，前者先在更新Xn|SP的内容得到偏移再
+用结果寻址，后者先选址等到结果，再更新偏移。ARMv7里还有不做基地址更新的指令
+，在ARMv8中取消了。</p>
+<p>可以想象，这种变址方式主要用于处理对象、数组，堆栈等数据结构。</p>
+</li>
+<li><p class="first">PC偏移寻址：LDR &lt;Xt&gt;, &lt;label&gt;</p>
+<p>节省了一个寄存器，都交给立即数用，这样可以寻址当前地址为中
+心的19位的空间，512KB。这种方式主要用于访问代码段或者代码段内嵌数据。</p>
+</li>
+<li><p class="first">寄存器基变址的例子：LDR &lt;Xt&gt;, [&lt;Xn|SP&gt;, (&lt;Wm&gt;|&lt;Xm&gt;){, &lt;extend&gt; {&lt;amount&gt;}}]</p>
+<p>相对立即数基变址，从偏移中再用掉5位，作为偏移寄存器，这样变址的空间就扩大为
+一个寄存器，剩下的4位，用来干什么都不好，所以用作对变址寄存器Wm或者Xm的进行
+放大，比如左移8位，这可以把字长大小的数组的下标转化为地址下标。</p>
+</li>
+<li><p class="first">双寄存器加载：LDP &lt;Xt1&gt;, &lt;Xt2&gt;, [&lt;Xn|SP&gt;], #&lt;imm&gt;或者
+LDP &lt;Xt1&gt;, &lt;Xt2&gt;, [&lt;Xn|SP&gt;, #&lt;imm&gt;]!</p>
+<p>这是LDR的变体，但多加载了一个目标寄存器，这样就多占了一个寄存器的空间，压缩
+了一下指令码占掉的空间，imm剩下7为，用法和LDR一样。</p>
+</li>
+</ul>
+<p>对应RISC-V，只有一种寻址方式：LD rd, rs1, #imm。操作码占10为，两个寄存器占了10
+位，正好剩下12位做偏移，其他功能都还没有。这看起来还没有进行足够的优化。</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="安全和权限设计.html" class="btn btn-neutral float-right" title="权限设计" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="处理器执行模型.html" class="btn btn-neutral float-left" title="处理器执行模型" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Kenneth Lee
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

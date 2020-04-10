@@ -38,7 +38,7 @@
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
     <link rel="next" title="Cache" href="Cache.html" />
-    <link rel="prev" title="总线" href="总线.html" /> 
+    <link rel="prev" title="Linux内核软件架构基础" href="Linux内核软件架构基础.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -94,6 +94,8 @@
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">认识鲲鹏920：一个服务器SoC</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="综述.html">综述</a></li>
 <li class="toctree-l2"><a class="reference internal" href="总线.html">总线</a></li>
+<li class="toctree-l2"><a class="reference internal" href="软件构架.html">软件架构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Linux内核软件架构基础.html">Linux内核软件架构基础</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">地址空间</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id2">综述</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#mmio">MMIO</a></li>
@@ -119,7 +121,7 @@
 <li class="toctree-l2"><a class="reference internal" href="Cache.html">Cache</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Cache.html#cache-coherency">Cache Coherency</a></li>
 <li class="toctree-l2"><a class="reference internal" href="中断.html">中断</a></li>
-<li class="toctree-l2"><a class="reference internal" href="设备.html">设备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="设备和设备总线.html">设备和设备总线</a></li>
 <li class="toctree-l2"><a class="reference internal" href="管理系统.html">管理系统</a></li>
 </ul>
 </li>
@@ -365,7 +367,7 @@ Lookaside Buffer。简单说，就是MMU或者IOMMU为了访问内存需要查�
 <p>内存：</p>
 <ul class="simple">
 <li><dl class="first docutils">
-<dt>MemAttr[1:0]=00 Outter内存</dt>
+<dt>MemAttr[1:0]=00 Outer内存</dt>
 <dd><ul class="first last">
 <li>MemAttr[3:2]=01 Inner或者Outer NonCacheable</li>
 <li>MemAttr[3:2]=10 Outer Write-through Cacheable</li>
@@ -374,9 +376,9 @@ Lookaside Buffer。简单说，就是MMU或者IOMMU为了访问内存需要查�
 </dd>
 </dl>
 </li>
-<li>MemAttr[1:0]=01 NonCacheable Outter内存</li>
-<li>MemAttr[1:0]=10 Write-through Cacheable Outter内存</li>
-<li>MemAttr[1:0]=11 Write-back Cacheable Outter内存</li>
+<li>MemAttr[1:0]=01 NonCacheable Outer内存</li>
+<li>MemAttr[1:0]=10 Write-through Cacheable Outer内存</li>
+<li>MemAttr[1:0]=11 Write-back Cacheable Outer内存</li>
 </ul>
 <p>设备：</p>
 <ul class="simple">
@@ -768,7 +770,7 @@ Cache Write-Through模式访问一般的内存。</p>
         <a href="Cache.html" class="btn btn-neutral float-right" title="Cache" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="总线.html" class="btn btn-neutral float-left" title="总线" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="Linux内核软件架构基础.html" class="btn btn-neutral float-left" title="Linux内核软件架构基础" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
