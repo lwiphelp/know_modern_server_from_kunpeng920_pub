@@ -9,9 +9,9 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="517.33624mm"
-   height="137.91176mm"
-   viewBox="0 0 517.33626 137.91177"
+   width="499.3378mm"
+   height="165.44415mm"
+   viewBox="0 0 499.33782 165.44417"
    version="1.1"
    id="svg8"
    inkscape:version="0.92.3 (2405546, 2018-03-11)"
@@ -282,14 +282,14 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.4"
-     inkscape:cx="1020.206"
-     inkscape:cy="285.30452"
+     inkscape:cx="798.77743"
+     inkscape:cy="389.85529"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="3830"
+     inkscape:window-width="1910"
      inkscape:window-height="2062"
-     inkscape:window-x="0"
+     inkscape:window-x="1920"
      inkscape:window-y="42"
      inkscape:window-maximized="0"
      fit-margin-top="2"
@@ -313,7 +313,7 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-57.872585,331.05529)">
+     transform="translate(-57.872585,330.92529)">
     <path
        style="fill:none;stroke:#000000;stroke-width:1.36500001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="M 59.872585,-244.26895 H 555.0214"
@@ -652,7 +652,7 @@
          y="-275.05078"
          style="stroke-width:0.15568461">B</tspan></text>
     <path
-       style="fill:none;stroke:#008080;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:6,6;stroke-dashoffset:0"
+       style="fill:none;stroke:#008080;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:6, 6;stroke-dashoffset:0;stroke-opacity:1"
        d="m 217.8334,-287.62331 -67.75283,29.80055"
        id="path1501"
        inkscape:connector-curvature="0" />

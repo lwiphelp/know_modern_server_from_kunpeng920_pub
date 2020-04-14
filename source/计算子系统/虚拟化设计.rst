@@ -3,6 +3,357 @@
 虚拟化设计
 ==========
 
-todo
+介绍
+----
+
+虚拟化是现代数据中心非常关键的的能力，它为数据中心的可管理性提供了重要的保障。
+如果数据中心的用户认可的是一台真实的机器，这台机器的位置，IP地址，磁盘大小，等
+等，都有可能成为这个用户的设计依赖，这样我们要调配硬件，组合租户，挂起应用等，
+都无法保证。让租户运行在虚拟机中，为这种管理便利建立了一个非常灵活的基础。
+
+虚拟化技术的原始概念来自仿真技术。所谓仿真，就是用一台机器模拟另一台机器。在
+CPU设计中，这种技术被广泛使用。一个CPU，从输入输出的角度来说，就是输入一组代码
+和数据，在IO上输出信号，或者更新内存。这个行为完全可以用软件进行仿真：我们给定
+一片运行内存作为这个被虚拟CPU的物理内存，然后我们根据我们被仿真的CPU的行为，从
+这片内存的复位向量的位置，读入第一条指令，更新CPU的内部状态（比如寄存器），内
+存，和IO端口，然后再读入下一条指令，再仿真它的行为……如此反复，我们就可以模仿这
+个被仿真的CPU的行为了。这种技术同样可以推广到一台完整的机器。
+
+仿真技术，可以模拟计算的运行过程，从而可以分析这台机器的行为模式，性能瓶颈等问
+题，CPU和计算机设计依靠这种方法来判断CPU的设计是否可以满足要求。
+
+虚拟化技术和这个类似，但它的目的不是为了仿真和验证这台计算机，它的目的是模拟一
+个可以实际使用的机器，让使用者不需要工作在物理设备上，而是在一台虚拟的设备上，
+从而提高整个数据中心的可管理能力。
+
+        | 虚拟机
+        | 虚拟机不是一个具有严格指向的定义，本章中提到的虚拟机，
+        | 是从计算机硬件这个角度提供的仿真。但虚拟机在很多场合
+        | 中，也可以表示不同层面的仿真，比如Python虚拟机，是提供
+        | 某种语言的运行环境的模拟，而并非提供一种硬件行为的仿真。
+
+
+仿真虚拟化和调度虚拟化
+----------------------
+用仿真方法来做虚拟化，仿真的过程完全是软件行为，被仿真机器的一条指令，都要表现
+为对多个软件对象的访问和更新。但这样肯定是很慢的，为了提高可管理性牺牲掉巨大的
+性能，是不可能被接受的。
+
+所以，实用的虚拟化技术都是基于调度的：被模拟的机器不是靠软件行为执行的，被模拟
+的机器和模拟用的机器是相同的体系结构，所以被模拟机器的执行过程其实就是直接用模
+拟机器的CPU直接执行里面的指令。
+
+这就好像被模拟的机器和模拟的机器分时使用的模拟机器的CPU而已：
+
+        .. figure:: sched_virtualization.svg
+
+这种模拟方法我们称为调度虚拟化。
+
+如果没有硬件的支持，调度虚拟化的成本也很高，因为被虚拟设备和虚拟设备是复用同一
+个CPU的，调度的时候我们可以保存CPU的运行寄存器，但我们不可能把系统寄存器也让出
+来给被虚拟的设备用。比如虚拟设备我们给页表寄存器设置了一个页表，等我们调度被模
+拟设备的时候，我们不可能取消虚拟设备的页表，换成被虚拟设备的页表。
+
+为了解决这个问题，我们只能把被虚拟设备中的这类行为做成仿真虚拟化一样——一旦遇到
+需要模拟这种行为的情形，都进行特殊处理，用仿真的方式去应对。这样效率就又降下去
+了。
+
+为了减少这样的“仿真”行为，硬件可以提供虚拟化支持，就是在系统中多准备一些“影子
+资源”，提供给被虚拟的设备使用，这样，被虚拟设备的所有行为，都可以直接被硬件支
+持，需要仿真的地方就少得多了。
+
+为了做到这一点，大部分处理器的手段是给处理器再增加一种状态，表示系统工作在虚拟
+系统中还是被虚拟系统中，在哪个被虚拟系统中。比如ARMv8的体系架构中用EL0模式表示
+用户态，用EL1模式表示操作系统内核态，正交于这两个模式，还有一个VMID状态，表示
+当前的EL0和EL1属于什么虚拟机。这样EL0和EL1中的系统状态都单独看做是一个虚拟机内
+部的了。然后它再增加一个更高的特权级，称为EL2，在EL2中可以设置这个VMID。EL2中的
+软件就称为一个Hypervisor，通过在Hypervisor中管理VMID的使用，就可以实现虚拟机之
+间的切换了。
+
+        .. figure:: armv8_hypervisor_mode.svg
+
+ARMv8中虚拟化支持是可选特性，鲲鹏920支持这个特性。
+
+本章余下的章节中，我们主要看看鲲鹏920 CPU硬件是如何对调度虚拟化提供支持的。（
+设备的虚拟化在介绍设备的章节中介绍）
+
+
+Type1和Type2虚拟化
+------------------
+
+当硬件支持进行调度虚拟化了，我们马上就面对这样一个问题：硬件的原始驱动放在哪里
+？虚拟机里面我们模拟了虚拟设备，但虚拟设备依赖真实的设备，我们总需要写真实的设
+备的驱动。
+
+这个驱动可以写在某个VM里面，其他VM通过Hypervisor请求这个服务，这是一种方法。
+Xen就使用这种方法，这个提供原始驱动的VM（在Xen中）称为Dom 0。这种方式称为Type
+1虚拟化。
+
+Type 1虚拟化的虚拟化路径比较长，但Hypervisor简单，对安全管理来说更加容易控制。
+当然，这些最后还是看优化细节。
+
+这个驱动也可以写在Hypervisor里面，其他VM直接向Hypervisor请求服务。这时
+Hypervisor就有了操作系统的功能了，甚至很多时候，我们直接就让其中一个操作系统充
+当Hypervisor。这样，其他的VM向这个OS请求服务。这种模式，就叫Type 2虚拟化：
+
+        .. figure:: type1_type2_hypervisor.svg
+
+对使用虚拟化功能的最终用户来说，他面对的最终操作界面，永远都是一个操作系统，
+Hypervisor只是其中一个服务。他会基于这个操作系统的操作界面创建虚拟机。我们把这
+个操作系统称为Host OS。Type1和Type2的本质区别是这个Host OS到底是个普通的VM，还
+是一个Hypervisor。
+
+Type2虚拟化需要硬件更多的支持。Type1虚拟化Hypervisor和操作系统的分离的，所以，
+只要让EL2看到Hypervisor需要管理的寄存器，让EL1看到OS需要管理的寄存器，就可以实
+现需要实现的功能。但如果要实现Type2，Host OS同时是Hypervisor和OS两个身份，就需
+要让EL2同时可以看到EL1可以看到的所有功能。这需要在这个模式上暴露更多的功能。在
+ARMv8上，这是一个扩展特性，称为VHE，Virtualization Host Extensions。它是支持
+ARMv8.1时必须支持的特性（当然，前提是这个平台实现了EL2）2。
+
+        | 在其他一些处理器上，比如RISC-V上，这个问题不一定存在。
+        | 在RISC-V上，高特权级总可以访问低特权级的任何寄存器，
+        | 和ARMv8在不同特权级上，即使同名的寄存器也不一定是同一个物理寄存器，
+        | 是不一样的。
+
+.. VHE的标记是ID_AA64MMFR1_EL1.VH，设置标记是HCR_EL2.E2H（EL2 host）。
+   开E2H后，EL1和EL0映射为EL2的寄存器，包括：
+   
+   SCTLR_EL1: 全局内存行为控制（比如PAuth等）
+   CPACR_EL1：全局中断行为控制（比如Trap到什么级别等）
+   TTBR0/1_EL1：页表，其中VM中的TTBR0_EL1在VHE中叫TTBR0_EL12
+   TCR_EL1：页表方案控制
+   AFSR0/1_EL1：Auxiliary Fault Status Register
+   ESR_EL1：Exception Syndrome Register
+   FAR_EL1：Fault Address Register
+   A/MAIR_EL1: (Aux) Memory Attribute Indirection Register
+   VBAR_EL1: 中断向量
+   CONTEXTIDR_EL1：ASID
+   CNTKCTL_EL1: Counter-timer Kernel Control register
+   SPSR_EL1: Saved Program Status Register
+   ELR_EL1：异常返回地址
+   CNTP/V_CTR/CVAL/TVAL_EL0：物理和虚拟时钟控制（虚拟时钟是和虚拟CPU时间比的时
+   钟）
+
+所以，Linux中另一个虚拟化解决方案KVM的实现也相应面对了这个复杂度。架构上，它主
+要是面向Type 2虚拟化的，因为它直接实现在内核中，把自己作为一个Hypervisor来管理
+。但如果硬件上不支持VHE，它又需要根据工作需要，把这个内核在EL1和EL2之间反复切
+换。所以我们不能简单说KVM就是Type1还是Type2的，我们只能说它是工作在Type1还是
+Type2模式。
+
+CPU对调度虚拟化的支持
+---------------------
+
+如前所述，CPU对调度虚拟化的支持就好像内核对用户态支持一样，让虚拟机的资源变成
+影子资源，用的时候可以直接用，但一旦进入管理特权级，就可以进行切换。
+
+我们可以一个个看这些资源可以怎么处理的：
+
+地址翻译
+~~~~~~~~
+在鲲鹏920/ARMv8中，EL1的时候，通过TTBR0/1两个寄存器设置页表，还可以通过SMMU设
+置针对设备的页表。为了让这个资源影子化，CPU把MMU/SMMU的翻译设置为两层的，地址
+翻译过程变成VA->IPA->PA。其中IPA称为“中间物理地址”，对于虚拟机来说，它是物理地
+址，对于Hypervisor，它是虚拟地址。
+
+所以整个原理就是：虚拟机继续访问TTBR0/1_EL1设置页表，但在MMU中这个地址翻译为
+IPA，然后用Hypervisor的TTBR1_EL2设置的页表翻译为真正的PA。这称为两级地址翻译，
+2-Stage Address Translation。
+
+一如TTBR0/1_EL1的设置中包含了ASID（区分进程），TTBR1_EL2中也包含了VMID（区分虚
+拟机），所以在MMU的TLB中不需要每次切换虚拟机就清空所有的页表Cache，只要保证
+VMID和ASID都能够匹配就可以了。
+
+
+特殊指令Trapped Out
+~~~~~~~~~~~~~~~~~~~~
+部分虚拟机内的行为涉及全局调度，比如WFI/WFE，都是休眠指令，让CPU停下来，等待外
+部信号（比如中断等），但对于虚拟机，这个虚拟机不执行，不等于其他虚拟机就不执行
+这就可以让这些指令在虚拟机里面执行的时候，产生一个异常到EL2上，以便可以先调度
+到其他虚拟机上。
+
+这个控制不经过MMU/SMMU，所以就需要另外的控制位进行控制，比如HCR_EL2.TWI，就可
+以把虚拟机的WFI Trapped Out出来。
+
+ARMv8给很多关键重要行为都定义了Trapped Out条件，包括执行关键指令或者读写系统寄
+存器，这些控制条件可以从EL1, EL2, EL3设置（例如通过写系统寄存器：SCTLR_EL1/2/3
+），分别把更低级别的行为路由到本特权级上，高特权级根据ESR_ELx获知原因，进行相
+应的仿真就可以了。比如本来虚拟机需要读一个系统寄存器到x1，Hypervisor可以直接设
+置这个值，然后中断返回，这样这条指令好像执行过了，而下一条指令也从x1中获得仿真
+的值了。
+
+
+中断模拟
+~~~~~~~~~
+给虚拟机种入中断有两种可能，一种是没有真的发生了中断，Hypervisor需要模拟一个中
+断给虚拟机。ARMv8通过HCR_EL2控制寄存器实现这种种入。种入中断后，进入虚拟机的
+EL1就会产生跳转到虚拟机的对应中断向量上。
+
+第二种可能是发生了真实的中断，这一种方法可以仍是前面这种方法，先在EL2中收这个
+中断（HCR_EL2可以设置什么中断路由到EL2），然后通过HCR_EL2种入这个中断。比如
+HCR_EL2.VI种入IRQ，HCR_EL2.VF种入FIQ，HCR_EL2.VSE种入SError。
+
+这是ARMv8架构规范给出的基本中断模拟方法。但这样就慢了，另一种方法是让正在调度
+的虚拟机直接处理这个中断，但虚拟机有可能没在调度中，这样不同体系结构的方案就不
+一样了。鲲鹏920采用的是ARM GICv4的定义，它通过增加一种EoI模式来降低成本，当使能
+ICC_CTLR_EL1.EOIMode的时候，在EL2中发EoI并不会中止GIC的中断报告，而会等待vCPU进
+入调度，Hypervisor可以在这个vCPU的等待列表中增加一个中断，等这个vCPU进入调度的
+时候（相关的中断列表也恢复到硬件上了），vCPU会进入中断，当这里发EoI的时候，这
+个中断才正式中止了。这减少了一次回到Hypervisor再发EoI的过程，但没有实现如果虚
+拟机在线的时候，直接让虚拟机处理。但作为通用方案，这个方法比较保险。
+
+对于是来自外部的LPI，GICv4在ITS中提供直接种入的方法：先通过ITS配置一张vPE表（
+GITS_BASER<n>，ARM的规范把CPU核称为PE，Process Element），里面定义物理中断
+和虚拟中断的对应关系，然后把vCPU的GICR_VPENDBASER指向对应的vPE配置，之后ITS就
+把这个中断直接作为vCPU的Pending消息处理了，vCPU一致没有得到调度，这个队列会一
+致被填满，直到有人清空它。
+
+
+时钟虚拟化
+~~~~~~~~~~
+虚拟化还有一个规避不了的问题是时间。虚拟机认为自己是物理的，所以它的时间概念也
+应该是物理的。在客观世界时间过了一分钟，在虚拟机中也应该过了一分钟。但实际上它
+可能只拥有20秒，其他时间被Hypervisor或者其他虚拟机取走了。
+
+很多平台只提供物理时钟，而且不是架构定义的一部分，Linux内核把这个作为假设，通
+过clocksource和clockevent两种类型的设备分别提供读时和中断通知功能，无论架构有
+多少时钟设备，一概注册为clocksource或者clockevent，到使用的时候根据设备的参数
+的选择最合适的方案（比如选择精度最高的时钟做调度）。
+
+鲲鹏遵循ARMv8的标准，在ARMv8中，时钟是架构标准设备，查看鲲鹏920的Linux配置，
+可以看到这封装为1个clocksource和每个核一个的clockevent：::
+
+        >ls /sys/devices/system/clocksource
+        clocksource0  power  uevent
+
+        >ls /sys/devices/system/clockevents
+        broadcast      clockevent112  clockevent13  clockevent29  clockevent44 clockevent6   clockevent75  clockevent90
+        clockevent0    clockevent113  clockevent14  clockevent3   clockevent45 clockevent60  clockevent76  clockevent91
+        clockevent1    clockevent114  clockevent15  clockevent30  clockevent46 clockevent61  clockevent77  clockevent92
+        clockevent10   clockevent115  clockevent16  clockevent31  clockevent47 clockevent62  clockevent78  clockevent93
+        clockevent100  clockevent116  clockevent17  clockevent32  clockevent48 clockevent63  clockevent79  clockevent94
+        clockevent101  clockevent117  clockevent18  clockevent33  clockevent49 clockevent64  clockevent8   clockevent95
+        clockevent102  clockevent118  clockevent19  clockevent34  clockevent5 clockevent65  clockevent80  clockevent96
+        clockevent103  clockevent119  clockevent2   clockevent35  clockevent50 clockevent66  clockevent81  clockevent97
+        clockevent104  clockevent12   clockevent20  clockevent36  clockevent51 clockevent67  clockevent82  clockevent98
+        clockevent105  clockevent120  clockevent21  clockevent37  clockevent52 clockevent68  clockevent83  clockevent99
+        clockevent106  clockevent121  clockevent22  clockevent38  clockevent53 clockevent69  clockevent84  power
+        clockevent107  clockevent122  clockevent23  clockevent39  clockevent54 clockevent7   clockevent85  uevent
+        clockevent108  clockevent123  clockevent24  clockevent4   clockevent55 clockevent70  clockevent86
+        clockevent109  clockevent124  clockevent25  clockevent40  clockevent56 clockevent71  clockevent87
+        clockevent11   clockevent125  clockevent26  clockevent41  clockevent57 clockevent72  clockevent88
+        clockevent110  clockevent126  clockevent27  clockevent42  clockevent58 clockevent73  clockevent89
+        clockevent111  clockevent127  clockevent28  clockevent43  clockevent59 clockevent74  clockevent9
+
+这个驱动在Linux内核的drivers/clocksource/arm_arch_timer.c中。
+
+ARMv8构架上把物理时钟和虚拟时钟分开，虚拟时钟在计时的时候减去一个Hypervisor可
+以设置的值（CNTVOFF_EL2），让Hypervisor可以控制给虚拟机读的值。但在Linux的实现
+中，这个特性没有什么用，Linux只认为读到的是物理时钟的值。
+
+todo：需要和代码对照一下，这部分代码很久没有看了。
+
+
+软件实现原理
+-------------
+
+Host OS初始化
+~~~~~~~~~~~~~
+我们用KVM的实现考察一下虚拟机的调度是如何完成的。鲲鹏支持VHE，所以在Host OS的
+内核启动阶段，内核就停留在EL2层级：
+
+.. code-block:: c
+
+        ENTRY(stext)
+                bl	preserve_boot_args
+                bl	el2_setup			// Drop to EL1, w0=cpu_boot_mode
+                adrp	x23, __PHYS_OFFSET
+                and	x23, x23, MIN_KIMG_ALIGN - 1	// KASLR offset, defaults to 0
+                bl	set_cpu_boot_mode_flag
+                bl	__create_page_tables
+                /*
+                 * The following calls CPU setup code, see arch/arm64/mm/proc.S for
+                 * details.
+                 * On return, the CPU will be ready for the MMU to be turned on and
+                 * the TCR will have been set.
+                 */
+                bl	__cpu_setup			// initialise processor
+                b	__primary_switch
+        ENDPROC(stext)
+
+这里的el2_setup负责检查当前内核的状态和是否支持VHE，并最终决定把让内核停留在
+EL2还是EL1：
+
+.. code-block:: c
+
+        /*
+         * If we're fortunate enough to boot at EL2, ensure that the world is
+         * sane before dropping to EL1.
+         *
+         * Returns either BOOT_CPU_MODE_EL1 or BOOT_CPU_MODE_EL2 in w0 if
+         * booted in EL1 or EL2 respectively.
+         */
+        ENTRY(el2_setup)
+                msr	SPsel, #1			// We want to use SP_EL{1,2}
+                mrs	x0, CurrentEL
+                cmp	x0, #CurrentEL_EL2
+                b.eq	1f
+                mov_q	x0, (SCTLR_EL1_RES1 | ENDIAN_SET_EL1)
+                msr	sctlr_el1, x0
+                mov	w0, #BOOT_CPU_MODE_EL1		// This cpu booted in EL1
+                isb
+                ret
+
+        1:	mov_q	x0, (SCTLR_EL2_RES1 | ENDIAN_SET_EL2)
+                msr	sctlr_el2, x0
+
+        #ifdef CONFIG_ARM64_VHE
+                /*
+                 * Check for VHE being present. For the rest of the EL2 setup,
+                 * x2 being non-zero indicates that we do have VHE, and that the
+                 * kernel is intended to run at EL2.
+                 */
+                mrs	x2, id_aa64mmfr1_el1
+                ubfx	x2, x2, #ID_AA64MMFR1_VHE_SHIFT, #4
+        #else
+                mov	x2, xzr
+        #endif
+        
+                /* Hyp configuration. */
+                mov_q	x0, HCR_HOST_NVHE_FLAGS
+                cbz	x2, set_hcr
+                mov_q	x0, HCR_HOST_VHE_FLAGS
+        set_hcr:
+                msr	hcr_el2, x0
+                isb
+                ...
+
+如果CONFIG_ARM64_VHE配置了，代码首先检查id_aa64mmfr1_el1寄存器，看VHE特性是否
+被支持，如果支持了，就进入使能VHE的流程。此后，内核就一直工作在EL2状态。
+
+其他CPU的启动原理是类似的。
+
+启动和调度虚拟机
+~~~~~~~~~~~~~~~~~
+用户程序，比如qemu，通过/dev/kvm建立kvm的访问上下文（一个文件描述符，以下简称
+kvm_fd），然后用kvm_fd创建虚拟机，也用文件描述符表示，以下简称vm_fd，然后用
+vm_fd再创建vCPU，文件句柄简称vcpu_fd。这样我们就有不同的控制对象可以控制所有的
+虚拟机，单独的虚拟机和单独的CPU。这些实现都在virt/kvm/kvm_main.c中。
+
+其他行为都好理解，基本上都是根据EL2的接口设置资源和页表，读者很容易找到代码的
+位置。我们重点理解一下Host怎么进入和退出Guest的。
+
+当我们创建了一个vCPU，需要调度它了，用户态调用vcpu_fd的ioctl(KVM_RUN)。内核函
+数调用kvm_vcpu_ioctl(KVM_RUN)，这时在EL2，我们需要退出到EL1，把CPU让出来给虚拟
+机，这里调用kvm_arch_vcpu_ioctl_run(vcpu)。vcpu是虚拟CPU的状态，函数先把所有需
+要种入的设置全部设到硬件寄存器中，然后调用kvm_vcpu_run_vhe()（对于没有vhe的平
+台就只能发起Hypervisor请求了），这里完成最后一层的设置，然后进入汇编的
+__guest_enter()，这时只剩下通用寄存器等EL2还要用的一些东西需要恢复进去，最后就
+是eret退出EL2，整个CPU就被让出给虚拟机了。
+
+之后虚拟机执行过程中除了任何异常，系统可以退回到__guest_enter()后面，Host检查
+退出原因，比如可能是VM里面发起的IO请求，Host就可以退出系统调用回到qemu进程中，
+qemu进程就可以模拟这个IO行为了。
+
+可以看到，整个过程和操作系统的进程调度其实没有本质的区别。
 
 .. vim: fo+=mM tw=78
