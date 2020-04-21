@@ -204,8 +204,8 @@ ICC_CTLR_EL1.EOIMode的时候，在EL2中发EoI并不会中止GIC的中断报告
 对于是来自外部的LPI，GICv4在ITS中提供直接种入的方法：先通过ITS配置一张vPE表（
 GITS_BASER<n>，ARM的规范把CPU核称为PE，Process Element），里面定义物理中断
 和虚拟中断的对应关系，然后把vCPU的GICR_VPENDBASER指向对应的vPE配置，之后ITS就
-把这个中断直接作为vCPU的Pending消息处理了，vCPU一致没有得到调度，这个队列会一
-致被填满，直到有人清空它。
+把这个中断直接作为vCPU的Pending消息处理了，vCPU一直没有得到调度，这个队列会一
+直被填满，直到有人清空它。
 
 
 时钟虚拟化
@@ -350,9 +350,11 @@ vm_fd再创建vCPU，文件句柄简称vcpu_fd。这样我们就有不同的控�
 __guest_enter()，这时只剩下通用寄存器等EL2还要用的一些东西需要恢复进去，最后就
 是eret退出EL2，整个CPU就被让出给虚拟机了。
 
-之后虚拟机执行过程中除了任何异常，系统可以退回到__guest_enter()后面，Host检查
+之后虚拟机执行过程中出了任何异常，系统可以退回到__guest_enter()后面，Host检查
 退出原因，比如可能是VM里面发起的IO请求，Host就可以退出系统调用回到qemu进程中，
 qemu进程就可以模拟这个IO行为了。
+
+        .. figure:: software_virt_sched.svg
 
 可以看到，整个过程和操作系统的进程调度其实没有本质的区别。
 
