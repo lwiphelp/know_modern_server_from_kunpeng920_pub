@@ -10,8 +10,8 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="306.09448mm"
-   height="314.09113mm"
-   viewBox="0 0 306.0945 314.09114"
+   height="336.76971mm"
+   viewBox="0 0 306.0945 336.76973"
    version="1.1"
    id="svg8"
    inkscape:version="0.92.3 (2405546, 2018-03-11)"
@@ -657,8 +657,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.4"
-     inkscape:cx="852.32802"
-     inkscape:cy="583.57166"
+     inkscape:cx="630.89945"
+     inkscape:cy="583.57186"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -690,12 +690,20 @@
      id="layer1"
      transform="translate(-61.953659,1009.4905)">
     <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:0.78728372;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-36-7-93-8-0-2-2-3-7-3"
+       width="79.534721"
+       height="22.601856"
+       x="82.851479"
+       y="-794.20178"
+       ry="0" />
+    <rect
        style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
        id="rect873-36-7-93-8-0-2-2-5-4"
        width="76.417091"
        height="21.185133"
-       x="185.17427"
-       y="-719.08447"
+       x="91.247185"
+       y="-696.40588"
        ry="0" />
     <flowRoot
        xml:space="preserve"
@@ -729,7 +737,7 @@
          style="stroke-width:0.26458332">计算子系统</tspan></text>
     <path
        style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Mend)"
-       d="m 182.40536,-706.98924 -57.45239,-30.61607"
+       d="m 125.51994,-696.02793 -0.56697,-41.57738"
        id="path4084"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cc" />
@@ -796,54 +804,26 @@
        id="rect873-36-7-93-8-0-2-2-5"
        width="76.417091"
        height="21.185133"
-       x="182.43393"
-       y="-721.73029"
+       x="88.506844"
+       y="-699.0517"
        ry="0" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="183.46985"
-       y="-706.1947"
+       x="89.542763"
+       y="-683.51611"
        id="text2119-4-0-6"><tspan
          sodipodi:role="line"
          id="tspan2117-0-23-7"
-         x="183.46985"
-         y="-706.1947"
+         x="89.542763"
+         y="-683.51611"
          style="stroke-width:0.26458332">各外部检测部件</tspan></text>
-    <path
-       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Mend-7)"
-       d="m 228.59573,-721.94442 62.93303,-116.41667"
-       id="path4084-4"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="cc" />
     <path
        style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Mend-62)"
        d="m 125.97341,-891.23808 145.14287,-24.56845"
        id="path4084-2"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cc" />
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="244.77911"
-       y="-731.68451"
-       id="text2119-4-0-1-5-7-3"><tspan
-         sodipodi:role="line"
-         x="244.77911"
-         y="-731.68451"
-         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Italic';fill:#0000ff;stroke-width:0.26458332"
-         id="tspan12764-7">已修复类错误</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="67.836052"
-       y="-711.48743"
-       id="text2119-4-0-1-5-7-3-8"><tspan
-         sodipodi:role="line"
-         x="67.836052"
-         y="-711.48743"
-         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Italic';fill:#0000ff;stroke-width:0.26458332"
-         id="tspan12764-7-6">需要OS干预和PCIe AER错误</tspan></text>
     <path
        style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Mend-62-8)"
        d="m 290.67772,-892.51616 -10.01636,-24.19047"
@@ -899,7 +879,7 @@
          style="stroke-width:0.17271616">Incore检测部件</tspan></text>
     <path
        style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Mend-7-9)"
-       d="m 122.87288,-847.24297 112.06994,0.18899"
+       d="m 162.74937,-781.28612 72.19345,-65.76786"
        id="path4084-4-2"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cc" />
@@ -960,12 +940,12 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="190.51199"
-       y="-852.04224"
+       x="194.66974"
+       y="-801.20447"
        id="text2119-4-0-1-5-7-3-5"><tspan
          sodipodi:role="line"
-         x="190.51199"
-         y="-852.04224"
+         x="194.66974"
+         y="-801.20447"
          style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Italic';fill:#0000ff;stroke-width:0.26458332"
          id="tspan12764-7-9">已修复类错误</tspan></text>
     <text

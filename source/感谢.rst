@@ -4,16 +4,19 @@
 
 （按姓名拼音序）
 
-Hu
+Hu (Hu.xw)
         全文编辑，撰写启动和运行管理部分
 
-Kenneth Lee 
+Kenneth Lee (Li.gz)
         全文编辑和写作
 
-Ning
+Ning (Cheng.cn)
         对外设的各种设计做了详细的介绍
 
-Xia
+Tang (Tang.xf)
+        提供了RAS的相关资料
+
+Xia (Xia.j)
         对总线设计方案做了详细的介绍
 
 
