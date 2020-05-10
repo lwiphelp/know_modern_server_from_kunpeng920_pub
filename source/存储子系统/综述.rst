@@ -86,6 +86,20 @@ VFS
 如前所述，VFS层包含了各种内核访问的接口，很多功能都会封装为文件访问，但我们这
 里只考虑它对存储业务的支持。
 
+VFS对外部使用者呈现三个基本概念：
+
+* file：这表示用户程序访问存储中一个对象的句柄，用户程序通过这个对象访问一个存
+  储存储的对象
+
+* inode：这表示存储系统中的一个对象，也就是我们一般理解的“文件”和“目录”。多个
+  用户程序可能访问同一个inode，这呈现为多个file。
+
+* dentry：这表示VFS对外呈现的一个“路径”。
+
+VFS从根目录开始，用dentry指向各个inode，构成一个从使用者角度使用所有系统对象的
+树状结构，其中存储对象是其中的重点。但VFS的对象也可以是系统其他管理对象，比如
+/dev子树用于访问外部设计，/sys和/proc子树用于访问内核的数据结构等。
+
 VFS把存储设备看做是一个连续或者非连续的线性空间，对这个线性空间赋予格式，从而
 构成一个“文件系统”，文件系统的格式由文件系统类型（file_system_type）定义。文件
 系统格式通过mount系统调用关联到一个块设备（block_device），从块设备的非易失存
@@ -114,10 +128,11 @@ VFS把存储设备看做是一个连续或者非连续的线性空间，对这�
         mount -t nfs myhost:/export/home /mnt/home
 
 这里面，proc和sys可以不需要参数，因为系统就这么一个proc文件系统，所以你可以写
-none或者所有你系统的字符串。而这里的9p文件系统需要的virtio指定的字符串，而nfs
-需要的是服务器的地址，这些参数都用作mount的主参数。
+none或者所有你愿意的字符串，这个参数用不上。而这里的9p文件系统需要是的virtio指
+定的字符串，用于匹配不同的virtio接口。而nfs需要的是服务器的地址。
 
-回到内核实现，下面是file_system_type涉及的回调：
+回到内核实现，我们从各个对象的回调函数集看看这些对象的行为抽象。下面是
+file_system_type涉及的回调：
 
         .. code-block:: c
 
@@ -128,24 +143,205 @@ none或者所有你系统的字符串。而这里的9p文件系统需要的virti
 这些回调的核心概念的这个fs_context，它表示file_system_type和一个存储介质关联时
 的上下文，用户可以自己初始化这个上下文，这时实现上面的init_fs_context，这需要
 用户自己提供，如果用户不需要控制这么多东西，可以改为实现mount，这时VFS会用默认
-的init_fs_context（legacy_fs_context_ops），其中的get_tree回调需要使用你的
-mount，文件系统类型在mount中负责基于默认的fs_context内容（参数也在其中了），找
-到对应的参数，利用这些参数创建root目录的dentry和sb，为这些目录结构创建响应的回
-调，这样整个目录递归结构就建立了。
+的init_fs_context（legacy_fs_context_ops），其中的get_tree回调需要使用这里的
+mount，file_system_type在mount回调中负责基于默认的fs_context内容（相关的mount
+参数也在其中了），创建本文件系统root目录的dentry和sb，把这个dentry作为root或者
+到已经存在的VFS根系统的某个dentry上，就构成一个递归的使用结构了。
 
-总结起来，VFS重点就是维护整个目录结构，让file_system_type建立目录结构和不同非
-易失存储的关联。
+下面是super_block的主要回调：
+
+.. code-block:: c
+
+        struct super_operations {
+                struct inode *(*alloc_inode)(struct super_block *sb);
+                void (*destroy_inode)(struct inode *);
+
+                void (*dirty_inode) (struct inode *, int flags);
+                int (*write_inode) (struct inode *, struct writeback_control *wbc);
+                int (*drop_inode) (struct inode *);
+                void (*evict_inode) (struct inode *);
+                void (*put_super) (struct super_block *);
+                int (*sync_fs)(struct super_block *sb, int wait);
+                ...
+                int (*remount_fs) (struct super_block *, int *, char *);
+                void (*umount_begin) (struct super_block *);
+                ...
+                int (*bdev_try_to_free_page)(struct super_block*, struct page*, gfp_t);
+                long (*nr_cached_objects)(struct super_block *, struct shrink_control *);
+                long (*free_cached_objects)(struct super_block *, struct shrink_control *);
+        };
+
+它的重点就是从sb上得到inode，为这个inode分配dentry，这个文件系统就成为整个VFS
+目录树的一部分。访问sb的inode就可以找到其他inode。
+
+下面是inode的回调：
+
+.. code-block:: c
+
+        struct inode_operations {
+                struct dentry * (*lookup) (struct inode *,struct dentry *, unsigned int);
+                const char * (*get_link) (struct dentry *, struct inode *, struct delayed_call *);
+                int (*permission) (struct inode *, int);
+                ...
+                int (*create) (struct inode *,struct dentry *, umode_t, bool);
+                int (*link) (struct dentry *,struct inode *,struct dentry *);
+                int (*unlink) (struct inode *,struct dentry *);
+                int (*symlink) (struct inode *,struct dentry *,const char *);
+                int (*mkdir) (struct inode *,struct dentry *,umode_t);
+                int (*rmdir) (struct inode *,struct dentry *);
+                int (*mknod) (struct inode *,struct dentry *,umode_t,dev_t);
+                int (*rename) (struct inode *, struct dentry *, struct inode *, struct dentry *, unsigned int);
+                ...
+                int (*fiemap)(struct inode *, struct fiemap_extent_info *, u64 start, u64 len);
+                int (*update_time)(struct inode *, struct timespec64 *, int);
+                int (*atomic_open)(struct inode *, struct dentry *, struct file *, unsigned open_flag, umode_t create_mode);
+                int (*tmpfile) (struct inode *, struct dentry *, umode_t);
+                ...
+        } ____cacheline_aligned;
+
+这里主要是inode的Meta Data的管理，真正的文件读写，通过inode的Metadata的指引，
+从VFS的文件接口读到inode的数据结构中，这部分操作反而不属于inode的回调。
+
+下面是dentry的主要回调：
+
+.. code-block:: c
+
+        struct dentry_operations {
+                int (*d_revalidate)(struct dentry *, unsigned int);
+                int (*d_weak_revalidate)(struct dentry *, unsigned int);
+                int (*d_hash)(const struct dentry *, struct qstr *);
+                int (*d_compare)(const struct dentry *,
+                                unsigned int, const char *, const struct qstr *);
+                int (*d_delete)(const struct dentry *);
+                int (*d_init)(struct dentry *);
+                void (*d_release)(struct dentry *);
+                void (*d_prune)(struct dentry *);
+                void (*d_iput)(struct dentry *, struct inode *);
+                char *(*d_dname)(struct dentry *, char *, int);
+                struct vfsmount *(*d_automount)(struct path *);
+                int (*d_manage)(const struct path *, bool);
+                struct dentry *(*d_real)(struct dentry *, const struct inode *);
+        } ____cacheline_aligned;
+
+而VFS自己对用户程序呈现的文件接口回调是这样的：
+
+.. code-block:: c
+
+        struct file_operations {
+                ...
+                loff_t (*llseek) (struct file *, loff_t, int);
+                ssize_t (*read) (struct file *, char __user *, size_t, loff_t *);
+                ssize_t (*write) (struct file *, const char __user *, size_t, loff_t *);
+                ssize_t (*read_iter) (struct kiocb *, struct iov_iter *);
+                ssize_t (*write_iter) (struct kiocb *, struct iov_iter *);
+                ...
+                int (*mmap) (struct file *, struct vm_area_struct *);
+                unsigned long mmap_supported_flags;
+                int (*open) (struct inode *, struct file *);
+                int (*flush) (struct file *, fl_owner_t id);
+                int (*release) (struct inode *, struct file *);
+                int (*fsync) (struct file *, loff_t, loff_t, int datasync);
+                int (*fasync) (int, struct file *, int);
+                ...
+        } __randomize_layout;
+
+这里省略了大部分和文件读写关系不大的调用，可以看到这个基本就和用户态可以做的动
+作一一对应了，file打开inode，再对inode做相关动作，就可以找到对应的fs_context和
+sb，剩下的问题就只剩下怎么访问设备了。
+
 
 Page Cache层
 ~~~~~~~~~~~~~~
 
-file_system_type从慢速的存储中读入数据，总需要内存作为缓存，这个部分由统一的模
-块提供，这个层级，就是Page Cache层。提供Page Cache管理的模块称为filemap，但并
-非每种file_system_type都使用这种服务，这也不一定表示这种file_system_type就一定
-没有页缓冲，它完全可以自己申请页表来完成一样的功能。
+我们前面谈inode的时候，好像在谈一个程序可见的对象，其实大部分时候，我们说inode
+，并不存在一个实体，这是需要读者注意的。
 
-filemap维护一个称为address_space的数据接口，它通过一个稀疏表管理整个文件线性空
-间分段加载到内存中的数据。
+比如说，我们在某个SATA硬盘上按ext4的格式，放了一个文件文件，
+/my_home/my_file.txt，我们说，磁盘上有一个inode对应着这个文件。但这个inode对象
+并不在我们的内存中，这个inode的内容（就是my_file.txt里面保存的内容），也不在内
+存中。我们要让这个内存对程序可见，我们需要把内容读到内存中，这些内存，就是这些
+文件的Cache。Linux选择以页为单位管理文件的Cache，所以，我们把它称为Page Cache
+。文件Cache并不需要以Page为单位，但以Page为单位比较容易管理，这个选择变成所有
+模块的共识，“文件Cache必须以页为单位”就变成一个硬限制了。
+
+这些其实是file_system_type的功能，但如果把这个功能统一为一个库，我们就可以认为
+我们存在这样一个层。但换过来说，file_system_type也不一定要用这个库，对于不用这
+个库的file_system_type，我们也不能简单说它没有Page Cache，这个读者们知道这个思
+路就好。
+
+按前面的描述，文件Cache其实有两种，一种是文件内存本身，另一种是存Metadata的
+Cache，比如文件名，修改时间，权限等等。先讨论前者：
+
+文件是一个线性空间的抽象，Linux内核用address_space这个概念来抽象它，
+address_space是一个稀疏表，保存所有被加载到内存中的某个inode的内容。
+
+address_space的回调行为包括：
+
+.. code-block:: c
+
+        struct address_space_operations {
+                int (*writepage)(struct page *page, struct writeback_control *wbc);
+                int (*readpage)(struct file *, struct page *);
+                int (*writepages)(struct address_space *, struct writeback_control *);
+                int (*set_page_dirty)(struct page *page);
+                int (*readpages)(struct file *filp, struct address_space *mapping, struct list_head *pages, unsigned nr_pages);
+                int (*write_begin)(struct file *, struct address_space *mapping, ...);
+                int (*write_end)(struct file *, struct address_space *mapping, ...);
+                sector_t (*bmap)(struct address_space *, sector_t);
+                void (*invalidatepage) (struct page *, unsigned int, unsigned int);
+                int (*releasepage) (struct page *, gfp_t);
+                void (*freepage)(struct page *);
+                ssize_t (*direct_IO)(struct kiocb *, struct iov_iter *iter);
+                int (*migratepage) (struct address_space *, struct page *, struct page *, enum migrate_mode);
+                bool (*isolate_page)(struct page *, isolate_mode_t);
+                void (*putback_page)(struct page *);
+                int (*launder_page) (struct page *);
+                int (*is_partially_uptodate) (struct page *, unsigned long, unsigned long);
+                void (*is_dirty_writeback) (struct page *, bool *, bool *);
+                int (*error_remove_page)(struct address_space *, struct page *);
+                int (*swap_activate)(struct swap_info_struct *sis, struct file *file, sector_t *span);
+                void (*swap_deactivate)(struct file *file);
+        };
+
+可以看到，它提供的抽象主要是让file_system_type帮助它读入和写出某个位置上的整页
+内存。address_space由filemap模块维护，filemap提供的接口主要是某个inode的页的读
+写，如果页面不存在，由它来负责调用前面的回调来加载它。
+
+它的API接口大致是这样的：::
+
+        void delete_from_page_cache(struct page *page);
+        int add_to_page_cache_locked(struct page *page, struct address_space *mapping, pgoff_t offset, gfp_t gfp_mask)
+        int filemap_fdatawrite(struct address_space *mapping);
+        int filemap_fdatawrite_range(struct address_space *mapping, loff_t start, loff_t end)
+        int filemap_flush(struct address_space *mapping)
+        int filemap_check_errors(struct address_space *mapping)
+        bool filemap_range_has_page(struct address_space *mapping, loff_t start_byte, loff_t end_byte)
+        int filemap_fdatawait_range(struct address_space *mapping, loff_t start_byte, loff_t end_byte)
+        int file_fdatawait_range(struct file *file, loff_t start_byte, loff_t end_byte)
+        void wait_on_page_bit(struct page *page, int bit_nr)
+        int wait_on_page_bit_killable(struct page *page, int bit_nr)
+        void unlock_page(struct page *page)
+        ...
+
+大部分时候，file_system_type不会直接调用filemap的API，而是直接使用filemap的读
+写函数作为自己的文件读写函数。比如btrfs的：
+
+.. code-block:: c
+
+        const struct file_operations btrfs_file_operations = {
+                .llseek		= btrfs_file_llseek,
+                .read_iter      = generic_file_read_iter,
+                .splice_read	= generic_file_splice_read,
+                ...
+                .write_iter	= btrfs_file_write_iter,
+                ...
+        };
+
+这里的generic_file_read_iter()和generic_file_splice_read()函数都是filemap的函
+数，而btrfs_file_write_iter()其实最后也是调filemap的函数执行相关操作。
+
+Page Cache的内容都是在访问的时候加载到内存中的，访问完了就不需要了，但如果放弃
+掉又比较可惜，因为说不定后来还会使用。
 
 我们在命令行运行free命令，会有这样的结果：::
 
@@ -156,8 +352,133 @@ filemap维护一个称为address_space的数据接口，它通过一个稀疏表
 
 其中的buff/cache就是这里提到的address_space管理的数据。其中buff（Buffers）是块
 设备自己的inode对应的address_space，如果你直接访问块设备或者file_system_type访
-问磁盘上的matedata，就会占据这部分空间（todo：这需要确认一下）。如果你直接访问
-具体的文件，对应文件inode上的空间就是cache占据的页面空间。
+问磁盘上的matedata，就会占据这部分空间。如果你直接访问具体的文件，对应文件
+inode上的空间就是cache占据的页面空间。
+
+free命令其实认为这个buff/cache也是空闲的内存，如果内存不足了，直接使用这部分内
+存就可以了。这是这部分内存被认为是Cache的一个例证吧。
+
+Buffer和Cache在/proc/meminfo中会独立统计，下面是一个示例：::
+
+        MemTotal:       16135012 kB
+        MemFree:         2660940 kB
+        MemAvailable:    7314380 kB
+        Buffers:         1453236 kB
+        Cached:          4273856 kB
+        SwapCached:         9704 kB
+        Active:          8903088 kB
+        Inactive:        3605612 kB
+
+以页为单位读文件的内容很合理，用于读Metadata就不那么合理了。因为Metadata通常很
+小，用不了一页。Linux把这个功能也抽象为一个库了。这称为Buffer Head。和filemap
+一样，这也不是强制的。
+
+buffer_header本质是块设备inode的address_space的一部分，因为这些Metadata本来就
+是块设备上的内容，所以当你定位一个inode的时候，file_system_type驱动是在块设备
+的绝对偏移上找到对应的页，这就变成了对这个块设备的inode的address_space的访问，
+这个访问页内的空间，就可以作为一个buffer_header来使用了。
+
+Buffer Header的实现在fs/buffer.c中实现。
+
+BIO层
+~~~~~~
+在Linux中，BIO是一个模块，处于file_system_type驱动（包括它使用的Page Cache）和
+块设备之间，用于把file_system_type驱动的读写请求调度到块设备之间。本文说BIO层
+不是讲这个模块，只是表示包括这个模块在内的，对整个存储系统的抽象。这会主要包括
+这个对块设备的调度已经块设备的封装本身。
+
+bio的核心接口是这个：
+
+.. code-block:: c
+
+        blk_qc_t submit_bio(struct bio *bio);
+
+bio里提供一组需要同步到磁盘上的page（包括也内的范围数据），bio模块把这些页请求
+调度在某个设备的特定队列中，剩下的事情就是让io调度在这个队列中投入调度了。
+
+而块设备本身并不提供读写函数，块设备通过和它关联的每个gendisk提供request_queue
+以满足bio的要求。gendisk自己的回调是这样的：
+
+.. code-block:: c
+
+        struct block_device_operations {
+                int (*open) (struct block_device *, fmode_t);
+                void (*release) (struct gendisk *, fmode_t);
+                int (*rw_page)(struct block_device *, sector_t, struct page *, unsigned int);
+                int (*ioctl) (struct block_device *, fmode_t, unsigned, unsigned long);
+                int (*compat_ioctl) (struct block_device *, fmode_t, unsigned, unsigned long);
+                unsigned int (*check_events) (struct gendisk *disk,
+                                              unsigned int clearing);
+                int (*media_changed) (struct gendisk *);
+                void (*unlock_native_capacity) (struct gendisk *);
+                int (*revalidate_disk) (struct gendisk *);
+                int (*getgeo)(struct block_device *, struct hd_geometry *);
+                void (*swap_slot_free_notify) (struct block_device *, unsigned long);
+                int (*report_zones)(struct gendisk *, sector_t sector,
+                                    struct blk_zone *zones, unsigned int *nr_zones,
+                                    gfp_t gfp_mask);
+                ...
+        };
+
+这只是完成一些基本的辅助功能。其他的读写行为是通过submit_bio()来实现的。为了理解
+这个读写过程如何发生，我们可以直接用gdb跟踪一下内核的执行流。比如我们给submit_bio
+设置一个断点，然后我们尝试直接写一个块设备，可以跟踪到这样的流程：::
+
+	#0  submit_bio (bio=0xffff80003c8ede80) at block/blk-core.c:1167
+	#1  0xffff00001031c000 in submit_bh_wbc (op=0, op_flags=<optimized out>, bh=0xffff80003bf62008,
+	    write_hint=WRITE_LIFE_NOT_SET, wbc=0x0) at fs/buffer.c:3098
+	#2  0xffff00001031ce3c in submit_bh (bh=<optimized out>, op_flags=<optimized out>, op=<optimized out>)
+	    at fs/buffer.c:3104
+	#3  ll_rw_block (op=0, op_flags=0, nr=<optimized out>, bhs=<optimized out>)
+	    at fs/buffer.c:3154
+	#4  0xffff00001031d550 in __block_write_begin_int (page=0xffff7e0000f37680, pos=<optimized out>, len=<optimized out>,
+	    get_block=<optimized out>, iomap=<optimized out>) at fs/buffer.c:1997
+	#5  0xffff00001031d778 in __block_write_begin (get_block=<optimized out>, len=<optimized out>, pos=<optimized out>,
+	    page=<optimized out>) at fs/buffer.c:2017
+	#6  block_write_begin (mapping=<optimized out>, pos=0, len=1, flags=0, pagep=0xffff000012d13bf8,
+	    get_block=0xffff000010320f58 <blkdev_get_block>) at fs/buffer.c:2076
+	#7  0xffff0000103205f8 in blkdev_write_begin (file=<optimized out>, mapping=0xffff80003d00f690, pos=0, len=1, flags=0,
+	    pagep=0xffff000012d13bf8, fsdata=<optimized out>) at fs/block_dev.c:641
+	#8  0xffff00001020cc08 in generic_perform_write (file=0xffff800038f39540, i=0xffff000012d13d20, pos=0)
+	    at mm/filemap.c:3299
+	#9  0xffff00001020fb2c in __generic_file_write_iter (iocb=0xffff000012d13d48, from=0xffff000012d13d20)
+	    at mm/filemap.c:3428
+	#10 0xffff0000103210bc in blkdev_write_iter (iocb=0xffff000012d13d48, from=0xffff000012d13d20)
+	    at fs/block_dev.c:1966
+	#11 0xffff0000102c9534 in call_write_iter (iter=<optimized out>, kio=<optimized out>, file=<optimized out>)
+	    at include/linux/fs.h:1863
+	#12 new_sync_write (filp=0xffff800038f39540, buf=0x25fd6010 "", len=1, ppos=0xffff000012d13e30)
+	    at fs/read_write.c:474
+	#13 0xffff0000102c9614 in __vfs_write (file=0xffff800038f39540, p=0x25fd6010 "", count=1, pos=0xffff000012d13e30)
+	    at fs/read_write.c:487
+	#14 0xffff0000102cc30c in vfs_write (file=0xffff800038f39540, buf=0x25fd6010 "", count=<optimized out>,
+	    pos=0xffff000012d13e30) at fs/read_write.c:549
+	#15 0xffff0000102cc654 in ksys_write (fd=<optimized out>, buf=0x25fd6010 "", count=1)
+	    at fs/read_write.c:598
+	#16 0xffff0000102cc6e4 in __do_sys_write (count=<optimized out>, buf=<optimized out>, fd=<optimized out>)
+	    at fs/read_write.c:610
+	#17 __se_sys_write (count=<optimized out>, buf=<optimized out>, fd=<optimized out>)
+	    at fs/read_write.c:607
+	#18 __arm64_sys_write (regs=0xffff000012d13ec0) at fs/read_write.c:607
+	#19 0xffff000010098840 in __invoke_syscall (syscall_fn=<optimized out>, regs=<optimized out>)
+	    at arch/arm64/kernel/syscall.c:35
+	#20 invoke_syscall (syscall_table=<optimized out>, sc_nr=<optimized out>, scno=<optimized out>, regs=<optimized out>)
+	    at arch/arm64/kernel/syscall.c:47
+	#21 el0_svc_common (regs=0xffff000012d13ec0, scno=<optimized out>, sc_nr=<optimized out>,
+	    syscall_table=0xffff000010830870 <sys_call_table>)
+	    at arch/arm64/kernel/syscall.c:83
+	#22 0xffff000010098928 in el0_svc_handler (regs=0xffff000012d13ec0)
+	    at arch/arm64/kernel/syscall.c:129
+	#23 0xffff0000100841c8 in el0_svc () at arch/arm64/kernel/entry.S:948
+
+这里跟踪的是loop块设备的直接写入流程，可以看到，入口从write的系统调用入口进入，
+碰到这个块设备的入口的时候，对应的inode的回调转入块设备的blkdev_write_iter()写入，
+然后就转入filemap的Page Cache访问函数，最后这个是buffer_header，变成submid_bh()，
+最后就成为submit_bio()。
+
+介质层
+~~~~~~~
+介质层响应最终的bio请求，最终落实真正的请求，这可以是网络通讯，块设备读写等等。
 
 todo：后面的内容待续
 
