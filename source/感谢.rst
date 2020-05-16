@@ -10,6 +10,9 @@ Hu (Hu.xw)
 Kenneth Lee (Li.gz)
         全文编辑和写作
 
+Liu （Liu.yx)
+        写作了RDMA部分内容
+
 Ning (Cheng.cn)
         对外设的各种设计做了详细的介绍
 
@@ -18,6 +21,10 @@ Tang (Tang.xf)
 
 Xia (Xia.j)
         对总线设计方案做了详细的介绍
+
+Xiong (Xiong.w)
+        帮忙修正了TSO的逻辑
+
 
 
 最后感谢未列出名字的，为鲲鹏设计和ARM服务器生态提供支持和帮助的所有朋友们。
