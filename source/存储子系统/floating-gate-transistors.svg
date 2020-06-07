@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="239.07932mm"
+   height="108.74149mm"
+   viewBox="0 0 239.07932 108.74148"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
+   sodipodi:docname="floating-gate-transistors.svg">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="2.8"
+     inkscape:cx="470.83583"
+     inkscape:cy="234.6333"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="3830"
+     inkscape:window-height="2065"
+     inkscape:window-x="0"
+     inkscape:window-y="40"
+     inkscape:window-maximized="0"
+     fit-margin-top="2"
+     fit-margin-left="2"
+     fit-margin-bottom="2"
+     fit-margin-right="2" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(26.114712,-11.052442)">
+    <rect
+       style="opacity:0.63999999;fill:#008000;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect815"
+       width="61.326637"
+       height="28.253719"
+       x="27.025299"
+       y="47.819195" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="42.805801"
+       y="70.119797"
+       id="text819"><tspan
+         sodipodi:role="line"
+         id="tspan817"
+         x="42.805801"
+         y="70.119797"
+         style="font-size:5.64444447px;stroke-width:0.26458332">半导体基板</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="31.378597"
+       y="98.242073"
+       id="text819-3"><tspan
+         sodipodi:role="line"
+         id="tspan817-6"
+         x="31.378597"
+         y="98.242073"
+         style="font-size:5.64444447px;stroke-width:0.26458332">普通CMOS三极管结构</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="148.44678"
+       y="98.158867"
+       id="text819-3-7"><tspan
+         sodipodi:role="line"
+         id="tspan817-6-5"
+         x="148.44678"
+         y="98.158867"
+         style="font-size:5.64444447px;stroke-width:0.26458332">浮栅MOS管结构</tspan></text>
+    <rect
+       style="opacity:0.63999999;fill:#0000ff;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect815-3"
+       width="14.363096"
+       height="8.4099703"
+       x="27.025299"
+       y="47.819195" />
+    <rect
+       style="opacity:0.63999999;fill:#0000ff;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect815-3-5"
+       width="13.98512"
+       height="8.4099703"
+       x="74.366814"
+       y="47.819195" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.56500006;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 34.017857,47.913689 V 36.479911 h -18.89881"
+       id="path887"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="15.881574"
+       y="32.096245"
+       id="text819-6"><tspan
+         sodipodi:role="line"
+         id="tspan817-2"
+         x="15.881574"
+         y="32.096245"
+         style="font-size:5.64444447px;stroke-width:0.26458332">源极</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.56500006;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 80.805684,47.879716 V 36.445938 h 18.89881"
+       id="path887-9"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="86.475967"
+       y="31.534922"
+       id="text819-6-1"><tspan
+         sodipodi:role="line"
+         id="tspan817-2-2"
+         x="86.475967"
+         y="31.534922"
+         style="font-size:5.64444447px;stroke-width:0.26458332">漏极</tspan></text>
+    <rect
+       style="opacity:0.63999999;fill:#aa8800;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect815-7"
+       width="37.797619"
+       height="1.7953867"
+       x="39.262276"
+       y="46.260044" />
+    <rect
+       style="opacity:0.63999999;fill:#ff00ff;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect815-7-0"
+       width="16.819941"
+       height="3.3072915"
+       x="49.609371"
+       y="43.047249" />
+    <path
+       style="fill:none;stroke:#0000ff;stroke-width:0.26458332;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:1.5874999, 0.26458332;stroke-dashoffset:0;stroke-opacity:1"
+       d="M 70.587052,46.685266 78.90253,15.785714"
+       id="path989"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="81.840126"
+       y="17.833286"
+       id="text819-6-1-9"><tspan
+         sodipodi:role="line"
+         id="tspan817-2-2-3"
+         x="81.840126"
+         y="17.833286"
+         style="font-size:5.64444447px;stroke-width:0.26458332">绝缘层</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.56500006;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 56.331726,43.344001 V 31.910223"
+       id="path887-9-6"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="50.562584"
+       y="27.093704"
+       id="text819-6-1-0"><tspan
+         sodipodi:role="line"
+         id="tspan817-2-2-6"
+         x="50.562584"
+         y="27.093704"
+         style="font-size:5.64444447px;stroke-width:0.26458332">栅极</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="14.170731"
+       y="106.19087"
+       id="text819-3-2"><tspan
+         sodipodi:role="line"
+         id="tspan817-6-6"
+         x="14.170731"
+         y="106.19087"
+         style="font-size:4.23333311px;stroke-width:0.26458332">通过改变栅极的电压，控制从源极到漏极的电流</tspan></text>
+    <rect
+       style="opacity:0.63999999;fill:#008000;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect815-1"
+       width="61.326637"
+       height="28.253719"
+       x="138.2854"
+       y="48.240891" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="154.0659"
+       y="70.541496"
+       id="text819-8"><tspan
+         sodipodi:role="line"
+         id="tspan817-7"
+         x="154.0659"
+         y="70.541496"
+         style="font-size:5.64444447px;stroke-width:0.26458332">半导体基板</tspan></text>
+    <rect
+       style="opacity:0.63999999;fill:#0000ff;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect815-3-9"
+       width="14.363096"
+       height="8.4099703"
+       x="138.2854"
+       y="48.240891" />
+    <rect
+       style="opacity:0.63999999;fill:#0000ff;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect815-3-5-2"
+       width="13.98512"
+       height="8.4099703"
+       x="185.62692"
+       y="48.240891" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.56500006;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 145.27796,48.335384 V 36.901606 h -18.89881"
+       id="path887-0"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="127.14168"
+       y="32.517937"
+       id="text819-6-2"><tspan
+         sodipodi:role="line"
+         id="tspan817-2-3"
+         x="127.14168"
+         y="32.517937"
+         style="font-size:5.64444447px;stroke-width:0.26458332">源极</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.56500006;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 192.06579,48.301414 V 36.867633 h 18.89881"
+       id="path887-9-7"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="197.73608"
+       y="31.956621"
+       id="text819-6-1-5"><tspan
+         sodipodi:role="line"
+         id="tspan817-2-2-9"
+         x="197.73608"
+         y="31.956621"
+         style="font-size:5.64444447px;stroke-width:0.26458332">漏极</tspan></text>
+    <rect
+       style="opacity:0.63999999;fill:#aa8800;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect815-7-2"
+       width="37.797619"
+       height="7.4650283"
+       x="150.52238"
+       y="41.0121" />
+    <rect
+       style="opacity:0.63999999;fill:#ff00ff;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect815-7-0-2"
+       width="16.819941"
+       height="3.3072917"
+       x="160.86948"
+       y="43.468956" />
+    <path
+       style="fill:none;stroke:#0000ff;stroke-width:0.26458332;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:1.58749992, 0.26458332;stroke-dashoffset:0;stroke-opacity:1"
+       d="M 174.57112,45.784047 190.16263,16.20741"
+       id="path989-8"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="193.10023"
+       y="18.254984"
+       id="text819-6-1-9-9"><tspan
+         sodipodi:role="line"
+         id="tspan817-2-2-3-7"
+         x="193.10023"
+         y="18.254984"
+         style="font-size:5.64444447px;stroke-width:0.26458332">浮栅</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.56500006;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 168.44227,37.907063 V 26.473287"
+       id="path887-9-6-3"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="162.67314"
+       y="21.656767"
+       id="text819-6-1-0-6"><tspan
+         sodipodi:role="line"
+         id="tspan817-2-2-6-1"
+         x="162.67314"
+         y="21.656767"
+         style="font-size:5.64444447px;stroke-width:0.26458332">栅极</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="-24.2784"
+       y="54.113358"
+       id="text819-2"><tspan
+         sodipodi:role="line"
+         id="tspan817-9"
+         x="-24.2784"
+         y="54.113358"
+         style="font-size:5.64444447px;stroke-width:0.26458332">和基板异种的半导体</tspan></text>
+    <rect
+       style="opacity:0.63999999;fill:#ff00ff;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect815-7-0-2-3"
+       width="16.819941"
+       height="3.3072917"
+       x="160.63988"
+       y="37.944569" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:0.5;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="132.43871"
+       y="105.22939"
+       id="text819-3-2-1"><tspan
+         sodipodi:role="line"
+         id="tspan817-6-6-9"
+         x="132.43871"
+         y="105.22939"
+         style="font-size:4.23333311px;line-height:0.5;stroke-width:0.26458332">通过改变栅极和衬底的电压，让少量电</tspan><tspan
+         sodipodi:role="line"
+         x="132.43871"
+         y="111.34656"
+         style="font-size:4.23333311px;line-height:0.5;stroke-width:0.26458332"
+         id="tspan1213">子可以进入或者离开浮栅，从而实现数</tspan><tspan
+         sodipodi:role="line"
+         x="132.43871"
+         y="117.46372"
+         style="font-size:4.23333311px;line-height:0.5;stroke-width:0.26458332"
+         id="tspan1215">据的存储</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.56500006;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 170.46726,87.648435 V 76.214659"
+       id="path887-9-6-3-4"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="174.36954"
+       y="84.351456"
+       id="text819-6-1-0-6-7"><tspan
+         sodipodi:role="line"
+         id="tspan817-2-2-6-1-8"
+         x="174.36954"
+         y="84.351456"
+         style="font-size:5.64444447px;stroke-width:0.26458332">衬底</tspan></text>
+  </g>
+</svg>
