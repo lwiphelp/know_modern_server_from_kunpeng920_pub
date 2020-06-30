@@ -14,7 +14,7 @@
    viewBox="0 0 499.33782 151.18087"
    version="1.1"
    id="svg8"
-   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
    sodipodi:docname="kp920_cache_arch.svg">
   <defs
      id="defs2">
@@ -207,15 +207,15 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.4"
-     inkscape:cx="1025.359"
+     inkscape:cx="803.93043"
      inkscape:cy="276.50126"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="3830"
-     inkscape:window-height="2062"
+     inkscape:window-height="2065"
      inkscape:window-x="0"
-     inkscape:window-y="42"
+     inkscape:window-y="40"
      inkscape:window-maximized="0"
      fit-margin-top="2"
      fit-margin-left="2"
@@ -230,7 +230,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -544,21 +544,21 @@
     <rect
        style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
        id="rect873-36-7-93-8-0-2-2-3-2"
-       width="187.77721"
-       height="13.241659"
+       width="46.687851"
+       height="13.241669"
        x="80.512199"
        y="-293.88718" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:7.19649649px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.1799124"
-       x="162.55904"
-       y="-280.65933"
+       x="90.785843"
+       y="-281.03256"
        id="text2119-4-0-0-1-7"
        transform="scale(0.98742348,1.0127367)"><tspan
          sodipodi:role="line"
          id="tspan2117-0-23-6-4-2"
-         x="162.55904"
-         y="-280.65933"
+         x="90.785843"
+         y="-281.03256"
          style="stroke-width:0.1799124">L2 Cache</tspan></text>
     <rect
        style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
@@ -740,25 +740,6 @@
          style="stroke-width:0.1799124">L1 I/D Cache</tspan></text>
     <rect
        style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
-       id="rect873-36-7-93-8-0-2-2-3-2-1"
-       width="187.77721"
-       height="13.241659"
-       x="298.71704"
-       y="-295.08588" />
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:7.19649649px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.1799124"
-       x="383.54309"
-       y="-281.84293"
-       id="text2119-4-0-0-1-7-2"
-       transform="scale(0.98742348,1.0127367)"><tspan
-         sodipodi:role="line"
-         id="tspan2117-0-23-6-4-2-9"
-         x="383.54309"
-         y="-281.84293"
-         style="stroke-width:0.1799124">L2 Cache</tspan></text>
-    <rect
-       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
        id="rect873-36-7-93-8-0-2-2-3-2-2-3"
        width="187.77721"
        height="13.241659"
@@ -787,5 +768,138 @@
          x="468.41736"
          y="-332.59802"
          style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.46666622px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Italic';fill:#0000ff;stroke-width:0.26458332">CCL</tspan></text>
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-36-7-93-8-0-2-2-3-2-3"
+       width="46.792084"
+       height="13.241667"
+       x="127.20005"
+       y="-293.88718" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:7.19649649px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.1799124"
+       x="138.06834"
+       y="-281.03259"
+       id="text2119-4-0-0-1-7-67"
+       transform="scale(0.98742348,1.0127367)"><tspan
+         sodipodi:role="line"
+         id="tspan2117-0-23-6-4-2-5"
+         x="138.06834"
+         y="-281.03259"
+         style="stroke-width:0.1799124">L2 Cache</tspan></text>
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-36-7-93-8-0-2-2-3-2-9"
+       width="46.938278"
+       height="13.241669"
+       x="174.5591"
+       y="-293.88718" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:7.19649649px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.1799124"
+       x="186.28421"
+       y="-281.03259"
+       id="text2119-4-0-0-1-7-3"
+       transform="scale(0.98742348,1.0127367)"><tspan
+         sodipodi:role="line"
+         id="tspan2117-0-23-6-4-2-6"
+         x="186.28421"
+         y="-281.03259"
+         style="stroke-width:0.1799124">L2 Cache</tspan></text>
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-36-7-93-8-0-2-2-3-2-3-0"
+       width="46.792084"
+       height="13.241667"
+       x="221.49738"
+       y="-293.88718" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:7.19649649px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.1799124"
+       x="233.56671"
+       y="-281.03262"
+       id="text2119-4-0-0-1-7-67-6"
+       transform="scale(0.98742348,1.0127367)"><tspan
+         sodipodi:role="line"
+         id="tspan2117-0-23-6-4-2-5-2"
+         x="233.56671"
+         y="-281.03262"
+         style="stroke-width:0.1799124">L2 Cache</tspan></text>
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-36-7-93-8-0-2-2-3-2-6"
+       width="46.687851"
+       height="13.241669"
+       x="298.40051"
+       y="-295.08588" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:7.19649649px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.1799124"
+       x="311.44934"
+       y="-282.21619"
+       id="text2119-4-0-0-1-7-1"
+       transform="scale(0.98742348,1.0127367)"><tspan
+         sodipodi:role="line"
+         id="tspan2117-0-23-6-4-2-8"
+         x="311.44934"
+         y="-282.21619"
+         style="stroke-width:0.1799124">L2 Cache</tspan></text>
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-36-7-93-8-0-2-2-3-2-3-7"
+       width="46.792084"
+       height="13.241667"
+       x="345.08838"
+       y="-295.08588" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:7.19649649px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.1799124"
+       x="358.73184"
+       y="-282.21622"
+       id="text2119-4-0-0-1-7-67-9"
+       transform="scale(0.98742348,1.0127367)"><tspan
+         sodipodi:role="line"
+         id="tspan2117-0-23-6-4-2-5-20"
+         x="358.73184"
+         y="-282.21622"
+         style="stroke-width:0.1799124">L2 Cache</tspan></text>
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-36-7-93-8-0-2-2-3-2-9-2"
+       width="46.938278"
+       height="13.241669"
+       x="392.44742"
+       y="-295.08588" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:7.19649649px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.1799124"
+       x="406.94772"
+       y="-282.21622"
+       id="text2119-4-0-0-1-7-3-3"
+       transform="scale(0.98742348,1.0127367)"><tspan
+         sodipodi:role="line"
+         id="tspan2117-0-23-6-4-2-6-7"
+         x="406.94772"
+         y="-282.21622"
+         style="stroke-width:0.1799124">L2 Cache</tspan></text>
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#1a1a1a;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect873-36-7-93-8-0-2-2-3-2-3-0-5"
+       width="46.792084"
+       height="13.241667"
+       x="439.38571"
+       y="-295.08588" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:7.19649649px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.1799124"
+       x="454.23022"
+       y="-282.21625"
+       id="text2119-4-0-0-1-7-67-6-9"
+       transform="scale(0.98742348,1.0127367)"><tspan
+         sodipodi:role="line"
+         id="tspan2117-0-23-6-4-2-5-2-2"
+         x="454.23022"
+         y="-282.21625"
+         style="stroke-width:0.1799124">L2 Cache</tspan></text>
   </g>
 </svg>

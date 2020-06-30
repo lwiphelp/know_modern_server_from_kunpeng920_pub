@@ -261,7 +261,7 @@ Host OS初始化
 我们用KVM的实现考察一下虚拟机的调度是如何完成的。鲲鹏支持VHE，所以在Host OS的
 内核启动阶段，内核就停留在EL2层级：
 
-.. code-block:: c
+.. code-block:: C
 
         ENTRY(stext)
                 bl	preserve_boot_args
@@ -283,7 +283,7 @@ Host OS初始化
 这里的el2_setup负责检查当前内核的状态和是否支持VHE，并最终决定把让内核停留在
 EL2还是EL1：
 
-.. code-block:: c
+.. code-block:: C
 
         /*
          * If we're fortunate enough to boot at EL2, ensure that the world is

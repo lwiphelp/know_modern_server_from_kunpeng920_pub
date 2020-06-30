@@ -225,7 +225,7 @@ none或者所有你愿意的字符串，这个参数用不上。而这里的9p�
 回到内核实现，我们从各个对象的回调函数集看看这些对象的行为抽象。下面是
 file_system_type涉及的回调：
 
-        .. code-block:: c
+.. code-block:: c
 
 	int (*init_fs_context)(struct fs_context *);
 	struct dentry *(*mount) (struct file_system_type *, int, const char *, void *);
