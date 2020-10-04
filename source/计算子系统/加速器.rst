@@ -1,0 +1,298 @@
+.. Copyright by Kenneth Lee. 2020. All Right Reserved.
+
+加速器
+=======
+
+介绍
+-----
+加速器是另一种形态的计算单元。在本章的综述中，我们认为加速器是对某些固定计算逻
+辑进行聚合的需要。本章我们深入看看，什么样的计算属于CPU，什么样的计算属于加速
+器。
+
+鲲鹏920提供了几种常用算法的加速器，比如压缩，加解密等，这些功能CPU也能做，为什
+么需要额外做一个硬件来做呢？
+
+核心的原因我们前面提到了：这可以做聚合，专用的压缩和加解密的计算单元利用率不高
+，在CPU内部专门设计一个计算单元，它的利用率不高，做在CPU外面，它可以聚合多个
+CPU的多个进程的请求，提高整体的利用效率。鲲鹏920的通用CPU核的主频可以达到3GHz
+以上，但它的加速器的主频可以低到1GHz以下，仍能提供CPU一样的算力。这样的利用率
+高得多。
+
+有人可能会有这样的疑问：那么我们能否直接用CPU自身来做聚合呢？回答是：这不容易
+。比如说，CPU只有MMU，这样其他进程向这个CPU发请求，就必须进行跨进程拷贝。而加
+速器使用IOMMU，IOMMU同时支持多张页表，很容易同时服务多个进程。
+
+        .. figure:: mmu_vs_iommu.svg
+
+另一方面，使用CPU调度很难形成pipeline，后面我们和会看到，在鲲鹏920上，调度本身
+的成本并不低，大部分的鲲鹏加速器，计算部分的面积都不超过50%，其他的面积都是调
+度本身消耗的，这种调度的引入，保证了加速器的计算单元的利用率在高压力下大部分时
+候都可以接近满载，这也是CPU无法做到的。
+
+鲲鹏加速器的内部结构
+--------------------
+
+鲲鹏的加速器内部结构相当复杂，有多个独立的线索同步被调度执行，如果我们要理清所
+有的细节逻辑，我们就不得不深入讨论硬件设计细节了。从软件的角度，我们则可以简单
+理解如下：
+
+        .. figure:: kp920_accelerator.svg
+
+其中总线接口部分又称为QM（Queues Manager），在鲲鹏920上，这是一个公共的宏IP，被
+所有加速器共享（共享实现，但物理上每个加速器都有独立的资源）。它提供虚拟PCIe接
+口，并通过共享内存，实现1024个双向队列，让CPU把请求（称为BD，Buffer Descriptor
+）发送给CPU。在Linux主线内核中（2019年8月开始进入主线，下同），这个IP的驱动是 ::
+
+        drivers/crypto/hisilicon/qm.c
+
+它本身不考虑加速器的具体算法，只是把内存中描述的“请求”通知到实际的加速器，由加
+速器内核进行处理，然后把结果回写到内存。
+
+在这个模型中，如果BD描述的是一条或者一段代码，由加速器完成执行，这也无不可。加
+速器基本上就是一个异构的核。作者曾经和硬件的实现者探讨过有没有可能把BD解释的相
+关步骤修改为一个个单独的指令，这样给CPU侧一定的编程能力。但至少在当前的实现中
+，这基本上做不到，因为硬件必须按BD的格式进行定制实现才有可能保证硬件的执行效率
+，一旦等待CPU指令的节奏，这个效率就很难保证了。但无论如何这是硬件实现的需要，
+在构架上，加速器本质上是一个包含IOMMU和聚合调度器的异构核。
+
+总线后面是加速器本身的调度单元，这个单元有自己的内部执行内存，它负责把外部内存
+中的BD等数据加载到加速器内部，调度其中一个运算Core进行执行，并在计算完成后，把
+BD响应回写到总线上。
+
+最后是多个计算核，它们每个可以独立响应调度器的请求，从而把多个请求排成流水线。
+调度器的数量通常受流水线深度的影响，因为即使有更多的加速器，如果请求不能搬移到
+调度器，这并没有意义。
+
+
+软件实现
+--------
+鲲鹏920的加速器实现在主线内核中的位置如下：::
+
+        driver/crypto/hisilicon/sec2    // 对称加解密
+        driver/crypto/hisilicon/hpre    // 非对称加解密
+        driver/crypto/hisilicon/zip     // 压缩解压缩
+
+它们都可以注册到内核的crypto子系统，封装为crypto的同步和异步访问接口，可以被直
+接调用，也可以被一些标准的内核模块比如dm-crypt用于磁盘压缩加密。
+
+这些加速器的提供的算法可以从这些模块的..._alg数组（比如skcipher_alg）中查到。
+比如上面的加速器就注册了这些算法：::
+
+        static struct skcipher_alg sec_skciphers[] = {
+                SEC_SKCIPHER_ALG("ecb(aes)", sec_setkey_aes_ecb,
+                                 AES_MIN_KEY_SIZE, AES_MAX_KEY_SIZE,
+                                 AES_BLOCK_SIZE, 0)
+
+                SEC_SKCIPHER_ALG("cbc(aes)", sec_setkey_aes_cbc,
+                                 AES_MIN_KEY_SIZE, AES_MAX_KEY_SIZE,
+                                 AES_BLOCK_SIZE, AES_BLOCK_SIZE)
+
+                SEC_SKCIPHER_ALG("xts(aes)", sec_setkey_aes_xts,
+                                 SEC_XTS_MIN_KEY_SIZE, SEC_XTS_MAX_KEY_SIZE,
+                                 AES_BLOCK_SIZE, AES_BLOCK_SIZE)
+
+                SEC_SKCIPHER_ALG("ecb(des3_ede)", sec_setkey_3des_ecb,
+                                 SEC_DES3_2KEY_SIZE, SEC_DES3_3KEY_SIZE,
+                                 DES3_EDE_BLOCK_SIZE, 0)
+
+                SEC_SKCIPHER_ALG("cbc(des3_ede)", sec_setkey_3des_cbc,
+                                 SEC_DES3_2KEY_SIZE, SEC_DES3_3KEY_SIZE,
+                                 DES3_EDE_BLOCK_SIZE, DES3_EDE_BLOCK_SIZE)
+
+                SEC_SKCIPHER_ALG("xts(sm4)", sec_setkey_sm4_xts,
+                                 SEC_XTS_MIN_KEY_SIZE, SEC_XTS_MIN_KEY_SIZE,
+                                 AES_BLOCK_SIZE, AES_BLOCK_SIZE)
+
+                SEC_SKCIPHER_ALG("cbc(sm4)", sec_setkey_sm4_cbc,
+                                 AES_MIN_KEY_SIZE, AES_MIN_KEY_SIZE,
+                                 AES_BLOCK_SIZE, AES_BLOCK_SIZE)
+        };
+
+        static struct akcipher_alg rsa = {
+                .sign = hpre_rsa_dec,
+                .verify = hpre_rsa_enc,
+                .encrypt = hpre_rsa_enc,
+                .decrypt = hpre_rsa_dec,
+                .set_pub_key = hpre_rsa_setpubkey,
+                .set_priv_key = hpre_rsa_setprivkey,
+                .max_size = hpre_rsa_max_size,
+                .init = hpre_rsa_init_tfm,
+                .exit = hpre_rsa_exit_tfm,
+                .reqsize = sizeof(struct hpre_asym_request) + HPRE_ALIGN_SZ,
+                .base = {
+                        .cra_ctxsize = sizeof(struct hpre_ctx),
+                        .cra_priority = HPRE_CRYPTO_ALG_PRI,
+                        .cra_name = "rsa",
+                        .cra_driver_name = "hpre-rsa",
+                        .cra_module = THIS_MODULE,
+                },
+        };
+
+        static struct kpp_alg dh = {
+                .set_secret = hpre_dh_set_secret,
+                .generate_public_key = hpre_dh_compute_value,
+                .compute_shared_secret = hpre_dh_compute_value,
+                .max_size = hpre_dh_max_size,
+                .init = hpre_dh_init_tfm,
+                .exit = hpre_dh_exit_tfm,
+                .reqsize = sizeof(struct hpre_asym_request) + HPRE_ALIGN_SZ,
+                .base = {
+                        .cra_ctxsize = sizeof(struct hpre_ctx),
+                        .cra_priority = HPRE_CRYPTO_ALG_PRI,
+                        .cra_name = "dh",
+                        .cra_driver_name = "hpre-dh",
+                        .cra_module = THIS_MODULE,
+                },
+        };
+
+        static struct acomp_alg hisi_zip_acomp_zlib = {
+                .init			= hisi_zip_acomp_init,
+                .exit			= hisi_zip_acomp_exit,
+                .compress		= hisi_zip_acompress,
+                .decompress		= hisi_zip_adecompress,
+                .base			= {
+                        .cra_name		= "zlib-deflate",
+                        .cra_driver_name	= "hisi-zlib-acomp",
+                        .cra_module		= THIS_MODULE,
+                        .cra_priority           = HZIP_ALG_PRIORITY,
+                        .cra_ctxsize		= sizeof(struct hisi_zip_ctx),
+                }
+        };
+
+        static struct acomp_alg hisi_zip_acomp_gzip = {
+                .init			= hisi_zip_acomp_init,
+                .exit			= hisi_zip_acomp_exit,
+                .compress		= hisi_zip_acompress,
+                .decompress		= hisi_zip_adecompress,
+                .base			= {
+                        .cra_name		= "gzip",
+                        .cra_driver_name	= "hisi-gzip-acomp",
+                        .cra_module		= THIS_MODULE,
+                        .cra_priority           = HZIP_ALG_PRIORITY,
+                        .cra_ctxsize		= sizeof(struct hisi_zip_ctx),
+                }
+        };
+        
+在内核中选择这些算法，就会匹配到对应的加速器进行加速处理。但鲲鹏的加速器的重点
+还是用户态进程的加速。内核crypto模块也提供用户态的接口，但使用内核的crypto模块
+需要进行系统调用，这样会严重影响请求的效率。下面是2018年海思开始开发uacce（
+User mode ACCElerator）的在鲲鹏920前一代Hi1616上的测试数据：
+
+================= ========== =========== =========== ==========  ===========
+Block Size(bytes) 16         64          256         1024        8192
+================= ========== =========== =========== ==========  ===========
+AF_ALG                37.86k     140.05k     565.33k    2530.30k   19802.79k
+uacce               6327.14k   24477.50k   97456.55k  335090.47k 1797931.01k
+CPU               635934.24k 1248170.84k 1623808.68k 1732138.33k 1795028.31k
+================= ========== =========== =========== ==========  ===========
+
+其中AF_ALG一行是通过AF_ALG Socket访问内核crypto的效果，可以看到，这个性能基本
+没法用，但如果直接用用户态访问，加速器的效果就可以接近CPU，考虑到加速器的主频
+远远低于CPU，而且这只是Hi1616在对称加解密上的性能，这最终是有收益的。
+
+下面是鲲鹏920上HPRE加速器和CPU的对比：
+
+todo：要一份测试数据。
+
+无论如何，从这个数据上我们可以看到，系统调用，以及把数据从一个核转给另一个核进
+行处理，都是有非常明显的成本的。
+
+要降低这个成本，就需要在用户态直接访问加速器硬件。在不少内部方案中，人们在内核
+暴露一个接口，把用户地址的对应的物理地址直接暴露给使用加速器的用户程序，直接把
+这个地址传输到设备上。这种方法只能用于全部都在使用者控制的场合，因为一旦把物理
+地址暴露给用户进程，这个用户进程就可以通过这个机制作为跳板，取得内核的任何数据
+。这完全不安全。
+
+海思为此开发了uacce。它基于IOMMU建立一个框架：当用户从uacce打开一个设备，uacce
+内部模块自动同步这个进程的页表和设备设备的页表，这样，进程使用的指针和加速器内
+部使用的指针具有相同的含义，加速器的访问范围也被限制在进程的范围内：
+
+        .. figure:: share_mmu_iommu_pt_in_uacce.svg
+
+鲲鹏920的uacce接口实现在qm接口上，和具体的加速器模块没有关系。加速器和应用的数
+据接口和uacce的地址共享需求无关，这些接口的解释，都可以放到用户态。
+
+基于uacce使用加速器给用户程序一个很简单的使用接口：打开一个设备，mmap它的IO空
+间，根据设备的数据接口填充BD，然后通过IO空间通知加速器处理数据就可以了。加速器
+和用户程序的地址空间是完全相同的。
+
+但还是会有三个问题。第一个问题简单，但需要时间：很多IOMMU的驱动（包括SMMU的驱
+动最初是不支持多PASID的），这需要所有IOMMU的提供者想当长的时间去达成共识。在本
+文写作的时候，主线上还没有完全支持这个特性的ARM IOMMU驱动。所以需要使用这个功
+能，要不使用专有的鲲鹏内核，或者自己下载ARM SMMU的SVA（Share Virtual Address）
+Patch才能让uacce正常工作。
+
+第二个问题稍复杂一些：当一个进程被Fork，子进程没有加速器的上下文，同时父进程的
+内存变成和子进程COW共享了。如果这时父进程和加速器同时写这片内存，就会导致两者
+访问不同的页表了。
+
+        | COW，Copy On Write，是Linux的内存管理策略。当一个进程Fork的时候，
+        | 子进程和父进程共同拥有父进程的全部内存，这些内存将被设置为只读。
+        | 任何一方写某页的内存，这个页面将被拷贝一份，成为写一方的实际内存。
+
+这个问题需要解决两个子问题，一个是在进程Fork的时候，给子进程分配一个新的上下文
+，这个提醒现在uaccce中还在做，在有这个特性前，子进程需要重新自己分配加速器上下
+文。另一个子问题是SVA特性的一部分，只要保证SVA正常上传，CPU和设备的访问总是有
+现有顺序的，两者最终总能指向同一个页面。
+
+第三个问题最复杂：CPU的主频比设备高，MMU的速度也比IOMMU快，这个如果仅仅是翻译
+，影响不大，但如果TLB需要刷新，甚至页表项不存在，需要做缺页处理，这个时间就会
+大大拉长。特别是后者，MMU是CPU的一部分，在CPU内部缺页是个执行过程中的一个同步
+行为，而IOMMU是设备的一部分，缺页只能作为一个外部中断报告给CPU，然后再由CPU来
+分配页面，这样一个过程，会大大拉长整个执行的时长，把加速器换来的优势消耗干净。
+这个问题几乎无解，因为页面分配只能由一方来执行，总得选一方。就算预先给IOMMU一
+批页面，页表还是一个，页表的访问还需要两方同步。所以，解决这个问题最简单直接的
+方法，还是先把内存锁定在内存中，最能保证性能。
+
+（作为参考，一个实验室的测试显示，在鲲鹏920上，MMU缺页的时延大约是4us强，而
+IOMMU的缺页时延是20us以上）
+
+(todo：怎么锁定内存？预先初始化是一种方法，mlock也是一种方法，但都不保险。特别
+是允许页面迁移的情况下，这个要进一步找更好的方法，不排除要增加新的内核机制去支
+持）
+
+核间通讯成本
+-------------
+前面说到加速器的调用成本，本小节进一步探讨一下这个问题。把一个计算的上下文从一
+个核迁移到另一个核，它的成本包括：
+
+* 核间通知。很多时候我们称为Doorbell。Doorbell大部分时候对发起Doorbell的核来说
+  是某种指令或者被通知设备MMIO空间的访问，而对被通知的核来说表现为中断。
+
+* Cache Reload，Cache需要在被迁移的核上重新装载。
+
+* 请求核和被请求核在时间上的不同步。比如请求核发出请求的时候，被请求核正在响应
+  其他核的请求。
+
+要降低这些成本，相应也包括几个方面。对于Doorbell，如果有可能，我们尽量多发一些
+请求然后再Doorbell，这可以起到更好的聚合效果。
+
+Cache Reload问题没有什么办法，按鲲鹏920的构架，只有L3 Cache是可以被加速器复用
+的，L1/L2 Cache都在CPU核内部，加速器无法访问这些Cache。要降低这个成本，软件工
+程师可以考虑需要加速器计算的数据没有必要的时候不要放到CPU中计算，避免对于的加
+载。
+
+核间不同步的问题和核间通知问题一样，都是两个核的同步问题，从这个角度说，加速器
+本身就不适合做同步请求。正如我们一开始说的，加速器很重要的一个优势就是聚合复杂
+的计算，聚合计算就不适合做同步请求。
+
+
+小结
+----
+最后我们总结一下CPU和加速器的特点对比：
+
+======== ====================   ====================
+对比项   CPU                    加速器
+======== ====================   ====================
+主频     高主频（比如，3GHz+）  低主频（比如，1GHz-）
+功能     通用，简单，容易修改   专用，难以修改
+服务     Per-Thread             Queued Request
+缺页处理 同步异常，快           异步中断，慢
+======== ====================   ====================
+
+所以，实际上把什么计算放在CPU中，什么计算放在加速器上，是个非常技巧性的问题。
+很多算法工程师，比如加解密的设计者，会更取向于使用CPU算法，所以现在很多同步
+加解密或者AI推理的算法都出现了CPU指令和计算单元直接支持的现象。但对于非对称，
+AI训练等数据量大，计算方法特殊的场合，加速器仍有不可取代的优势。
+
+.. vim: fo+=mM tw=78
