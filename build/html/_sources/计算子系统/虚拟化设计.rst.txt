@@ -1,8 +1,0 @@
-.. Copyright by Kenneth Lee. 2020. All Right Reserved.
-
-虚拟化设计
-==========
-
-todo
-
-.. vim: fo+=mM tw=78
