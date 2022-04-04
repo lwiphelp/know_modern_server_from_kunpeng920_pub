@@ -13,7 +13,7 @@
    viewBox="0 0 165.58984 103.14803"
    version="1.1"
    id="svg8"
-   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
    sodipodi:docname="mmu_vs_iommu.svg">
   <defs
      id="defs2">
@@ -1277,9 +1277,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2.8"
-     inkscape:cx="325.41901"
-     inkscape:cy="117.34711"
+     inkscape:zoom="2.2685227"
+     inkscape:cx="321.18265"
+     inkscape:cy="193.20594"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -1287,10 +1287,10 @@
      fit-margin-left="2"
      fit-margin-bottom="2"
      fit-margin-right="2"
-     inkscape:window-width="3830"
-     inkscape:window-height="2065"
-     inkscape:window-x="0"
-     inkscape:window-y="40"
+     inkscape:window-width="1848"
+     inkscape:window-height="1136"
+     inkscape:window-x="72"
+     inkscape:window-y="27"
      inkscape:window-maximized="0"
      inkscape:snap-global="false"
      inkscape:document-rotation="0" />
@@ -1302,7 +1302,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -1322,8 +1322,7 @@
            height="48.92857"
            x="380.71429"
            y="754.21063" /></flowRegion><flowPara
-         id="flowPara2104" /></flowRoot>
-    <rect
+         id="flowPara2104" /></flowRoot>    <rect
        style="opacity:1;fill:url(#linearGradient2465-0);fill-opacity:1;stroke:#000000;stroke-width:0.0477964;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
        id="rect1164-3-9-1-1-62"
        width="6.6705599"
@@ -1392,15 +1391,15 @@
        id="path6294" />
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       style="font-style:normal;font-weight:normal;font-size:10.58329964px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458299"
        x="39.329765"
        y="43.133583"
        id="text825-6-5-3-8-5-6-6-5-5-3-4-2-4-1"><tspan
          sodipodi:role="line"
          x="39.329765"
          y="43.133583"
-         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Italic';fill:#0000ff;stroke-width:0.264583"
-         id="tspan2826-5-5-3-2">BBTR0</tspan></text>
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.17499995px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Italic';fill:#0000ff;stroke-width:0.26458299"
+         id="tspan2826-5-5-3-2">TTBR0</tspan></text>
     <path
        style="fill:none;stroke:#000000;stroke-width:0.264999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker6298-9)"
        d="m 66.201937,42.672275 8.845689,-6.016497"
@@ -1501,15 +1500,15 @@
        id="path6294-4" />
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       style="font-style:normal;font-weight:normal;font-size:10.58329964px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458299"
        x="38.089081"
        y="85.008232"
        id="text825-6-5-3-8-5-6-6-5-5-3-4-2-4-1-3"><tspan
          sodipodi:role="line"
          x="38.089081"
          y="85.008232"
-         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Italic';fill:#0000ff;stroke-width:0.264583"
-         id="tspan2826-5-5-3-2-1">BBTR1</tspan></text>
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.17499995px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Italic';fill:#0000ff;stroke-width:0.26458299"
+         id="tspan2826-5-5-3-2-1">TTBR1</tspan></text>
     <path
        style="fill:none;stroke:#000000;stroke-width:0.264999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker6298-9-3)"
        d="m 64.961255,84.546923 8.84569,-6.016497"
