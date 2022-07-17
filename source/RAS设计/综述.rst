@@ -31,7 +31,7 @@ Serviceabilty是可服务性，表示设备被修复的能力，它通常可以�
 Availability。比如某条内存DIMM条损坏了，有Serviceabilty能力的设备可能可以在运
 行中直接隔离这条内存条，提供动态插拔的能力，维护人员就可以在设备工作的情况下完
 成对内存条的替换。其他提供日志，告警，让维护人员更早发现，更容易定位问题，从而
-提前修复问题，这些都属于可服务型考虑的范围。
+提前修复问题，这些都属于可服务性考虑的范围。
 
 所以，RAS重视的是服务器在R-A-S三种能力上的结果，这个结果首先是从基本功能上体现
 的，但当我们谈到RAS特性的时候，其实更关心的这些基本功能之外做的“额外”设计。因
@@ -220,7 +220,7 @@ APEI是APCI定义错误处理方法的接口。鲲鹏920的错误（包括外设
                 ...
         }
 
-当请求通过debufs的error_inject发入的时候，error_inject_fops的回调被激活，einj
+当请求通过debugfs的error_inject发入的时候，error_inject_fops的回调被激活，einj
 驱动用Linux的APEI提供的虚拟机调用EINJ表中提供的种入函数：::
 
         static int error_inject_set(void *data, u64 val)

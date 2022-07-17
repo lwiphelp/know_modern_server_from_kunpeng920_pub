@@ -70,8 +70,8 @@ Boot Loader或者操作系统，在正式使用某个网桥下面的设备前，
 的设备和子网桥。PCIe把这个地址空间分成三部分：
 
 * 配置空间。这在PCI标准中称为配置空间，在PCIe中作了扩展，称为ECAM空间，Enhanced
-  Configuration Access echanism。在本文中，在不会引起误会的情况下，我们混用这两
-  个概念，两者是兼容的。
+  Configuration Access Mechanism。在本文中，在不会引起误会的情况下，我们混用这
+  两个概念，两者是兼容的。
 
 * 内存地址空间，这个访问的可能是内存，也可能是MMIO。
 
